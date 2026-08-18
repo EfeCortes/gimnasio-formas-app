@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gimnasio Formas - App Móvil</title>
+  
+  <!-- Tailwind CSS CDN para utilidades de layout -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+  <!-- Estilos Tácticos OLED -->
+  <link rel="stylesheet" href="css/styles.css?v=13.5">
+</head>
+<body class="selection:bg-white selection:text-black">
+
+  <!-- Fondo Dinámico Global (detrás de todo) -->
+  <div id="global-bg-container" class="fixed inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-500 opacity-0" style="z-index: -10;">
+    <div id="global-bg-1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 scale-105" style="filter: brightness(0.55); -webkit-filter: brightness(0.55);"></div>
+    <div id="global-bg-2" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 scale-105" style="filter: brightness(0.55); -webkit-filter: brightness(0.55);"></div>
+  </div>
+
+  <!-- Toasts de Notificación -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ROLE SELECTOR OVERLAY (Discriminador de Roles Inicial) -->
+  <div id="role-selector-overlay" class="fixed inset-0 bg-[#000000] z-[600] flex flex-col justify-center items-center p-6">
+    <div class="max-w-md w-full bg-[#0a0a0a] border-2 border-[#222] p-8 rounded-2xl space-y-6 text-center">
+      <div class="flex justify-center mb-2">
+        <!-- Logo SVG (brand.svg) -->
+        <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 177.64 52.79" class="w-48 h-auto">
+          <defs><style>.st_brand_sel { fill: #fff; }</style></defs>
+          <path class="st_brand_sel" d="M41.15,16.43h-21.36v6.41h19.1v9.26h-19.1v13.33H7.59V6.39h33.56v10.04Z"/>
+          <path class="st_brand_sel" d="M55.5,45.43c-3.88,0-6.75-.91-8.62-2.73-1.86-1.82-2.8-4.67-2.8-8.53v-16.51c0-3.87.93-6.71,2.8-8.53,1.86-1.82,4.74-2.73,8.62-2.73h18.42c3.88,0,6.75.91,8.62,2.73,1.86,1.82,2.8,4.67,2.8,8.53v16.51c0,3.87-.93,6.71-2.8,8.53-1.86,1.82-4.74,2.73-8.62,2.73h-18.42ZM59.91,35.23h9.6c1.32,0,2.25-.26,2.8-.78.55-.52.82-1.45.82-2.79v-11.49c0-1.34-.27-2.27-.82-2.79-.55-.52-1.48-.78-2.8-.78h-9.6c-1.36,0-2.3.26-2.83.78-.53.52-.79,1.45-.79,2.79v11.49c0,1.34.26,2.27.79,2.79.53.52,1.47.78,2.83.78Z"/>
+          <path class="st_brand_sel" d="M130.36,45.43h-13.22l-7.91-12.55h-6.78v12.55h-12.2V6.39h28.14c3.62,0,6.23.8,7.85,2.4,1.62,1.6,2.43,4.18,2.43,7.75v5.3c0,3.05-.57,5.36-1.72,6.94-1.15,1.58-2.97,2.57-5.45,2.98l8.87,13.66ZM102.45,15.26v9.04h10.96c1.17,0,1.97-.21,2.4-.64.43-.43.65-1.22.65-2.37v-3.01c0-1.15-.22-1.94-.65-2.37-.43-.43-1.23-.64-2.4-.64h-10.96Z"/>
+          <path class="st_brand_sel" d="M170.59,21.06v9.7h-12.99v12.33h-10.17v-12.33h-12.99v-9.7h12.99v-12.33h10.17v12.33h12.99Z"/>
+        </svg>
+      </div>
+
+      <!-- VISTA 1: Selector de Rol -->
+      <div id="role-view-select" class="space-y-6">
+        <h2 class="text-white font-michroma text-sm tracking-widest uppercase">Selecciona tu Rol</h2>
+        <p class="text-xs text-white/50 font-sans">Elige tu forma de ingreso para adaptar el contenido.</p>
+        
+        <div class="space-y-4 pt-2">
+          <button onclick="selectAppRole('cliente')" class="w-full bg-[#0effc7] hover:bg-white text-black font-michroma font-bold text-xs py-4 rounded-xl transition-all uppercase tracking-widest">
+            INGRESAR COMO SOCIO / CLIENTE
+          </button>
+          <button onclick="selectAppRole('staff')" class="w-full border-2 border-[#333] hover:border-white text-white font-michroma font-bold text-xs py-4 rounded-xl transition-all uppercase tracking-widest">
+            ACCESO PERSONAL / STAFF
+          </button>
+        </div>
+      </div>
+
+      <!-- VISTA 2: Login de Staff -->
+      <div id="role-view-login" class="space-y-5 hidden">
+        <h2 class="text-white font-michroma text-sm tracking-widest uppercase">Ingreso Personal</h2>
+        <p class="text-xs text-white/50 font-sans">Introduce tus credenciales para acceder a los paneles.</p>
+        
+        <form onsubmit="handleStaffAuth(event)" class="space-y-4 font-sans text-left">
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-white/40 mb-1 font-michroma">Usuario / Instructor</label>
+            <input type="text" id="auth-username" required placeholder="Ej: Teo o Recepcion" class="w-full bg-[#141414] border-2 border-[#333] rounded-lg p-3 text-white text-sm focus:border-[#0effc7] outline-none">
+          </div>
+          
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-white/40 mb-1 font-michroma">Contraseña</label>
+            <input type="password" id="auth-password" required placeholder="••••••••" class="w-full bg-[#141414] border-2 border-[#333] rounded-lg p-3 text-white text-sm focus:border-[#0effc7] outline-none">
+          </div>
+
+          <div class="flex gap-3 pt-2">
+            <button type="button" onclick="cancelStaffLogin()" class="flex-1 bg-[#222] text-white font-michroma text-xs py-3.5 rounded-lg hover:bg-[#333] transition-colors">
+              VOLVER
+            </button>
+            <button type="submit" class="flex-1 bg-[#0effc7] text-black font-michroma font-bold text-xs py-3.5 rounded-lg hover:bg-white transition-colors uppercase tracking-widest font-michroma">
+              INGRESAR
+            </button>
+          </div>
+        </form>
+
+        <div class="text-[10px] font-sans text-center text-white/30 pt-2 border-t border-[#222]/40">
+          Credenciales demo:<br>
+          Instructor: <code class="text-white/60">Teo</code> • Clave: <code class="text-white/60">Prometeo2003</code><br>
+          Recepción: <code class="text-white/60">Recepcion</code> • Clave: <code class="text-white/60">123</code>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PANTALLA DE REGISTRO / BLOQUEO POR ACTIVACIÓN (PWA GUARD) -->
+  <div id="registration-overlay" class="fixed inset-0 bg-[#000000] z-[500] flex flex-col justify-center items-center p-6 hidden">
+    <div class="max-w-md w-full bg-[#0a0a0a] border-2 border-[#222] p-8 rounded-2xl space-y-6 text-center">
+      <div class="flex justify-center mb-2">
+        <!-- Logo SVG (brand.svg) -->
+        <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 177.64 52.79" class="w-40 h-auto">
+          <defs><style>.st_brand_reg { fill: #fff; }</style></defs>
+          <path class="st_brand_reg" d="M41.15,16.43h-21.36v6.41h19.1v9.26h-19.1v13.33H7.59V6.39h33.56v10.04Z"/>
+          <path class="st_brand_reg" d="M55.5,45.43c-3.88,0-6.75-.91-8.62-2.73-1.86-1.82-2.8-4.67-2.8-8.53v-16.51c0-3.87.93-6.71,2.8-8.53,1.86-1.82,4.74-2.73,8.62-2.73h18.42c3.88,0,6.75.91,8.62,2.73,1.86,1.82,2.8,4.67,2.8,8.53v16.51c0,3.87-.93,6.71-2.8,8.53-1.86,1.82-4.74,2.73-8.62,2.73h-18.42ZM59.91,35.23h9.6c1.32,0,2.25-.26,2.8-.78.55-.52.82-1.45.82-2.79v-11.49c0-1.34-.27-2.27-.82-2.79-.55-.52-1.48-.78-2.8-.78h-9.6c-1.36,0-2.3.26-2.83.78-.53.52-.79,1.45-.79,2.79v11.49c0,1.34.26,2.27.79,2.79.53.52,1.47.78,2.83.78Z"/>
+          <path class="st_brand_reg" d="M130.36,45.43h-13.22l-7.91-12.55h-6.78v12.55h-12.2V6.39h28.14c3.62,0,6.23.8,7.85,2.4,1.62,1.6,2.43,4.18,2.43,7.75v5.3c0,3.05-.57,5.36-1.72,6.94-1.15,1.58-2.97,2.57-5.45,2.98l8.87,13.66ZM102.45,15.26v9.04h10.96c1.17,0,1.97-.21,2.4-.64.43-.43.65-1.22.65-2.37v-3.01c0-1.15-.22-1.94-.65-2.37-.43-.43-1.23-.64-2.4-.64h-10.96Z"/>
+          <path class="st_brand_reg" d="M170.59,21.06v9.7h-12.99v12.33h-10.17v-12.33h-12.99v-9.7h12.99v-12.33h10.17v12.33h12.99Z"/>
+        </svg>
+      </div>
+
+      <!-- ESTADO A: Formulario de Registro -->
+      <div id="reg-step-form" class="space-y-4">
+        <h2 class="text-xl font-michroma text-white uppercase tracking-wider">Registro de Socio</h2>
+        <p class="text-xs text-white/50 font-sans">Ingresa tus datos para registrar este dispositivo en el sistema de reservas.</p>
+        
+        <form onsubmit="handleRegistration(event)" class="space-y-4 font-sans text-left">
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-white/70 mb-1 font-michroma">Nombre y Apellido</label>
+            <input type="text" id="reg-name" required placeholder="Ej: Juan Pérez" class="w-full bg-[#141414] border-2 border-[#333] rounded-lg p-3 text-white text-sm focus:border-[#0effc7] outline-none">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-white/70 mb-1 font-michroma">Teléfono / Celular</label>
+            <input type="text" id="reg-phone" required placeholder="Ej: 77012345" class="w-full bg-[#141414] border-2 border-[#333] rounded-lg p-3 text-white text-sm focus:border-[#0effc7] outline-none">
+          </div>
+          <button type="submit" class="w-full bg-[#0effc7] text-black font-michroma font-bold text-xs py-3.5 rounded-lg hover:bg-white transition-colors uppercase tracking-widest mt-2">
+            REGISTRAR DISPOSITIVO
+          </button>
+        </form>
+      </div>
+
+      <!-- ESTADO B: Esperando Activación -->
+      <div id="reg-step-pending" class="space-y-5 hidden">
+        <h2 class="text-xl font-michroma text-[#fddb00] uppercase tracking-wider">PENDIENTE DE ACTIVACIÓN</h2>
+        <p class="text-xs text-white/70 font-sans leading-relaxed">
+          Tu dispositivo se ha registrado correctamente. Envía tu código a la recepción del gimnasio por WhatsApp para darte de alta.
+        </p>
+        
+        <div class="bg-[#141414] border-2 border-dashed border-[#333] p-4 rounded-xl">
+          <div class="text-[10px] font-michroma text-white/40 uppercase mb-1">Código de Dispositivo</div>
+          <div id="pending-device-code" class="text-xl font-michroma font-bold text-white tracking-widest">FORMAS-XXXX</div>
+        </div>
+
+        <div class="space-y-3 font-sans pt-2">
+          <button onclick="requestWhatsAppActivation()" class="w-full bg-[#128C7E] hover:bg-[#25D366] text-white font-michroma font-bold text-xs py-3.5 rounded-lg transition-colors uppercase tracking-widest flex items-center justify-center gap-2">
+            SOLICITAR AL WHATSAPP
+          </button>
+          
+          <div class="relative py-2">
+            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-[#222]"></div></div>
+            <div class="relative flex justify-center text-[10px] uppercase font-michroma"><span class="bg-[#0a0a0a] px-2 text-white/30">O Simular para Pruebas</span></div>
+          </div>
+
+          <button onclick="simulateMockApproval()" class="w-full border border-white/30 text-white hover:bg-white hover:text-black font-michroma font-bold text-[10px] py-2.5 rounded-lg transition-all">
+            ⚡ AUTO-APROBAR (DEMO MODO)
+          </button>
+        </div>
+      </div>
+
+      <!-- ESTADO C: Cuenta Inactiva/Suspendida -->
+      <div id="reg-step-inactive" class="space-y-4 hidden">
+        <h2 class="text-xl font-michroma text-red-500 uppercase tracking-wider">CUENTA SUSPENDIDA / INACTIVA</h2>
+        <p class="text-xs text-white/70 font-sans leading-relaxed">
+          Tu cuenta ha sido desactivada temporalmente por la administración del gimnasio. Por favor comunícate con recepción.
+        </p>
+        <button onclick="requestWhatsAppActivation()" class="w-full bg-[#128C7E] hover:bg-[#25D366] text-white font-michroma font-bold text-xs py-3.5 rounded-lg transition-colors uppercase tracking-widest font-sans">
+          HABLAR CON RECEPCIÓN
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Header Sticky con Logo y Fecha -->
+  <header class="app-header-sticky">
+    <div class="header-main">
+      <div class="header-logo-container" onclick="handleLogoClick()">
+        <!-- Logo SVG (brand.svg) -->
+        <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 177.64 52.79" class="logo-svg">
+          <defs>
+            <style>
+              .st_brand {
+                fill: #fff;
+              }
+            </style>
+          </defs>
+          <path class="st_brand" d="M41.15,16.43h-21.36v6.41h19.1v9.26h-19.1v13.33H7.59V6.39h33.56v10.04Z"/>
+          <path class="st_brand" d="M55.5,45.43c-3.88,0-6.75-.91-8.62-2.73-1.86-1.82-2.8-4.67-2.8-8.53v-16.51c0-3.87.93-6.71,2.8-8.53,1.86-1.82,4.74-2.73,8.62-2.73h18.42c3.88,0,6.75.91,8.62,2.73,1.86,1.82,2.8,4.67,2.8,8.53v16.51c0,3.87-.93,6.71-2.8,8.53-1.86,1.82-4.74,2.73-8.62,2.73h-18.42ZM59.91,35.23h9.6c1.32,0,2.25-.26,2.8-.78.55-.52.82-1.45.82-2.79v-11.49c0-1.34-.27-2.27-.82-2.79-.55-.52-1.48-.78-2.8-.78h-9.6c-1.36,0-2.3.26-2.83.78-.53.52-.79,1.45-.79,2.79v11.49c0,1.34.26,2.27.79,2.79.53.52,1.47.78,2.83.78Z"/>
+          <path class="st_brand" d="M130.36,45.43h-13.22l-7.91-12.55h-6.78v12.55h-12.2V6.39h28.14c3.62,0,6.23.8,7.85,2.4,1.62,1.6,2.43,4.18,2.43,7.75v5.3c0,3.05-.57,5.36-1.72,6.94-1.15,1.58-2.97,2.57-5.45,2.98l8.87,13.66ZM102.45,15.26v9.04h10.96c1.17,0,1.97-.21,2.4-.64.43-.43.65-1.22.65-2.37v-3.01c0-1.15-.22-1.94-.65-2.37-.43-.43-1.23-.64-2.4-.64h-10.96Z"/>
+          <path class="st_brand" d="M170.59,21.06v9.7h-12.99v12.33h-10.17v-12.33h-12.99v-9.7h12.99v-12.33h10.17v12.33h12.99Z"/>
+        </svg>
+      </div>
+
+      <div class="header-right-icons">
+        <!-- Icono de Sobre de Contacto -->
+        <button onclick="switchTab('contacto')" title="Contacto y Redes" class="header-icon-btn wa-btn">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </button>
+        <!-- Icono Campana (Notificaciones) -->
+        <button onclick="openNotificationsModal()" title="Avisos" class="header-icon-btn bell-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 4.86 6 7.42 6 10.5v5l-2 2v1h16v-1l-2-2z"/></svg>
+        </button>
+        <!-- Icono Usuario -->
+        <button onclick="openUserProfileModal()" title="Mi Perfil" class="header-icon-btn user-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- CONTENIDO PRINCIPAL SECCIÓN POR SECCIÓN -->
+  <main class="max-w-[1400px] mx-auto px-4 pt-6 pb-28">
+
+    <!-- SECCIÓN 1: HORARIOS (CRONOGRAMA & EN VIVO) -->
+    <section id="tab-section-horarios" class="tab-section hidden">
+      <!-- Cabecera de Horarios Simplificada y Centrada -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-michroma font-bold text-white tracking-wider mb-4 uppercase">
+          HORARIOS
+        </h1>
+        <div class="flex justify-center items-center gap-2">
+          <div class="relative inline-flex items-center justify-center border border-white/30 rounded-xl px-4 py-2 bg-white/5 hover:border-white/70 transition-colors">
+            <select id="day-title-select" onchange="changeDay(this.value)" class="bg-transparent border-none text-white font-michroma font-bold focus:outline-none uppercase cursor-pointer pr-5 appearance-none text-sm text-center">
+              <option value="1" class="bg-[#121212] text-white">Lunes</option>
+              <option value="2" class="bg-[#121212] text-white">Martes</option>
+              <option value="3" class="bg-[#121212] text-white">Miércoles</option>
+              <option value="4" class="bg-[#121212] text-white">Jueves</option>
+              <option value="5" class="bg-[#121212] text-white">Viernes</option>
+              <option value="6" class="bg-[#121212] text-white">Sábado</option>
+            </select>
+            <!-- Flecha de dropdown personalizada -->
+            <span class="absolute right-4 pointer-events-none text-white/50 text-[10px]">▼</span>
+          </div>
+          <sup id="live-indicator-superscript" class="bg-[#ffdd00] text-black text-[9px] font-sans font-extrabold px-2.5 py-1 rounded-full tracking-wider leading-none hidden">HOY</sup>
+        </div>
+      </div>
+
+      <!-- Pastillas de Disciplina en formato horizontal deslizable -->
+      <div class="mb-8 w-full">
+        <div class="flex overflow-x-auto gap-2.5 pb-2 no-scrollbar px-4 w-full justify-start md:justify-center" id="schedule-category-chips-list">
+          <button onclick="onCategoryChipChange('Aeróbicos')" class="category-chip active shrink-0" id="chip-Aeróbicos">Aeróbicos</button>
+          <button onclick="onCategoryChipChange('Control')" class="category-chip shrink-0" id="chip-Control">Control</button>
+          <button onclick="onCategoryChipChange('Spinning')" class="category-chip shrink-0" id="chip-Spinning">Spinning</button>
+          <button onclick="onCategoryChipChange('Funcional')" class="category-chip shrink-0" id="chip-Funcional">Funcional</button>
+          <button onclick="onCategoryChipChange('Musculación')" class="category-chip shrink-0" id="chip-Musculación">Musculación</button>
+        </div>
+      </div>
+
+      <!-- Area de Horarios Dinámicos -->
+      <div id="dynamic-schedule-area" class="space-y-12"></div>
+    </section>
+
+
+    <!-- SECCIÓN 2: MIS RESERVAS -->
+    <section id="tab-section-reservas" class="tab-section hidden">
+      <div class="status-header">RESERVAS</div>
+      
+      <div class="max-w-3xl mx-auto space-y-6">
+        <div class="bg-[#0b0b0b] border-2 border-white/10 p-5 rounded-xl text-center">
+          <p class="text-xs md:text-sm text-white/80 font-sans leading-relaxed">
+            Aquí puedes consultar tus cupos asegurados, añadir los entrenamientos a tu agenda personal o cancelar con anticipación si no puedes asistir.
+          </p>
+        </div>
+
+        <div id="reservas-list-container" class="space-y-4">
+          <!-- Renderizado por JS -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECCIÓN 3: SUGERENCIAS DE CLASES / HORARIOS -->
+    <section id="tab-section-sugerencias" class="tab-section hidden">
+      <div class="status-header">SUGERENCIAS</div>
+
+      <div class="max-w-xl mx-auto bg-[#161616] p-6 rounded-2xl border border-[#282828] space-y-5">
+        <div class="text-center space-y-1">
+          <h2 class="text-base font-michroma text-[#0effc7] uppercase tracking-wider">💡 Propón una nueva clase u horario</h2>
+          <p class="text-xs text-white/60 font-sans">
+            ¿Quieres otra disciplina o un horario que se adapte mejor a ti? Dinos tu propuesta.
+          </p>
+        </div>
+
+        <form id="suggestion-form" onsubmit="handleSuggestionSubmit(event)" class="space-y-4 font-sans text-xs">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] font-bold uppercase text-white/50 mb-1.5 font-michroma">Tipo</label>
+              <select id="sug-type" class="w-full bg-[#0a0a0a] border border-[#2d2d2d] rounded-lg p-2.5 text-white text-xs focus:border-[#0effc7] outline-none">
+                <option value="Nuevo Horario">Nuevo Horario</option>
+                <option value="Nueva Disciplina">Nueva Disciplina</option>
+                <option value="Cambio Instructor">Cambio Instructor</option>
+                <option value="Otro">Otro Comentario</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-bold uppercase text-white/50 mb-1.5 font-michroma">Clase / Disciplina</label>
+              <input type="text" id="sug-class" required placeholder="Ej: Spinning madrugador..." class="w-full bg-[#0a0a0a] border border-[#2d2d2d] rounded-lg p-2.5 text-white text-xs focus:border-[#0effc7] outline-none">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] font-bold uppercase text-white/50 mb-1.5 font-michroma">Horario</label>
+              <input type="text" id="sug-time" placeholder="Ej: 07:00 AM" class="w-full bg-[#0a0a0a] border border-[#2d2d2d] rounded-lg p-2.5 text-white text-xs focus:border-[#0effc7] outline-none">
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-bold uppercase text-white/50 mb-1.5 font-michroma">Día(s)</label>
+              <input type="text" id="sug-days" placeholder="Ej: Lun y Mié" class="w-full bg-[#0a0a0a] border border-[#2d2d2d] rounded-lg p-2.5 text-white text-xs focus:border-[#0effc7] outline-none">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-bold uppercase text-white/50 mb-1.5 font-michroma">Detalles o Sugerencia</label>
+            <textarea id="sug-details" rows="2" placeholder="Describe brevemente tu idea..." class="w-full bg-[#0a0a0a] border border-[#2d2d2d] rounded-lg p-2.5 text-white text-xs focus:border-[#0effc7] outline-none"></textarea>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-2 pt-1.5">
+            <button type="submit" class="flex-1 bg-[#0effc7] text-black font-michroma font-bold text-[10px] py-3 px-4 rounded-lg hover:bg-[#0bcba0] transition-colors uppercase tracking-widest">
+              Enviar Propuesta
+            </button>
+            <button type="button" onclick="sendSuggestionViaWhatsApp()" class="flex-1 border border-[#0effc7] text-[#0effc7] bg-transparent font-michroma font-bold text-[10px] py-3 px-4 rounded-lg hover:bg-[#0effc7] hover:text-black transition-all uppercase tracking-widest flex items-center justify-center gap-1.5">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+              Enviar por WhatsApp
+            </button>
+          </div>
+        </form>
+
+        <!-- Historial de Sugerencias -->
+        <div id="past-suggestions-container" class="pt-6 border-t border-[#222]">
+          <h3 class="font-michroma text-xs text-white/50 uppercase mb-3 tracking-widest">Tus sugerencias enviadas</h3>
+          <div id="suggestions-list" class="space-y-2 text-xs font-sans text-white/70">
+            <!-- Render por JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO Y REDES -->
+    <section id="tab-section-contacto" class="tab-section hidden">
+      <div class="status-header">CONTACTO</div>
+
+      <div class="max-w-md mx-auto bg-[#161616] p-6 rounded-2xl border border-[#282828] space-y-6 text-center font-sans">
+        <div class="space-y-1">
+          <h2 class="text-base font-michroma text-[#ffdd00] uppercase tracking-wider">📌 GIMNASIO FORMAS</h2>
+          <p class="text-[10px] text-white/50 uppercase tracking-widest font-michroma">Centro de entrenamiento y salud</p>
+        </div>
+
+        <!-- Información Física -->
+        <div class="bg-[#0a0a0a] p-4 rounded-xl border border-[#2d2d2d] text-left space-y-3 text-xs text-white/80">
+          <div class="flex items-start gap-2.5">
+            <svg class="w-4 h-4 text-[#0effc7] fill-current shrink-0 mt-0.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <div>
+              <strong class="text-white block mb-0.5">Dirección:</strong>
+              Av. Portales y Pantaleón Dalence N° 1433, Cochabamba, Bolivia
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-2.5">
+            <svg class="w-4 h-4 text-[#0effc7] fill-current shrink-0 mt-0.5" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <div>
+              <strong class="text-white block mb-0.5">Teléfono Fijo:</strong>
+              4488481
+            </div>
+          </div>
+        </div>
+
+        <!-- Redes y Enlaces -->
+        <div class="space-y-3">
+          <span class="text-[10px] font-michroma text-white/40 uppercase tracking-widest block mb-1">Nuestros Canales de Contacto</span>
+          
+          <div class="grid grid-cols-1 gap-2.5">
+            <!-- WhatsApp -->
+            <a href="https://wa.me/59170000000" target="_blank" class="flex items-center justify-between bg-transparent border border-[#0effc7] hover:bg-[#0effc7] hover:text-black text-[#0effc7] px-4 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                WhatsApp Recepción
+              </span>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21 12l-8.15-8.15-1.42 1.42L16.86 11H5v2z"/></svg>
+            </a>
+
+            <!-- Facebook -->
+            <a href="https://facebook.com/gimnasioformas" target="_blank" class="flex items-center justify-between bg-transparent border border-[#0effc7] hover:bg-[#0effc7] hover:text-black text-[#0effc7] px-4 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg>
+                Facebook Oficial
+              </span>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21 12l-8.15-8.15-1.42 1.42L16.86 11H5v2z"/></svg>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://instagram.com/gimnasioformas" target="_blank" class="flex items-center justify-between bg-transparent border border-[#0effc7] hover:bg-[#0effc7] hover:text-black text-[#0effc7] px-4 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2zm-.2 2A3.6 3.6 0 004 7.6v8.8A3.6 3.6 0 007.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6A3.6 3.6 0 0016.4 4H7.6zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm5-2.25a.75.75 0 110 1.5.75.75 0 010-1.5z"/></svg>
+                Instagram
+              </span>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21 12l-8.15-8.15-1.42 1.42L16.86 11H5v2z"/></svg>
+            </a>
+
+            <!-- TikTok -->
+            <a href="https://tiktok.com/@gimnasioformas" target="_blank" class="flex items-center justify-between bg-transparent border border-[#0effc7] hover:bg-[#0effc7] hover:text-black text-[#0effc7] px-4 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.81-.74-3.94-1.69-.22-.19-.42-.38-.62-.59v6.52c-.02 2.57-1.12 5.08-3.06 6.77-1.9 1.66-4.58 2.32-7.03 1.76-2.52-.56-4.79-2.32-5.99-4.66-1.3-2.51-1.17-5.71.36-8.08 1.42-2.22 3.98-3.69 6.64-3.79.07 3.97-.03 3.97-.03 3.97-1.39-.08-2.82.52-3.6 1.68-.82 1.21-.77 2.91.13 4.02.85 1.05 2.27 1.51 3.56 1.13 1.21-.35 2.11-1.46 2.3-2.73.08-.55.06-1.11.06-1.67V.02z"/></svg>
+                TikTok
+              </span>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21 12l-8.15-8.15-1.42 1.42L16.86 11H5v2z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: ACCESO STAFF (ADMIN & INSTRUCTORES) -->
+    <section id="tab-section-staff" class="tab-section hidden">
+      <div class="status-header">STAFF</div>
+
+      <div class="max-w-4xl mx-auto space-y-6">
+        
+        <!-- Login del Staff -->
+        <div id="staff-login-card" class="bg-[#0a0a0a] border-2 border-[#222] p-6 rounded-2xl max-w-md mx-auto space-y-4">
+          <h3 class="text-center font-michroma text-white text-base uppercase">Ingreso del Personal</h3>
+          
+          <div class="space-y-3 font-sans">
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-white/40 mb-1 font-michroma">Código / Clave de Acceso</label>
+              <input type="password" id="staff-passcode" placeholder="Ej: RICKY-staff, RECEPCION-staff" class="w-full bg-[#141414] border-2 border-[#333] rounded-lg p-3 text-white text-center tracking-wide focus:border-[#0effc7] outline-none">
+            </div>
+            
+            <button onclick="handleStaffLogin()" class="w-full bg-[#0effc7] text-black font-michroma font-bold text-xs py-3 rounded-lg hover:bg-white transition-colors uppercase tracking-widest font-michroma">
+              INGRESAR AL PANEL
+            </button>
+          </div>
+
+          <div class="text-[10px] font-sans text-center text-white/30 pt-2 border-t border-[#222]">
+            Claves demo: <code class="text-white/60">RECEPCION-staff</code> o <code class="text-white/60">RICKY-staff</code>
+          </div>
+        </div>
+
+        <!-- PANEL DE ADMINISTRACIÓN / RECEPCIÓN (Escondido al inicio) -->
+        <div id="panel-admin" class="space-y-6 hidden">
+          <div class="flex justify-between items-center border-b border-[#222] pb-4">
+            <h2 class="font-michroma text-lg text-white">PANEL DE RECEPCIÓN & SOCIOS</h2>
+            <button onclick="logoutStaff()" class="border border-red-500/50 text-red-400 font-michroma text-[9px] px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
+              SALIR PANEL
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Columna Izquierda: Control de Activaciones -->
+            <div class="lg:col-span-2 bg-[#0a0a0a] border-2 border-[#222] p-5 rounded-xl space-y-4">
+              <h3 class="font-michroma text-xs text-white/50 uppercase tracking-widest">Control de Socios y Dispositivos</h3>
+              
+              <div class="overflow-x-auto">
+                <table class="w-full text-left font-sans text-xs text-white/80">
+                  <thead>
+                    <tr class="border-b border-[#222] text-white/40 font-michroma text-[10px]">
+                      <th class="py-2">Código</th>
+                      <th class="py-2">Socio</th>
+                      <th class="py-2">Teléfono</th>
+                      <th class="py-2 text-center">Estado / Toggle</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-socios-list">
+                    <!-- Dinámico -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Monitoreo de Clases -->
+            <div class="bg-[#0a0a0a] border-2 border-[#222] p-5 rounded-xl space-y-4">
+              <h3 class="font-michroma text-xs text-white/50 uppercase tracking-widest">Reservas Hoy</h3>
+              <div id="admin-reservas-stats" class="space-y-2 max-h-[400px] overflow-y-auto pr-1">
+                <!-- Dinámico -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL DE INSTRUCTORES (Escondido al inicio) -->
+        <div id="panel-instructor" class="space-y-6 hidden">
+          <div class="flex justify-between items-center border-b border-[#222] pb-4">
+            <div>
+              <h2 class="font-michroma text-lg text-white" id="instructor-welcome-title">CLASES DE INSTRUCTOR</h2>
+              <span class="text-[10px] text-white/40 font-michroma" id="instructor-name-badge">INSTRUCTOR</span>
+            </div>
+            <button onclick="logoutStaff()" class="border border-red-500/50 text-red-400 font-michroma text-[9px] px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
+              SALIR PANEL
+            </button>
+          </div>
+
+          <div class="space-y-6" id="instructor-classes-container">
+            <!-- Dinámico -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: GIMNASIO (INFO & DISCIPLINAS) -->
+    <!-- SECCIÓN 5: GIMNASIO (INFO & DISCIPLINAS) -->
+    <section id="tab-section-gimnasio" class="tab-section hidden">
+      <div class="status-header">CATÁLOGO</div>
+
+      <!-- Catálogo de Disciplinas -->
+      <div class="space-y-4 max-w-3xl mx-auto">
+        <!-- Paginación de Puntos (Indicador de Swipe) -->
+        <div id="catalog-dots" class="flex justify-center gap-2 mb-2 z-10 relative"></div>
+
+        <div class="flex overflow-x-auto gap-6 snap-x snap-mandatory no-scrollbar pb-8 pt-4 px-4 items-stretch" id="disciplines-grid">
+          <!-- Render por JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- BARRA DE NAVEGACIÓN INFERIOR (BOTTOM NAV BAR) -->
+  <nav class="bottom-nav">
+    <button onclick="switchTab('horarios')" id="nav-horarios" class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm1-13h-2v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+      <span>Horarios</span>
+    </button>
+
+    <button onclick="switchTab('reservas')" id="nav-reservas" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5z"/></svg>
+      <span>Reservas</span>
+      <span id="reserva-badge" class="nav-badge hidden">0</span>
+    </button>
+
+    <button onclick="switchTab('sugerencias')" id="nav-sugerencias" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C8.8 12.16 8 10.63 8 9c0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.63-.8 3.16-2.15 4.1z"/></svg>
+      <span>Sugerir</span>
+    </button>
+
+    <button onclick="switchTab('staff')" id="nav-staff" class="nav-item" style="display: none;">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+      <span>Staff</span>
+    </button>
+
+    <button onclick="switchTab('gimnasio')" id="nav-gimnasio" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+      <span>Catálogo</span>
+    </button>
+  </nav>
+
+  <!-- MODAL DE CONFIRMACIÓN DE RESERVA -->
+  <div id="modal-reserve" class="modal-overlay">
+    <div class="modal-content">
+      <button onclick="closeModal('modal-reserve')" class="modal-close">&times;</button>
+      
+      <div class="text-center space-y-4 font-sans">
+        <span class="text-xs font-michroma text-[#0effc7] uppercase tracking-widest block">Confirmar Reserva</span>
+        <h3 id="modal-class-title" class="text-2xl font-michroma text-white">BODY PUMP</h3>
+        
+        <div id="modal-class-details" class="bg-[#141414] border border-[#333] p-4 rounded-xl text-left text-xs space-y-2 text-white/80">
+          <!-- Render dinámico -->
+        </div>
+
+        <p class="text-xs text-white/60">
+          * Tu cupo se guardará inmediatamente en tu aplicación. Te sugerimos llegar 5 minutos antes del inicio de la clase.
+        </p>
+
+        <div class="flex gap-3 pt-2">
+          <button onclick="closeModal('modal-reserve')" class="flex-1 bg-[#222] text-white font-michroma text-xs py-3 rounded-lg hover:bg-[#333]">
+            Cancelar
+          </button>
+          <button id="btn-confirm-booking" class="flex-1 bg-[#0effc7] text-black font-michroma font-bold text-xs py-3 rounded-lg hover:bg-white font-michroma">
+            CONFIRMAR CUPO
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PERFIL DE USUARIO -->
+  <div id="modal-user-profile" class="modal-overlay">
+    <div class="modal-content">
+      <button onclick="closeModal('modal-user-profile')" class="modal-close">&times;</button>
+      
+      <div class="text-center space-y-4 font-sans">
+        <span class="text-xs font-michroma text-[#0effc7] uppercase tracking-widest block">Mi Perfil</span>
+        
+        <div class="w-16 h-16 bg-[#0effc7]/10 border border-[#0effc7]/30 rounded-full flex items-center justify-center mx-auto text-[#0effc7]">
+          <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+
+        <h3 id="profile-modal-name" class="text-xl font-michroma text-white">Nombre de Usuario</h3>
+        
+        <div class="bg-[#141414] border border-[#333] p-4 rounded-xl text-left text-xs space-y-3 text-white/80">
+          <div class="flex justify-between border-b border-[#222] pb-2">
+            <span class="text-white/40">Rol / Tipo:</span>
+            <span class="font-bold text-white uppercase tracking-wider" id="profile-modal-role">Socio / Cliente</span>
+          </div>
+          <div class="flex justify-between border-b border-[#222] pb-2">
+            <span class="text-white/40">Código Dispositivo:</span>
+            <span class="font-mono font-bold text-[#0effc7]" id="profile-modal-code">FORMAS-XXXX</span>
+          </div>
+          <div class="flex justify-between border-b border-[#222] pb-2">
+            <span class="text-white/40">Estado Cuenta:</span>
+            <span class="font-bold text-[#0effc7]" id="profile-modal-status">Activo</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-white/40">Teléfono:</span>
+            <span class="font-bold text-white" id="profile-modal-phone">77000000</span>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <button onclick="copyDeviceCode()" class="w-full border border-[#0effc7]/40 text-[#0effc7] hover:bg-[#0effc7] hover:text-black font-michroma font-bold text-[10px] py-2.5 rounded-lg transition-all">
+            Copiar Código de Dispositivo
+          </button>
+          
+          <button onclick="exitProfileSession()" class="w-full bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500 hover:text-white font-michroma font-bold text-[10px] py-2.5 rounded-lg transition-all">
+            CERRAR SESIÓN / CAMBIAR DE CUENTA
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL AVISOS / NOTIFICACIONES -->
+  <div id="modal-notifications" class="modal-overlay">
+    <div class="modal-content">
+      <button onclick="closeModal('modal-notifications')" class="modal-close">&times;</button>
+      
+      <div class="space-y-4 font-sans">
+        <div class="text-center">
+          <span class="text-xs font-michroma text-[#faa0c3] uppercase tracking-widest block">Tablero de Avisos</span>
+          <h3 class="text-lg font-michroma text-white mt-1">NOVEDADES EN FORMAS</h3>
+        </div>
+        
+        <div class="space-y-3 max-h-[300px] overflow-y-auto pr-1">
+          <div class="bg-[#141414] border border-[#222] p-3 rounded-lg space-y-1">
+            <div class="flex justify-between text-xs font-bold text-[#0effc7]">
+              <span>¡NUEVA CLASE DE YOGA!</span>
+              <span class="text-white/30 text-[9px]">Ayer</span>
+            </div>
+            <p class="text-[11px] text-white/70">Se habilitó el horario de Yoga los sábados a las 09:00 AM en Sala 2. ¡Reserva con anticipación!</p>
+          </div>
+          
+          <div class="bg-[#141414] border border-[#222] p-3 rounded-lg space-y-1">
+            <div class="flex justify-between text-xs font-bold text-[#fddb00]">
+              <span>SIMULADOR DE FECHA ACTIVO</span>
+              <span class="text-white/30 text-[9px]">Demo</span>
+            </div>
+            <p class="text-[11px] text-white/70">Estás navegando en modo simulación (Lunes 3 de Agosto). Todas las reservas y horarios corresponden a ese día.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Scripts -->
+  <script src="js/data.js?v=13.5"></script>
+  <script src="js/app.js?v=13.5"></script>
+</body>
+</html>

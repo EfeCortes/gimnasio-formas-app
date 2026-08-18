@@ -1,0 +1,732 @@
+:root {
+    --bg: #000000;
+    --card: #0a0a0a;
+    --card-hover: #121212;
+    --border: #222222;
+    --border-light: #333333;
+    --text-dim: #949494; /* Contraste mejorado para accesibilidad WCAG AA */
+    
+    /* Colores Neón Tácticos */
+    --color-active: #faa0c3;
+    --color-just-started: #fddb00;
+    --color-upcoming: #0effc7;
+    --color-later: #444444;
+    --color-accent: #0effc7;
+    --color-purple: #bb86fc;
+}
+
+.hidden {
+    display: none !important;
+}
+
+* {
+    box-sizing: border-box;
+    font-style: normal !important;
+}
+
+body {
+    background-color: var(--bg);
+    color: #ffffff;
+    font-family: 'Michroma', sans-serif;
+    letter-spacing: -0.01em;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 90px; /* Espacio para la barra de navegación inferior */
+    overflow-x: hidden;
+}
+
+/* Tipografías Utilitarias */
+.font-michroma { font-family: 'Michroma', sans-serif; }
+.font-exo { font-family: 'Exo 2', sans-serif; }
+.font-inter { font-family: 'Inter', sans-serif; }
+
+.tactic-bold { 
+    font-weight: 900 !important; 
+    text-transform: uppercase; 
+    letter-spacing: 0.15em; 
+}
+
+/* Header Sticky Táctico */
+.app-header-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    background-color: rgba(10, 10, 10, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header-logo-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.logo-svg {
+    height: 38px;
+    width: auto;
+}
+
+.header-right-icons {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.header-icon-btn {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888888;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.header-icon-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor; /* Asegura que hereden el color CSS del botón */
+}
+
+.header-icon-btn:hover {
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.header-icon-btn.wa-btn:hover {
+    color: #25D366;
+}
+
+.header-icon-btn.bell-btn:hover {
+    color: #faa0c3;
+}
+
+.header-icon-btn.user-btn:hover {
+    color: #0effc7;
+}
+
+.date-phrase {
+    font-size: 1.1rem; 
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.1rem;
+    white-space: nowrap;
+    color: #ffffff;
+}
+
+.clock-display {
+    font-size: 2.8rem;
+    line-height: 0.9;
+    font-weight: 900 !important;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+    color: #ffffff;
+}
+
+.logo-svg {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+}
+
+/* Navegación por pestañas superiores (En Vivo / Día) */
+.view-tab {
+    font-family: 'Michroma', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid #222;
+    background-color: #070707;
+    color: #888;
+}
+
+.view-tab.active {
+    border-color: var(--color-just-started); /* Amarillo #ffdd00 */
+    background-color: var(--color-just-started);
+    color: #000000;
+    font-weight: 900;
+}
+
+/* Filtros por categoría (Chips) */
+.category-chip {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem; /* Incrementado para accesibilidad visual */
+    font-weight: 700;
+    padding: 0.6rem 1.2rem; /* Mayor área táctil (mínimo 48px recomendado) */
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: #0d0d0d;
+    color: #949494; /* Color adaptado */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.category-chip.active {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+.category-chip:hover:not(.active) {
+    border-color: #555;
+    color: #fff;
+}
+
+/* Títulos de estado */
+.status-header {
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem; 
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em; 
+    text-align: center;
+}
+
+/* Tarjeta de Clase OLED con Glassmorphism */
+.class-card {
+    background: rgba(12, 12, 12, 0.72) !important;
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 12px;
+    padding: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    min-height: 250px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.3s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.class-card:hover {
+    transform: translateY(-4px);
+    background: rgba(18, 18, 18, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.7);
+}
+
+/* Removidos bordes neón de estado para evitar colisiones cromáticas */
+
+.card-header-gray {
+    background: #141414;
+    padding: 1rem 1.3rem;
+    font-size: 1.15rem;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700 !important; /* Más grueso para alto contraste */
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-body {
+    padding: 1.6rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    gap: 1.1rem;
+}
+
+.class-name {
+    font-family: 'Michroma', sans-serif;
+    font-size: 1.85rem; /* Más grande */
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    line-height: 1.15 !important; 
+    color: #fff;
+    word-wrap: break-word;
+}
+
+.instructor-name {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.35rem; /* Más grande */
+    font-weight: 600 !important; /* Más grueso */
+    font-style: italic !important;
+    color: #ffffff; /* Contraste máximo */
+}
+
+.seats-badge {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.98rem; /* Mayor tamaño para presbicia (14px) */
+    font-weight: 800;
+    padding: 0.45rem 1rem;
+    border-radius: 12px;
+    background: rgba(14, 255, 199, 0.12);
+    color: var(--color-upcoming);
+    border: 1px solid rgba(14, 255, 199, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 auto;
+}
+
+.seats-badge.low {
+    background: rgba(253, 219, 0, 0.1);
+    color: var(--color-just-started);
+    border-color: rgba(253, 219, 0, 0.3);
+}
+
+.seats-badge.full {
+    background: rgba(250, 160, 195, 0.1);
+    color: var(--color-active);
+    border-color: rgba(250, 160, 195, 0.3);
+}
+
+/* Botón de Reserva */
+.btn-reserve {
+    font-family: 'Michroma', sans-serif;
+    font-size: 1.05rem; /* Aumentado de 0.88rem a 1.05rem para legibilidad */
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 1.05rem 1.5rem;
+    border-radius: 8px;
+    border: none; /* Sin borde para evitar línea dentro de línea */
+    background: var(--color-upcoming); /* Verde brillante por defecto (Apretable) */
+    color: #000000; /* Alto contraste sobre fondo verde */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.btn-reserve:hover {
+    background: #00ffc2;
+    transform: scale(1.02);
+}
+
+.btn-reserve.reserved {
+    background: var(--color-active); /* Rosa para cosas reservadas / en curso / pasadas */
+    color: #000000;
+}
+
+.btn-reserve.btn-started-inactive {
+    background: #1b1b1b !important; /* Gris sumamente oscuro (apagado) */
+    color: #555555 !important; /* Gris oscuro apagado */
+    cursor: default;
+}
+
+.btn-reserve.btn-started-inactive:hover {
+    background: #1b1b1b !important;
+    transform: none !important;
+}
+
+.btn-reserve.full {
+    background: #222222; /* Gris oscuro para deshabilitados sin reserva */
+    color: #888888;
+    cursor: not-allowed;
+}
+
+.status-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+}
+
+.pulse-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    animation: blinker 1.5s infinite;
+}
+
+@keyframes blinker { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* Selector de Días */
+.day-selector-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.day-btn {
+    font-family: 'Michroma', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 0.75rem 0.4rem;
+    border-radius: 8px;
+    border: 2px solid #222;
+    background-color: #070707;
+    color: #949494;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+}
+
+.day-btn:hover {
+    color: #fff;
+    border-color: #555;
+}
+
+.day-btn.active {
+    background-color: var(--color-just-started); /* Amarillo #ffdd00 */
+    color: #000000;
+    border-color: var(--color-just-started);
+    font-weight: 900;
+}
+
+/* Badge de Día de Hoy */
+.today-badge {
+    font-size: 0.52rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    color: var(--color-just-started); /* Amarillo #ffdd00 */
+    border: 1px solid rgba(255, 221, 0, 0.4);
+    background: rgba(255, 221, 0, 0.12);
+    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    line-height: 1;
+}
+
+.day-btn.active .today-badge {
+    color: #000000;
+    border-color: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.day-today {
+    border-color: rgba(255, 221, 0, 0.45); /* Amarillo #ffdd00 */
+}
+
+/* BARRA DE NAVEGACIÓN INFERIOR (BOTTOM NAV) */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    background: rgba(10, 10, 10, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+    padding: 0 0.5rem;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #888888; /* Contraste mejorado */
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem; /* Incrementado a 12px (mínimo de accesibilidad) */
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    gap: 0.35rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    background: none;
+    flex: 1;
+    position: relative;
+    padding: 0.4rem 0;
+}
+
+.nav-item svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    transition: transform 0.2s ease, fill 0.2s ease;
+}
+
+.nav-item.active {
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.nav-item.active svg {
+    fill: var(--color-upcoming);
+    transform: translateY(-2px);
+}
+
+.nav-item.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 32px;
+    height: 3px;
+    background: var(--color-upcoming);
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 0 10px var(--color-upcoming);
+}
+
+.nav-badge {
+    position: absolute;
+    top: 2px;
+    right: 50%;
+    transform: translateX(14px);
+    background: var(--color-active);
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 900;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modales */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: #0d0d0d;
+    border: 2px solid #333333;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 100%;
+    padding: 2rem;
+    position: relative;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: #1c1c1c;
+    border: 1px solid #333;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: #333;
+}
+
+/* Toasts */
+.toast-container {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
+}
+
+.toast {
+    background: #111;
+    border: 2px solid var(--color-upcoming);
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    animation: toastIn 0.3s ease forwards;
+}
+
+@keyframes toastIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividad Móvil */
+@media (max-width: 768px) {
+    .header-main {
+        padding: 0.9rem 1rem;
+        gap: 0.75rem;
+    }
+    
+    .vertical-divider {
+        height: 40px;
+    }
+    
+    .logo-svg {
+        max-width: 120px;
+    }
+    
+    .date-phrase {
+        font-size: 0.82rem;
+    }
+    
+    .clock-display {
+        font-size: 2.1rem;
+    }
+    
+    .day-btn {
+        font-size: 0.65rem;
+        padding: 0.7rem 0.2rem;
+    }
+    
+    .class-name {
+        font-size: 1.4rem;
+    }
+    
+    .instructor-name {
+        font-size: 1.05rem;
+    }
+}
+
+.glass-card {
+    background: rgba(12, 12, 12, 0.72) !important;
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.5);
+    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    
+    /* Altura estirada porcentual para pantallas medianas/grandes */
+    height: 65vh;
+    min-height: 450px;
+    max-height: 600px;
+}
+
+.glass-card p, .glass-card div {
+    line-height: 1.65 !important;
+}
+
+@media (max-width: 768px) {
+    .glass-card {
+        height: auto;
+        min-height: auto;
+        max-height: none;
+    }
+}
+
+.glass-card:hover {
+    transform: translateY(-4px);
+    background: rgba(18, 18, 18, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.7);
+}
+
+/* Ocultar barra de desplazamiento */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Sobrescribir tamaños de texto pequeño (+5px para accesibilidad móvil) */
+.text-xs, .text-\[12px\], .seats-badge, .btn-reserve, .class-card button, .glass-card button {
+    font-size: 17px !important;
+}
+.text-\[10px\] {
+    font-size: 15px !important;
+}
+.text-\[11px\] {
+    font-size: 16px !important;
+}
+.category-chip, .view-tab {
+    font-size: 16px !important;
+}
+.day-btn span {
+    font-size: 14px !important;
+}
+
+/* Sugerencias: Botones, inputs y textareas más altos y legibles en móvil */
+#tab-section-sugerencias button,
+#tab-section-sugerencias input,
+#tab-section-sugerencias textarea {
+    min-height: 56px !important;
+    font-size: 16px !important;
+}
+#tab-section-sugerencias textarea {
+    min-height: 120px !important;
+}
+
+/* Botones de Filtro en el Bottom Sheet */
+.temp-view-btn-active {
+    background-color: #0effc7 !important;
+    color: #000000 !important;
+}
+.temp-view-btn-inactive {
+    background-color: transparent !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Botones Activos de Día / Categoría */
+.filter-btn-active {
+    background-color: rgba(14, 255, 199, 0.12) !important;
+    border-color: #0effc7 !important;
+    color: #0effc7 !important;
+    box-shadow: 0 0 12px rgba(14, 255, 199, 0.1);
+}
+
