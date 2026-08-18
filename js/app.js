@@ -215,13 +215,11 @@ function enterStaffMode(role) {
   if (roleOverlay) roleOverlay.classList.add('hidden');
 
   // Ajustar barra de navegación inferior (Mostrar solo Staff, ocultar el resto)
-  document.getElementById('nav-horarios').style.display = 'none';
-  document.getElementById('nav-reservas').style.display = 'none';
-  document.getElementById('nav-sugerencias').style.display = 'none';
-  document.getElementById('nav-gimnasio').style.display = 'none';
-  
-  const navStaff = document.getElementById('nav-staff');
-  navStaff.style.display = 'flex';
+  const staffNavs = ['nav-horarios', 'nav-gimnasio', 'nav-ofertas', 'nav-staff'];
+  staffNavs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = id === 'nav-staff' ? 'flex' : 'none';
+  });
   
   // Limpiar campos del login
   document.getElementById('auth-username').value = '';
@@ -238,12 +236,12 @@ function enterClientMode() {
   const roleOverlay = document.getElementById('role-selector-overlay');
   if (roleOverlay) roleOverlay.classList.add('hidden');
 
-  // Mostrar pestañas del cliente en barra inferior y ocultar staff (hasta que hagan 5 clicks en logo)
-  document.getElementById('nav-horarios').style.display = 'flex';
-  document.getElementById('nav-reservas').style.display = 'flex';
-  document.getElementById('nav-sugerencias').style.display = 'flex';
-  document.getElementById('nav-gimnasio').style.display = 'flex';
-  document.getElementById('nav-staff').style.display = 'none';
+  // Mostrar pestañas del cliente en barra inferior y ocultar staff
+  const clientNavs = ['nav-horarios', 'nav-gimnasio', 'nav-ofertas', 'nav-staff'];
+  clientNavs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = id === 'nav-staff' ? 'none' : 'flex';
+  });
 
   switchTab('horarios');
   checkUserStatus();
@@ -374,7 +372,6 @@ window.switchTab = function(tabName) {
     hideGlobalBackground();
   }
 
-  if (tabName === 'reservas') renderReservations();
   if (tabName === 'horarios') renderSchedule();
   if (tabName === 'staff') renderStaffPortal();
 };
@@ -558,7 +555,7 @@ function renderSchedule() {
       html += `
         <section>
           <div class="status-header">AHORA MISMO</div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2 sm:px-0">
             ${activeList.map(c => renderCardHtml(c, (curMins - c.mins <= 15 ? 'just-started' : 'active'))).join('')}
           </div>
         </section>
@@ -569,7 +566,7 @@ function renderSchedule() {
       html += `
         <section class="mt-8">
           <div class="status-header">SIGUIENTES</div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2 sm:px-0">
             ${soonList.map(c => renderCardHtml(c, 'soon')).join('')}
           </div>
         </section>
@@ -580,7 +577,7 @@ function renderSchedule() {
       html += `
         <section class="mt-8">
           <div class="status-header">Y DESPUÉS</div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2 sm:px-0">
             ${laterList.map(c => renderCardHtml(c, 'later')).join('')}
           </div>
         </section>
@@ -636,7 +633,7 @@ function renderSchedule() {
         ${muscHeaderHtml}
 
         ${allDayList.length > 0 ? `
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4 px-2 sm:px-0">
             ${allDayList.map(c => renderCardHtml(c, 'soon', true)).join('')}
           </div>
         ` : `
@@ -719,12 +716,12 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
     btnHtml = '';
   } else if (hasStarted) {
     if (isBooked) {
-      btnHtml = `<button onclick="switchTab('reservas')" class="btn-reserve btn-started-inactive" style="border: none;">✓ EN CURSO</button>`;
+      btnHtml = `<button onclick="openUserProfileModal()" class="btn-reserve btn-started-inactive" style="border: none;">✓ EN CURSO</button>`;
     } else {
       btnHtml = `<button onclick="handleStartedClassClick('${item.n}')" class="btn-reserve btn-started-inactive" style="border: none;">INICIADA</button>`;
     }
   } else if (isBooked) {
-    btnHtml = `<button onclick="switchTab('reservas')" class="btn-reserve reserved" style="border: none;">✓ RESERVADO</button>`;
+    btnHtml = `<button onclick="openUserProfileModal()" class="btn-reserve reserved" style="border: none;">✓ RESERVADO</button>`;
   } else if (seatsAvailable === 0) {
     btnHtml = `<button class="btn-reserve full" disabled style="border: none; background: #e11d48 !important; color: #ffffff !important; opacity: 1 !important;">CLASE LLENA</button>`;
   } else {
@@ -1005,11 +1002,11 @@ window.logoutStaff = function() {
   }
 
   // Ocultar toda la navegación del menú inferior
-  document.getElementById('nav-horarios').style.display = 'none';
-  document.getElementById('nav-reservas').style.display = 'none';
-  document.getElementById('nav-sugerencias').style.display = 'none';
-  document.getElementById('nav-gimnasio').style.display = 'none';
-  document.getElementById('nav-staff').style.display = 'none';
+  const allNavs = ['nav-horarios', 'nav-gimnasio', 'nav-ofertas', 'nav-staff'];
+  allNavs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
 };
 
 // --- PANEL DE ADMINISTRACIÓN (Lógica) ---
@@ -1482,6 +1479,9 @@ window.openUserProfileModal = function() {
     if (statusEl) statusEl.innerText = 'Inactivo';
     if (phoneEl) phoneEl.innerText = '--';
   }
+
+  // Renderizar la lista de reservas del usuario en su perfil
+  renderReservations();
 
   if (modal) modal.classList.add('active');
 };

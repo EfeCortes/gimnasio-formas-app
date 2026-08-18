@@ -702,14 +702,20 @@ body {
 }
 
 /* Sugerencias: Botones, inputs y textareas más altos y legibles en móvil */
-#tab-section-sugerencias button,
-#tab-section-sugerencias input,
-#tab-section-sugerencias textarea {
+#suggestion-form button,
+#suggestion-form input,
+#suggestion-form select,
+#suggestion-form textarea {
     min-height: 56px !important;
     font-size: 16px !important;
 }
-#tab-section-sugerencias textarea {
+#suggestion-form textarea {
     min-height: 120px !important;
+}
+
+/* Prevenir zoom automático en iOS/Safari al enfocar inputs */
+input, select, textarea {
+    font-size: 16px !important;
 }
 
 /* Botones de Filtro en el Bottom Sheet */
