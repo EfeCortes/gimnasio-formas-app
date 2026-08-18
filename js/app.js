@@ -71,7 +71,6 @@ window.onload = function() {
   updateClock();
   renderSchedule();
   renderReservations();
-  renderSuggestions();
   renderDisciplines();
   updateReservationBadge();
   
@@ -1178,44 +1177,14 @@ function renderInstructorPanel(instructorName) {
 }
 
 // --- FORMULARIO DE SUGERENCIAS ---
-window.handleSuggestionSubmit = function(event) {
-  event.preventDefault();
-  
+window.sendSuggestionViaWhatsApp = function(event) {
+  if (event) event.preventDefault();
+
   const type = document.getElementById('sug-type').value;
   const className = document.getElementById('sug-class').value.trim();
   const time = document.getElementById('sug-time').value.trim();
   const days = document.getElementById('sug-days').value.trim();
   const details = document.getElementById('sug-details').value.trim();
-
-  if (!className) return;
-
-  const newSuggestion = {
-    id: Date.now(),
-    type,
-    className,
-    time,
-    days,
-    details,
-    date: new Date().toLocaleDateString('es-BO')
-  };
-
-  try {
-    const list = JSON.parse(localStorage.getItem(SUGGESTIONS)) || [];
-    list.unshift(newSuggestion);
-    localStorage.setItem(SUGGESTIONS, JSON.stringify(list));
-  } catch (e) {}
-
-  document.getElementById('suggestion-form').reset();
-  showToast('¡Gracias! Tu sugerencia ha sido registrada.', 'success');
-  renderSuggestions();
-};
-
-window.sendSuggestionViaWhatsApp = function() {
-  const type = document.getElementById('sug-type').value;
-  const className = document.getElementById('sug-class').value;
-  const time = document.getElementById('sug-time').value;
-  const days = document.getElementById('sug-days').value;
-  const details = document.getElementById('sug-details').value;
 
   let msg = `*SUGERENCIA PARA GIMNASIO FORMAS*\n`;
   msg += `*Tipo:* ${type}\n`;
@@ -1226,33 +1195,10 @@ window.sendSuggestionViaWhatsApp = function() {
 
   const url = `https://wa.me/59170000000?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
+
+  document.getElementById('suggestion-form').reset();
+  showToast('Abriendo WhatsApp para enviar propuesta...', 'success');
 };
-
-function renderSuggestions() {
-  const container = document.getElementById('suggestions-list');
-  if (!container) return;
-
-  let list = [];
-  try {
-    list = JSON.parse(localStorage.getItem(SUGGESTIONS)) || [];
-  } catch (e) {}
-
-  if (list.length === 0) {
-    container.innerHTML = `<div class="italic opacity-50">Aún no has enviado sugerencias.</div>`;
-    return;
-  }
-
-  container.innerHTML = list.slice(0, 5).map(s => `
-    <div class="bg-[#141414] border border-[#222] p-3 rounded-lg space-y-1">
-      <div class="flex justify-between font-bold text-white">
-        <span>${s.className} (${s.type})</span>
-        <span class="text-[10px] text-white/40">${s.date}</span>
-      </div>
-      <div class="text-white/60">${s.time || ''} ${s.days ? '• ' + s.days : ''}</div>
-      ${s.details ? `<div class="text-white/40 italic">${s.details}</div>` : ''}
-    </div>
-  `).join('');
-}
 
 // --- RENDERIZADO DEL CATÁLOGO DE DISCIPLINAS ---
 const CATALOG_IMAGES = {
