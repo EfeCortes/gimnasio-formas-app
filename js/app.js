@@ -353,6 +353,7 @@ window.simulateMockApproval = function() {
 window.switchTab = function(tabName) {
   document.querySelectorAll('.tab-section').forEach(sec => sec.classList.add('hidden'));
   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  document.querySelectorAll('.header-icon-btn').forEach(btn => btn.classList.remove('active'));
   
   const targetSec = document.getElementById(`tab-section-${tabName}`);
   if (targetSec) {
@@ -362,6 +363,12 @@ window.switchTab = function(tabName) {
   const targetNav = document.getElementById(`nav-${tabName}`);
   if (targetNav) {
     targetNav.classList.add('active');
+  }
+
+  // Si es la sección contacto, marcar el botón correspondiente de la cabecera
+  if (tabName === 'contacto') {
+    const contactBtn = document.querySelector('.header-icon-btn.wa-btn');
+    if (contactBtn) contactBtn.classList.add('active');
   }
 
   // Controlar fondo dinámico global según pestaña activa
@@ -804,6 +811,14 @@ window.openReserveModal = function(classId, className, time, roomCode, instructo
 window.closeModal = function(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) modal.classList.remove('active');
+  if (modalId === 'modal-notifications') {
+    const btn = document.querySelector('.header-icon-btn.bell-btn');
+    if (btn) btn.classList.remove('active');
+  }
+  if (modalId === 'modal-user-profile') {
+    const btn = document.querySelector('.header-icon-btn.user-btn');
+    if (btn) btn.classList.remove('active');
+  }
 };
 
 window.handleStartedClassClick = function(className) {
@@ -1439,6 +1454,8 @@ window.openWhatsAppChat = function() {
 window.openNotificationsModal = function() {
   const modal = document.getElementById('modal-notifications');
   if (modal) modal.classList.add('active');
+  const btn = document.querySelector('.header-icon-btn.bell-btn');
+  if (btn) btn.classList.add('active');
 };
 
 window.openUserProfileModal = function() {
@@ -1484,6 +1501,8 @@ window.openUserProfileModal = function() {
   renderReservations();
 
   if (modal) modal.classList.add('active');
+  const btn = document.querySelector('.header-icon-btn.user-btn');
+  if (btn) btn.classList.add('active');
 };
 
 window.copyDeviceCode = function() {

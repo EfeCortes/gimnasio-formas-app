@@ -102,6 +102,10 @@ body {
     fill: currentColor; /* Asegura que hereden el color CSS del botón */
 }
 
+.header-icon-btn.active {
+    color: var(--color-just-started) !important;
+}
+
 .header-icon-btn:hover {
     color: #ffffff;
     transform: scale(1.05);
@@ -472,12 +476,12 @@ body {
 }
 
 .nav-item.active {
-    color: #ffffff;
+    color: var(--color-just-started);
     font-weight: 800;
 }
 
 .nav-item.active svg {
-    fill: var(--color-upcoming);
+    fill: var(--color-just-started);
     transform: translateY(-2px);
 }
 
@@ -487,9 +491,9 @@ body {
     top: 0;
     width: 32px;
     height: 3px;
-    background: var(--color-upcoming);
+    background: var(--color-just-started);
     border-radius: 0 0 4px 4px;
-    box-shadow: 0 0 10px var(--color-upcoming);
+    box-shadow: 0 0 10px var(--color-just-started);
 }
 
 .nav-badge {
