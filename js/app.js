@@ -747,10 +747,12 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
     return `
       <div class="class-card ${cardClass} ${expiredCardClass}" onmouseenter="changeGlobalBackground('${imgPath}')">
         <div class="card-header-gray">
-          <span>${displayTime}</span>
+          <span>${roomName}</span>
+          <span class="text-xs uppercase font-michroma opacity-75">${cat}</span>
         </div>
         <div class="card-body">
           ${statusLabel}
+          <div class="text-lg md:text-xl font-michroma font-bold text-[#ffdd00] tracking-tight mb-1.5">${displayTime}</div>
           <div class="class-name tactic-bold">${formatInstructor(item.i)}</div>
         </div>
       </div>
@@ -760,11 +762,12 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
   return `
     <div class="class-card ${cardClass} ${expiredCardClass}" onmouseenter="changeGlobalBackground('${imgPath}')">
       <div class="card-header-gray">
-        <span>${displayTime} • ${roomName}</span>
+        <span>${roomName}</span>
         <span class="text-xs uppercase font-michroma opacity-75">${cat}</span>
       </div>
       <div class="card-body">
         ${statusLabel}
+        <div class="text-lg md:text-xl font-michroma font-bold text-[#ffdd00] tracking-tight mb-1.5">${displayTime}</div>
         <div class="class-name tactic-bold">${item.n}</div>
         <div class="instructor-name">Con ${formatInstructor(item.i)}</div>
         

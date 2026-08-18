@@ -28,6 +28,7 @@ body {
     background-color: var(--bg);
     color: #ffffff;
     font-family: 'Michroma', sans-serif;
+    line-height: 1.5;
     letter-spacing: -0.01em;
     min-height: 100vh;
     margin: 0;
