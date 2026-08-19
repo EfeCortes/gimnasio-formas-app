@@ -214,12 +214,12 @@
     <section id="tab-section-horarios" class="tab-section hidden">
       <!-- Cabecera de Horarios Simplificada y Centrada -->
       <div class="text-center mb-8">
-        <h1 class="text-3xl md:text-4xl font-michroma font-bold text-white tracking-wider mb-4 uppercase">
+        <h1 class="text-3xl md:text-4xl font-michroma font-bold text-white tracking-wider mb-6 uppercase">
           HORARIOS
         </h1>
-        <div class="flex justify-center items-center gap-2">
-          <div class="relative inline-flex items-center justify-center border border-white/30 rounded-xl px-4 py-2 bg-white/5 hover:border-white/70 transition-colors">
-            <select id="day-title-select" onchange="changeDay(this.value)" class="bg-transparent border-none text-white font-michroma font-bold focus:outline-none uppercase cursor-pointer pr-5 appearance-none text-sm text-center">
+        <div class="w-full max-w-md mx-auto px-4">
+          <div class="relative w-full flex items-center justify-center border-2 border-white/30 rounded-2xl bg-white/5 hover:border-white/70 transition-all duration-200">
+            <select id="day-title-select" onchange="changeDay(this.value)" class="w-full bg-transparent border-none text-white font-michroma font-bold focus:outline-none uppercase cursor-pointer py-4 pl-6 pr-12 appearance-none text-sm text-center tracking-wider">
               <option value="1" class="bg-[#121212] text-white">Lunes</option>
               <option value="2" class="bg-[#121212] text-white">Martes</option>
               <option value="3" class="bg-[#121212] text-white">Miércoles</option>
@@ -228,9 +228,8 @@
               <option value="6" class="bg-[#121212] text-white">Sábado</option>
             </select>
             <!-- Flecha de dropdown personalizada -->
-            <span class="absolute right-4 pointer-events-none text-white/50 text-[10px]">▼</span>
+            <span class="absolute right-6 pointer-events-none text-white/50 text-xs">▼</span>
           </div>
-          <sup id="live-indicator-superscript" class="bg-[#ffdd00] text-black text-[9px] font-sans font-extrabold px-2.5 py-1 rounded-full tracking-wider leading-none hidden">HOY</sup>
         </div>
       </div>
 

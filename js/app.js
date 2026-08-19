@@ -496,19 +496,25 @@ function renderSchedule() {
 
   // Sincronizar el selector de días interactivo del título
   const selectDayEl = document.getElementById('day-title-select');
-  if (selectDayEl && selectDayEl.value !== String(selectedDayView)) {
-    selectDayEl.value = String(selectedDayView);
-  }
-
-  // Actualizar el exponente LIVE si el día seleccionado coincide con el día de simulación actual
-  const todayDayIndex = getSimulatedDate().getDay();
-  const liveIndicator = document.getElementById('live-indicator-superscript');
-  if (liveIndicator) {
-    if (selectedDayView == todayDayIndex) {
-      liveIndicator.classList.remove('hidden');
-    } else {
-      liveIndicator.classList.add('hidden');
+  if (selectDayEl) {
+    const todayDayIndex = getSimulatedDate().getDay();
+    const dayNames = {
+      1: 'Lunes',
+      2: 'Martes',
+      3: 'Miércoles',
+      4: 'Jueves',
+      5: 'Viernes',
+      6: 'Sábado'
+    };
+    
+    let optionsHtml = '';
+    for (let i = 1; i <= 6; i++) {
+      const isToday = (i === todayDayIndex);
+      const label = isToday ? `HOY (${dayNames[i]})` : dayNames[i];
+      optionsHtml += `<option value="${i}" class="bg-[#121212] text-white">${label}</option>`;
     }
+    selectDayEl.innerHTML = optionsHtml;
+    selectDayEl.value = String(selectedDayView);
   }
 
   // Sincronizar active status de los chips de categorías
