@@ -7,7 +7,7 @@ const SUGGESTIONS = 'formas_user_suggestions_v1';
 // --- ESTADO GLOBAL ---
 let activeView = 'day'; // Siempre vista por día por defecto
 let selectedDayView = new Date().getDay() === 0 ? 1 : new Date().getDay();
-let categoryFilter = 'Aeróbicos'; // 'Aeróbicos' | 'Control' | 'Spinning' | 'Funcional' | 'Musculación'
+let categoryFilter = 'Aerob & Pil'; // Filtro agrupado inicial
 let currentBookingData = null; // Guarda temporalmente la clase seleccionada para el modal
 
 // --- DYNAMIC BACKGROUND MAPPINGS & CHANGERS ---
@@ -438,59 +438,37 @@ const CATEGORY_ICONS = {
 
 function isCategoryMatched(classCategory, filter) {
   if (filter === 'ALL') return true;
-  if (filter === 'Aerob + Pil') {
+  if (filter === 'Aerob & Pil') {
     return classCategory === 'Aeróbicos' || classCategory === 'Control';
   }
-  if (filter === 'Spin + Func') {
+  if (filter === 'Spin & Func') {
     return classCategory === 'Spinning' || classCategory === 'Funcional';
   }
   return classCategory === filter;
 }
 
 window.renderCategorySelectors = function() {
-  const alt1Container = document.getElementById('alt1-chips-list');
-  const alt2Container = document.getElementById('alt2-chips-list');
-  if (!alt1Container || !alt2Container) return;
+  const container = document.getElementById('category-group-selector');
+  if (!container) return;
 
-  const categories = ['Aeróbicos', 'Control', 'Spinning', 'Funcional', 'Musculación'];
-  
-  // Alternativa 1: Iconos con etiqueta de texto solo en el chip activo
-  let alt1Html = '';
-  categories.forEach(cat => {
-    const isActive = (categoryFilter === cat);
-    const icon = CATEGORY_ICONS[cat] || '';
-    const label = isActive ? `<span class="flex items-center gap-1.5 justify-center">${icon} <span class="font-bold text-[9px] font-michroma uppercase">${cat}</span></span>` : icon;
-    
-    alt1Html += `
-      <button onclick="onCategoryChipChange('${cat}')" 
-              class="flex-1 flex items-center justify-center p-2 rounded-lg border transition-all duration-200 shrink-0 ${isActive ? 'bg-[#0effc7]/10 text-[#0effc7] border-[#0effc7] flex-[2]' : 'bg-transparent text-white/50 border-white/5 hover:border-white/20'}"
-              style="min-height: 48px;"
-              title="${cat}">
-        ${label}
-      </button>
-    `;
-  });
-  alt1Container.innerHTML = alt1Html;
-
-  // Alternativa 2: Agrupados (3 botones)
   const groups = [
-    { id: 'Aerob + Pil', name: 'Aerob + Pil', members: ['Aeróbicos', 'Control'] },
-    { id: 'Spin + Func', name: 'Spin + Func', members: ['Spinning', 'Funcional'] },
+    { id: 'Aerob & Pil', name: 'Aerob & Pil', members: ['Aeróbicos', 'Control'] },
+    { id: 'Spin & Func', name: 'Spin & Func', members: ['Spinning', 'Funcional'] },
     { id: 'Musculación', name: 'Musculación', members: ['Musculación'] }
   ];
 
-  let alt2Html = '';
+  let html = '';
   groups.forEach(g => {
     const isActive = (categoryFilter === g.id || g.members.includes(categoryFilter));
-    alt2Html += `
+    html += `
       <button onclick="onCategoryChipChange('${g.id}')" 
-              class="flex-1 py-3 px-1 rounded-lg border text-center font-michroma font-bold text-[9px] uppercase transition-all duration-200 ${isActive ? 'bg-[#0effc7]/10 text-[#0effc7] border-[#0effc7]' : 'bg-transparent text-white/50 border-white/5 hover:border-white/20'}"
-              style="min-height: 48px;">
+              class="flex-1 py-3.5 px-1.5 rounded-lg border text-center font-michroma font-bold text-xs md:text-sm uppercase transition-all duration-200 ${isActive ? 'bg-[#0effc7]/10 text-[#0effc7] border-[#0effc7]' : 'bg-transparent text-white/50 border-white/5 hover:border-white/20'}"
+              style="min-height: 52px;">
         ${g.name}
       </button>
     `;
   });
-  alt2Container.innerHTML = alt2Html;
+  container.innerHTML = html;
 };
 
 // --- FILTROS DE HORARIO (OPCIÓN A) ---
