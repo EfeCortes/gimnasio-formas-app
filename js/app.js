@@ -427,6 +427,72 @@ function updateClock() {
   }
 }
 
+// --- COMPONENTES COMPARATIVOS DE SELECTOR DE CATEGORÍAS ---
+const CATEGORY_ICONS = {
+  "Aeróbicos": `<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
+  "Control": `<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>`,
+  "Spinning": `<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829a9 9 0 01-12.728 0m0 0l2.829-2.829m-2.829-2.829a9 9 0 010-12.728m0 0l2.829 2.829m-2.829-2.829a9 9 0 0112.728 0m0 0l-2.829 2.829"/></svg>`,
+  "Funcional": `<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>`,
+  "Musculación": `<svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M21 11h-2V9c0-.55-.45-1-1-1h-1c-.55 0-1 .45-1 1v2H8V9c0-.55-.45-1-1-1H6c-.55 0-1 .45-1 1v2H3c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h2v2c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-2h10v2c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-2h2c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1z"/></svg>`
+};
+
+function isCategoryMatched(classCategory, filter) {
+  if (filter === 'ALL') return true;
+  if (filter === 'Aerob + Pil') {
+    return classCategory === 'Aeróbicos' || classCategory === 'Control';
+  }
+  if (filter === 'Spin + Func') {
+    return classCategory === 'Spinning' || classCategory === 'Funcional';
+  }
+  return classCategory === filter;
+}
+
+window.renderCategorySelectors = function() {
+  const alt1Container = document.getElementById('alt1-chips-list');
+  const alt2Container = document.getElementById('alt2-chips-list');
+  if (!alt1Container || !alt2Container) return;
+
+  const categories = ['Aeróbicos', 'Control', 'Spinning', 'Funcional', 'Musculación'];
+  
+  // Alternativa 1: Iconos con etiqueta de texto solo en el chip activo
+  let alt1Html = '';
+  categories.forEach(cat => {
+    const isActive = (categoryFilter === cat);
+    const icon = CATEGORY_ICONS[cat] || '';
+    const label = isActive ? `<span class="flex items-center gap-1.5 justify-center">${icon} <span class="font-bold text-[9px] font-michroma uppercase">${cat}</span></span>` : icon;
+    
+    alt1Html += `
+      <button onclick="onCategoryChipChange('${cat}')" 
+              class="flex-1 flex items-center justify-center p-2 rounded-lg border transition-all duration-200 shrink-0 ${isActive ? 'bg-[#0effc7]/10 text-[#0effc7] border-[#0effc7] flex-[2]' : 'bg-transparent text-white/50 border-white/5 hover:border-white/20'}"
+              style="min-height: 48px;"
+              title="${cat}">
+        ${label}
+      </button>
+    `;
+  });
+  alt1Container.innerHTML = alt1Html;
+
+  // Alternativa 2: Agrupados (3 botones)
+  const groups = [
+    { id: 'Aerob + Pil', name: 'Aerob + Pil', members: ['Aeróbicos', 'Control'] },
+    { id: 'Spin + Func', name: 'Spin + Func', members: ['Spinning', 'Funcional'] },
+    { id: 'Musculación', name: 'Musculación', members: ['Musculación'] }
+  ];
+
+  let alt2Html = '';
+  groups.forEach(g => {
+    const isActive = (categoryFilter === g.id || g.members.includes(categoryFilter));
+    alt2Html += `
+      <button onclick="onCategoryChipChange('${g.id}')" 
+              class="flex-1 py-3 px-1 rounded-lg border text-center font-michroma font-bold text-[9px] uppercase transition-all duration-200 ${isActive ? 'bg-[#0effc7]/10 text-[#0effc7] border-[#0effc7]' : 'bg-transparent text-white/50 border-white/5 hover:border-white/20'}"
+              style="min-height: 48px;">
+        ${g.name}
+      </button>
+    `;
+  });
+  alt2Container.innerHTML = alt2Html;
+};
+
 // --- FILTROS DE HORARIO (OPCIÓN A) ---
 window.changeDay = function(dayIndex) {
   selectedDayView = dayIndex;
@@ -435,12 +501,7 @@ window.changeDay = function(dayIndex) {
 
 window.onCategoryChipChange = function(cat) {
   categoryFilter = cat;
-  
-  // Actualizar clase activa en los chips de categorías
-  document.querySelectorAll('#schedule-category-chips-list .category-chip').forEach(btn => {
-    btn.classList.toggle('active', btn.id === `chip-${cat}`);
-  });
-
+  renderCategorySelectors();
   renderSchedule();
 };
 
@@ -517,10 +578,8 @@ function renderSchedule() {
     selectDayEl.value = String(selectedDayView);
   }
 
-  // Sincronizar active status de los chips de categorías
-  document.querySelectorAll('#schedule-category-chips-list .category-chip').forEach(btn => {
-    btn.classList.toggle('active', btn.id === `chip-${categoryFilter}`);
-  });
+  // Actualizar los selectores de categorías comparativos
+  renderCategorySelectors();
 
   // Actualizar fondo de Horarios según filtro activo
   const defaultImg = categoryFilter === 'ALL' ? 'assets/images/cardio.jpg' : (CATEGORY_IMAGES[categoryFilter] || 'assets/images/cardio.jpg');
@@ -535,7 +594,7 @@ function renderSchedule() {
 
     Object.keys(todayData).forEach(room => {
       (todayData[room] || []).forEach(cls => {
-        if (categoryFilter !== 'ALL' && (CATEGORY_MAP[cls.n] || 'Otros') !== categoryFilter) return;
+        if (!isCategoryMatched(CATEGORY_MAP[cls.n] || 'Otros', categoryFilter)) return;
 
         const tm = getMins(cls.t);
         const item = { ...cls, roomCode: room, mins: tm };
@@ -612,7 +671,7 @@ function renderSchedule() {
 
     Object.keys(viewDayData).forEach(room => {
       (viewDayData[room] || []).forEach(cls => {
-        if (categoryFilter !== 'ALL' && (CATEGORY_MAP[cls.n] || 'Otros') !== categoryFilter) return;
+        if (!isCategoryMatched(CATEGORY_MAP[cls.n] || 'Otros', categoryFilter)) return;
         if (cls.isMuscOpenHours) return; // Se muestra como encabezado, no como tarjeta
         allDayList.push({ ...cls, roomCode: room, mins: getMins(cls.t) });
       });

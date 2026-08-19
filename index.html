@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=13.5">
+  <link rel="stylesheet" href="css/styles.css?v=14.2">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -217,7 +217,7 @@
         <h1 class="text-3xl md:text-4xl font-michroma font-bold text-white tracking-wider mb-6 uppercase">
           HORARIOS
         </h1>
-        <div class="w-full max-w-md mx-auto px-4">
+        <div class="w-full max-w-md mx-auto px-2 sm:px-0">
           <div class="relative w-full flex items-center justify-center border-2 border-white/30 rounded-2xl bg-white/5 hover:border-white/70 transition-all duration-200">
             <select id="day-title-select" onchange="changeDay(this.value)" class="w-full bg-transparent border-none text-white font-michroma font-bold focus:outline-none uppercase cursor-pointer py-4 pl-6 pr-12 appearance-none text-sm text-center tracking-wider">
               <option value="1" class="bg-[#121212] text-white">Lunes</option>
@@ -233,15 +233,25 @@
         </div>
       </div>
 
-      <!-- Pastillas de Disciplina en formato horizontal deslizable -->
-      <div class="mb-8 w-full">
-        <div class="flex overflow-x-auto gap-2.5 pb-2 no-scrollbar px-4 w-full justify-start md:justify-center" id="schedule-category-chips-list">
-          <button onclick="onCategoryChipChange('Aeróbicos')" class="category-chip active shrink-0" id="chip-Aeróbicos">Aeróbicos</button>
-          <button onclick="onCategoryChipChange('Control')" class="category-chip shrink-0" id="chip-Control">Control</button>
-          <button onclick="onCategoryChipChange('Spinning')" class="category-chip shrink-0" id="chip-Spinning">Spinning</button>
-          <button onclick="onCategoryChipChange('Funcional')" class="category-chip shrink-0" id="chip-Funcional">Funcional</button>
-          <button onclick="onCategoryChipChange('Musculación')" class="category-chip shrink-0" id="chip-Musculación">Musculación</button>
+      <!-- Comparativa de selectores de disciplinas (Alternativa 1 y 2) -->
+      <div class="mb-8 w-full max-w-lg mx-auto px-2 sm:px-0 space-y-6">
+        
+        <!-- ALTERNATIVA 1: Iconos Compactos (Solo activo tiene texto) -->
+        <div class="space-y-2">
+          <span class="text-[9px] font-michroma text-white/40 uppercase tracking-widest block text-center">Alternativa 1: Iconos Compactos</span>
+          <div class="flex justify-between items-center gap-2 bg-[#0c0c0c]/80 p-2.5 rounded-xl border border-white/10" id="alt1-chips-list">
+            <!-- Renderizado por JS -->
+          </div>
         </div>
+
+        <!-- ALTERNATIVA 2: Agrupados (3 opciones) -->
+        <div class="space-y-2">
+          <span class="text-[9px] font-michroma text-white/40 uppercase tracking-widest block text-center">Alternativa 2: Agrupados (3 opciones)</span>
+          <div class="flex justify-between items-center gap-2 bg-[#0c0c0c]/80 p-2.5 rounded-xl border border-white/10" id="alt2-chips-list">
+            <!-- Renderizado por JS -->
+          </div>
+        </div>
+
       </div>
 
       <!-- Area de Horarios Dinámicos -->
@@ -750,7 +760,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=13.5"></script>
-  <script src="js/app.js?v=13.5"></script>
+  <script src="js/data.js?v=14.2"></script>
+  <script src="js/app.js?v=14.2"></script>
 </body>
 </html>
