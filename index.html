@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=14.3">
+  <link rel="stylesheet" href="css/styles.css?v=14.4">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -233,11 +233,36 @@
         </div>
       </div>
 
-      <!-- Selector de disciplinas agrupado (3 opciones) -->
-      <div class="mb-8 w-full max-w-lg mx-auto px-2 sm:px-0">
-        <div class="flex justify-between items-center gap-2 bg-[#0c0c0c]/80 p-2.5 rounded-xl border border-white/10" id="category-group-selector">
-          <!-- Renderizado por JS -->
+      <!-- Comparativa de selectores de disciplinas (3 opciones) -->
+      <div class="mb-8 w-full max-w-lg mx-auto px-2 sm:px-0 space-y-6">
+        
+        <!-- ALTERNATIVA A: Iconos Compactos (Solo activo tiene texto) -->
+        <div class="space-y-2">
+          <span class="text-[9px] font-michroma text-white/40 uppercase tracking-widest block text-center">Opción A: Iconos Compactos (Solo activo con texto)</span>
+          <div class="flex justify-between items-center gap-2 bg-[#0c0c0c]/80 p-2.5 rounded-xl border border-white/10" id="alta-chips-list">
+            <!-- Renderizado por JS -->
+          </div>
         </div>
+
+        <!-- ALTERNATIVA B: Rejilla de Dos Filas (Sin Scroll, Texto Grande) -->
+        <div class="space-y-2">
+          <span class="text-[9px] font-michroma text-white/40 uppercase tracking-widest block text-center">Opción B: Rejilla de Dos Filas (Sin Scroll)</span>
+          <div id="altb-chips-grid">
+            <!-- Renderizado por JS -->
+          </div>
+        </div>
+
+        <!-- ALTERNATIVA C: Selector Desplegable Único (Dropdown Compacto) -->
+        <div class="space-y-2">
+          <span class="text-[9px] font-michroma text-white/40 uppercase tracking-widest block text-center">Opción C: Menú Desplegable Único (Filtro Compacto)</span>
+          <div class="relative flex items-center justify-center border-2 border-white/30 rounded-2xl bg-white/5 hover:border-white/70 transition-all duration-200" id="altc-dropdown-wrapper">
+            <select id="category-dropdown-select" onchange="onCategoryChipChange(this.value)" class="w-full bg-transparent border-none text-white font-michroma font-bold focus:outline-none uppercase cursor-pointer py-4 pl-6 pr-12 appearance-none text-sm text-center tracking-wider">
+              <!-- Renderizado por JS -->
+            </select>
+            <span class="absolute right-6 pointer-events-none text-white/50 text-xs">▼</span>
+          </div>
+        </div>
+
       </div>
 
       <!-- Area de Horarios Dinámicos -->
@@ -746,7 +771,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=14.3"></script>
-  <script src="js/app.js?v=14.3"></script>
+  <script src="js/data.js?v=14.4"></script>
+  <script src="js/app.js?v=14.4"></script>
 </body>
 </html>

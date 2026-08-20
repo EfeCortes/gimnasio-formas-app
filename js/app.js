@@ -7,7 +7,7 @@ const SUGGESTIONS = 'formas_user_suggestions_v1';
 // --- ESTADO GLOBAL ---
 let activeView = 'day'; // Siempre vista por día por defecto
 let selectedDayView = new Date().getDay() === 0 ? 1 : new Date().getDay();
-let categoryFilter = 'Aerob & Pil'; // Filtro agrupado inicial
+let categoryFilter = 'Aeróbicos'; // Filtro inicial
 let currentBookingData = null; // Guarda temporalmente la clase seleccionada para el modal
 
 // --- DYNAMIC BACKGROUND MAPPINGS & CHANGERS ---
@@ -438,37 +438,57 @@ const CATEGORY_ICONS = {
 
 function isCategoryMatched(classCategory, filter) {
   if (filter === 'ALL') return true;
-  if (filter === 'Aerob & Pil') {
-    return classCategory === 'Aeróbicos' || classCategory === 'Control';
-  }
-  if (filter === 'Spin & Func') {
-    return classCategory === 'Spinning' || classCategory === 'Funcional';
-  }
   return classCategory === filter;
 }
 
 window.renderCategorySelectors = function() {
-  const container = document.getElementById('category-group-selector');
-  if (!container) return;
+  const altaContainer = document.getElementById('alta-chips-list');
+  const altbContainer = document.getElementById('altb-chips-grid');
+  const altcSelect = document.getElementById('category-dropdown-select');
+  if (!altaContainer || !altbContainer || !altcSelect) return;
 
-  const groups = [
-    { id: 'Aerob & Pil', name: 'Aerob & Pil', members: ['Aeróbicos', 'Control'] },
-    { id: 'Spin & Func', name: 'Spin & Func', members: ['Spinning', 'Funcional'] },
-    { id: 'Musculación', name: 'Musculación', members: ['Musculación'] }
-  ];
+  const categories = ['Aeróbicos', 'Control', 'Spinning', 'Funcional', 'Musculación'];
 
-  let html = '';
-  groups.forEach(g => {
-    const isActive = (categoryFilter === g.id || g.members.includes(categoryFilter));
-    html += `
-      <button onclick="onCategoryChipChange('${g.id}')" 
-              class="flex-1 py-3.5 px-1.5 rounded-lg border text-center font-michroma font-bold text-xs md:text-sm uppercase transition-all duration-200 ${isActive ? 'bg-[#0effc7]/10 text-[#0effc7] border-[#0effc7]' : 'bg-transparent text-white/50 border-white/5 hover:border-white/20'}"
-              style="min-height: 52px;">
-        ${g.name}
+  // Opción A: Iconos compactos
+  let altaHtml = '';
+  categories.forEach(cat => {
+    const isActive = (categoryFilter === cat);
+    const icon = CATEGORY_ICONS[cat] || '';
+    const label = isActive ? `<span class="flex items-center gap-1.5 justify-center">${icon} <span class="font-bold text-[9px] font-michroma uppercase">${cat}</span></span>` : icon;
+    altaHtml += `
+      <button onclick="onCategoryChipChange('${cat}')" 
+              class="flex-1 flex items-center justify-center p-2 rounded-lg border transition-all duration-200 shrink-0 ${isActive ? 'bg-[#0effc7]/10 text-[#0effc7] border-[#0effc7] flex-[2]' : 'bg-transparent text-white/50 border-white/5 hover:border-white/20'}"
+              style="min-height: 48px;"
+              title="${cat}">
+        ${label}
       </button>
     `;
   });
-  container.innerHTML = html;
+  altaContainer.innerHTML = altaHtml;
+
+  // Opción B: Rejilla de Dos Filas (3 columnas en fila 1, 2 en fila 2)
+  let altbHtml = '';
+  categories.forEach((cat, idx) => {
+    const isActive = (categoryFilter === cat);
+    const colSpanClass = idx < 3 ? 'col-span-2' : 'col-span-3';
+    altbHtml += `
+      <button onclick="onCategoryChipChange('${cat}')" 
+              class="${colSpanClass} py-3.5 px-1 rounded-lg border text-center font-michroma font-bold text-xs uppercase transition-all duration-200 ${isActive ? 'bg-[#0effc7]/10 text-[#0effc7] border-[#0effc7]' : 'bg-transparent text-white/50 border-white/5 hover:border-white/20'}"
+              style="min-height: 48px;">
+        ${cat}
+      </button>
+    `;
+  });
+  altbContainer.innerHTML = `<div class="grid grid-cols-6 gap-2 w-full">${altbHtml}</div>`;
+
+  // Opción C: Dropdown select
+  let altcHtml = '';
+  categories.forEach(cat => {
+    const isSelected = (categoryFilter === cat);
+    altcHtml += `<option value="${cat}" class="bg-[#121212] text-white" ${isSelected ? 'selected' : ''}>${cat}</option>`;
+  });
+  altcSelect.innerHTML = altcHtml;
+  altcSelect.value = categoryFilter;
 };
 
 // --- FILTROS DE HORARIO (OPCIÓN A) ---
