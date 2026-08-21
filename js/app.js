@@ -442,61 +442,28 @@ function isCategoryMatched(classCategory, filter) {
 }
 
 window.renderCategorySelectors = function() {
-  const altaContainer = document.getElementById('alta-chips-list');
-  const altbContainer = document.getElementById('altb-chips-stories');
-  const altcContainer = document.getElementById('altc-chips-tabs');
-  if (!altaContainer || !altbContainer || !altcContainer) return;
+  const container = document.getElementById('schedule-category-chips-list');
+  if (!container) return;
 
   const categories = ['Aeróbicos', 'Control', 'Spinning', 'Funcional', 'Musculación'];
 
-  // Opción A: Iconos compactos (Solo activo tiene texto)
-  let altaHtml = '';
+  let html = '';
   categories.forEach(cat => {
     const isActive = (categoryFilter === cat);
     const icon = CATEGORY_ICONS[cat] || '';
-    const label = isActive ? `<span class="flex items-center gap-1.5 justify-center">${icon} <span class="font-bold text-[9px] font-michroma uppercase">${cat}</span></span>` : icon;
-    altaHtml += `
-      <button onclick="onCategoryChipChange('${cat}')" 
-              class="flex-1 flex items-center justify-center p-2 rounded-lg border transition-all duration-200 shrink-0 ${isActive ? 'bg-[#0effc7]/10 text-[#0effc7] border-[#0effc7] flex-[2]' : 'bg-transparent text-white/50 border-white/5 hover:border-white/20'}"
-              style="min-height: 48px;"
-              title="${cat}">
-        ${label}
-      </button>
-    `;
-  });
-  altaContainer.innerHTML = altaHtml;
-
-  // Opción B: Burbujas de Historias Visuales (Estilo Instagram / Pinterest)
-  let altbHtml = '';
-  categories.forEach(cat => {
-    const isActive = (categoryFilter === cat);
-    const icon = CATEGORY_ICONS[cat] || '';
-    const shortLabel = cat === 'Musculación' ? 'Muscul' : cat;
-    altbHtml += `
+    
+    html += `
       <button onclick="onCategoryChipChange('${cat}')" class="flex flex-col items-center flex-1 focus:outline-none transition-all duration-200">
-        <div class="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/10 text-[#0effc7] shadow-[0_0_8px_rgba(14,255,199,0.3)]' : 'border-white/10 bg-transparent text-white/40 hover:border-white/20'}">
+        <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/10 text-[#0effc7] shadow-[0_0_10px_rgba(14,255,199,0.35)]' : 'border-white/10 bg-transparent text-white/50 hover:border-white/30'}">
           ${icon}
         </div>
-        <span class="text-[8px] font-michroma uppercase tracking-tight mt-1.5 font-bold transition-colors ${isActive ? 'text-[#0effc7]' : 'text-white/40'}">
-          ${shortLabel}
+        <span class="text-[10px] sm:text-xs font-michroma uppercase mt-2 font-bold tracking-tight transition-colors ${isActive ? 'text-[#0effc7]' : 'text-white/40'}">
+          ${cat}
         </span>
       </button>
     `;
   });
-  altbContainer.innerHTML = altbHtml;
-
-  // Opción C: Pestañas Minimalistas (Estilo Spotify / Twitter)
-  let altcHtml = '';
-  categories.forEach(cat => {
-    const isActive = (categoryFilter === cat);
-    altcHtml += `
-      <button onclick="onCategoryChipChange('${cat}')" 
-              class="flex-1 text-center pb-2.5 text-[9px] font-michroma font-bold uppercase transition-all duration-200 border-b-2 ${isActive ? 'text-[#0effc7] border-[#0effc7]' : 'text-white/40 border-transparent hover:text-white/70'}">
-        ${cat}
-      </button>
-    `;
-  });
-  altcContainer.innerHTML = altcHtml;
+  container.innerHTML = html;
 };
 
 // --- FILTROS DE HORARIO (OPCIÓN A) ---
