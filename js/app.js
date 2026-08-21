@@ -457,7 +457,7 @@ window.renderCategorySelectors = function() {
         <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/10 text-[#0effc7] shadow-[0_0_10px_rgba(14,255,199,0.35)]' : 'border-white/10 bg-transparent text-white/50 hover:border-white/30'}">
           ${icon}
         </div>
-        <span class="text-[10px] sm:text-xs font-michroma uppercase mt-2 font-bold tracking-tight transition-colors ${isActive ? 'text-[#0effc7]' : 'text-white/40'}">
+        <span class="text-[9px] sm:text-[10px] font-sans uppercase mt-1.5 font-extrabold tracking-wide text-center transition-colors ${isActive ? 'text-[#0effc7]' : 'text-white/40'}">
           ${cat}
         </span>
       </button>
