@@ -429,11 +429,26 @@ function updateClock() {
 
 // --- COMPONENTES COMPARATIVOS DE SELECTOR DE CATEGORÍAS ---
 const CATEGORY_ICONS = {
-  "Aeróbicos": `<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
-  "Control": `<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>`,
-  "Spinning": `<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829a9 9 0 01-12.728 0m0 0l2.829-2.829m-2.829-2.829a9 9 0 010-12.728m0 0l2.829 2.829m-2.829-2.829a9 9 0 0112.728 0m0 0l-2.829 2.829"/></svg>`,
-  "Funcional": `<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>`,
-  "Musculación": `<svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M21 11h-2V9c0-.55-.45-1-1-1h-1c-.55 0-1 .45-1 1v2H8V9c0-.55-.45-1-1-1H6c-.55 0-1 .45-1 1v2H3c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h2v2c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-2h10v2c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-2h2c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1z"/></svg>`
+  "Aeróbicos": `<svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+    <circle cx="12" cy="4" r="2"/>
+    <path d="M19.8 9.26l-3.32-1.9c-.62-.35-1.38-.21-1.85.34l-2.48 2.87-3.15-1.8c-.53-.3-1.2-.18-1.58.29l-3.2 4.0c-.35.44-.28 1.07.16 1.42s1.07.28 1.42-.16l2.67-3.34 2.37 1.35-1.98 4.29c-.25.53-.08 1.17.41 1.5l3.8 2.6c.41.28.96.22 1.3-.14l3.5-3.8c.39-.42.34-1.07-.08-1.46s-1.07-.34-1.46.08l-2.8 3.05-2.28-1.56 1.7-3.69 2.92-3.38 1.95 1.11c.54.31 1.23.13 1.55-.4l1.3-2.2c.26-.45.14-1.02-.3-1.28z"/>
+  </svg>`,
+  "Control": `<svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+    <circle cx="12" cy="4.5" r="2"/>
+    <path d="M12 7.5c-2.4 0-4.3 1.8-4.5 4.2L4.2 14c-.4.3-.5.9-.2 1.3s.9.5 1.3.2l2.8-2.1c.5.5 1.1.9 1.9 1.1v5c0 .6.4 1 1 1s1-.4 1-1v-5h2v5c0 .6.4 1 1 1s1-.4 1-1v-5c.8-.2 1.4-.6 1.9-1.1l2.8 2.1c.4.3 1 .2 1.3-.2s.2-1-.2-1.3l-3.3-2.3c-.2-2.4-2.1-4.2-4.5-4.2zm-2.5 4.5c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5v.5h-5V12z"/>
+  </svg>`,
+  "Spinning": `<svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+    <circle cx="14.5" cy="4.5" r="1.5"/>
+    <path d="M19.5 10c-1.38 0-2.5 1.12-2.5 2.5 0 1.25.92 2.29 2.12 2.47l-1.38-3.14-2.24 1.35c-.27.16-.62.16-.89 0l-3.23-1.94c-.2-.12-.34-.33-.38-.56L10.5 7.5H8.38c-.48 0-.91.3-1.06.75L5.75 13H4c-.55 0-1 .45-1 1s.45 1 1 1h2.25c.48 0 .91-.3 1.06-.75l1.09-3.27 1.89 1.13c.27.16.62.16.89 0l3.23-1.94 1.35 3.08c-1.2.18-2.12 1.22-2.12 2.47 0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5c0-1.09-.7-2.02-1.68-2.37l1.79-2.92c.16-.27.16-.62 0-.89l-1.2-1.95c-.2-.33-.6-.47-.96-.32zM7.5 19c-1.38 0-2.5-1.12-2.5-2.5S6.12 14 7.5 14s2.5 1.12 2.5 2.5S8.88 19 7.5 19z"/>
+  </svg>`,
+  "Funcional": `<svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+    <circle cx="12" cy="4" r="2"/>
+    <path d="M12 7c-1.1 0-2.03.74-2.35 1.74l-2.8 8.4c-.18.53.11 1.11.64 1.29.53.18 1.11-.11 1.29-.64L10 14h4l1.22 3.79c.14.44.55.71.97.71.09 0 .18-.01.27-.04.53-.17.83-.74.66-1.27l-2.77-8.45C14.03 7.74 13.1 7 12 7zM4.75 10c-.38 0-.7.28-.74.66-.05.41.25.79.66.84L9 12v-2H4.75zm14.5 0H15v2l4.33-.5c.41-.05.71-.43.66-.84-.04-.38-.36-.66-.74-.66z"/>
+  </svg>`,
+  "Musculación": `<svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+    <circle cx="12" cy="6.5" r="1.8"/>
+    <path d="M3 3h2v4H3zm16 0h2v4h-2zm-15 2h14v1H4zm8 4c-1.5 0-2.8.8-3.5 2L5 9v1.5l3 2v4c0 .8.7 1.5 1.5 1.5h5c.8 0 1.5-.7 1.5-1.5v-4l3-2V9l-3.5 2c-.7-1.2-2-2-3.5-2zm-2.5 9l-2.5 3h-2c-.5 0-1 .5-1 1s.5 1 1 1h3.5c.4 0 .8-.2 1-.6L12 19.5l2.5 2.9c.2.4.6.6 1 .6H19c.5 0 1-.5 1-1s-.5-1-1-1h-2l-2.5-3H9.5z"/>
+  </svg>`
 };
 
 function isCategoryMatched(classCategory, filter) {
