@@ -443,6 +443,7 @@ function isCategoryMatched(classCategory, filter) {
 
 window.renderCategorySelectors = function() {
   const container = document.getElementById('schedule-category-chips-list');
+  const titleDisplay = document.getElementById('active-category-title-display');
   if (!container) return;
 
   const categories = ['Aeróbicos', 'Control', 'Spinning', 'Funcional', 'Musculación'];
@@ -453,17 +454,18 @@ window.renderCategorySelectors = function() {
     const icon = CATEGORY_ICONS[cat] || '';
     
     html += `
-      <button onclick="onCategoryChipChange('${cat}')" class="flex flex-col items-center flex-1 focus:outline-none transition-all duration-200">
-        <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/10 text-[#0effc7] shadow-[0_0_10px_rgba(14,255,199,0.35)]' : 'border-white/10 bg-transparent text-white/50 hover:border-white/30'}">
+      <button onclick="onCategoryChipChange('${cat}')" class="focus:outline-none transition-all duration-200">
+        <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/10 text-[#0effc7] shadow-[0_0_10px_rgba(14,255,199,0.35)] scale-110' : 'border-white/10 bg-transparent text-white/50 hover:border-white/30 hover:scale-105'}">
           ${icon}
         </div>
-        <span class="text-[9px] sm:text-[10px] font-sans uppercase mt-1.5 font-extrabold tracking-wide text-center transition-colors ${isActive ? 'text-[#0effc7]' : 'text-white/40'}">
-          ${cat}
-        </span>
       </button>
     `;
   });
   container.innerHTML = html;
+
+  if (titleDisplay) {
+    titleDisplay.innerText = categoryFilter;
+  }
 };
 
 // --- FILTROS DE HORARIO (OPCIÓN A) ---
