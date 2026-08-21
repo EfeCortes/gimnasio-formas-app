@@ -443,13 +443,13 @@ function isCategoryMatched(classCategory, filter) {
 
 window.renderCategorySelectors = function() {
   const altaContainer = document.getElementById('alta-chips-list');
-  const altbContainer = document.getElementById('altb-chips-grid');
-  const altcSelect = document.getElementById('category-dropdown-select');
-  if (!altaContainer || !altbContainer || !altcSelect) return;
+  const altbContainer = document.getElementById('altb-chips-stories');
+  const altcContainer = document.getElementById('altc-chips-tabs');
+  if (!altaContainer || !altbContainer || !altcContainer) return;
 
   const categories = ['Aeróbicos', 'Control', 'Spinning', 'Funcional', 'Musculación'];
 
-  // Opción A: Iconos compactos
+  // Opción A: Iconos compactos (Solo activo tiene texto)
   let altaHtml = '';
   categories.forEach(cat => {
     const isActive = (categoryFilter === cat);
@@ -466,29 +466,37 @@ window.renderCategorySelectors = function() {
   });
   altaContainer.innerHTML = altaHtml;
 
-  // Opción B: Rejilla de Dos Filas (3 columnas en fila 1, 2 en fila 2)
+  // Opción B: Burbujas de Historias Visuales (Estilo Instagram / Pinterest)
   let altbHtml = '';
-  categories.forEach((cat, idx) => {
+  categories.forEach(cat => {
     const isActive = (categoryFilter === cat);
-    const colSpanClass = idx < 3 ? 'col-span-2' : 'col-span-3';
+    const icon = CATEGORY_ICONS[cat] || '';
+    const shortLabel = cat === 'Musculación' ? 'Muscul' : cat;
     altbHtml += `
+      <button onclick="onCategoryChipChange('${cat}')" class="flex flex-col items-center flex-1 focus:outline-none transition-all duration-200">
+        <div class="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/10 text-[#0effc7] shadow-[0_0_8px_rgba(14,255,199,0.3)]' : 'border-white/10 bg-transparent text-white/40 hover:border-white/20'}">
+          ${icon}
+        </div>
+        <span class="text-[8px] font-michroma uppercase tracking-tight mt-1.5 font-bold transition-colors ${isActive ? 'text-[#0effc7]' : 'text-white/40'}">
+          ${shortLabel}
+        </span>
+      </button>
+    `;
+  });
+  altbContainer.innerHTML = altbHtml;
+
+  // Opción C: Pestañas Minimalistas (Estilo Spotify / Twitter)
+  let altcHtml = '';
+  categories.forEach(cat => {
+    const isActive = (categoryFilter === cat);
+    altcHtml += `
       <button onclick="onCategoryChipChange('${cat}')" 
-              class="${colSpanClass} py-3.5 px-1 rounded-lg border text-center font-michroma font-bold text-xs uppercase transition-all duration-200 ${isActive ? 'bg-[#0effc7]/10 text-[#0effc7] border-[#0effc7]' : 'bg-transparent text-white/50 border-white/5 hover:border-white/20'}"
-              style="min-height: 48px;">
+              class="flex-1 text-center pb-2.5 text-[9px] font-michroma font-bold uppercase transition-all duration-200 border-b-2 ${isActive ? 'text-[#0effc7] border-[#0effc7]' : 'text-white/40 border-transparent hover:text-white/70'}">
         ${cat}
       </button>
     `;
   });
-  altbContainer.innerHTML = `<div class="grid grid-cols-6 gap-2 w-full">${altbHtml}</div>`;
-
-  // Opción C: Dropdown select
-  let altcHtml = '';
-  categories.forEach(cat => {
-    const isSelected = (categoryFilter === cat);
-    altcHtml += `<option value="${cat}" class="bg-[#121212] text-white" ${isSelected ? 'selected' : ''}>${cat}</option>`;
-  });
-  altcSelect.innerHTML = altcHtml;
-  altcSelect.value = categoryFilter;
+  altcContainer.innerHTML = altcHtml;
 };
 
 // --- FILTROS DE HORARIO (OPCIÓN A) ---

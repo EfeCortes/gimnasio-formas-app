@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=14.4">
+  <link rel="stylesheet" href="css/styles.css?v=14.5">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -244,22 +244,21 @@
           </div>
         </div>
 
-        <!-- ALTERNATIVA B: Rejilla de Dos Filas (Sin Scroll, Texto Grande) -->
+        <!-- ALTERNATIVA B: Burbujas de Historias Visuales (Estilo Instagram) -->
         <div class="space-y-2">
-          <span class="text-[9px] font-michroma text-white/40 uppercase tracking-widest block text-center">Opción B: Rejilla de Dos Filas (Sin Scroll)</span>
-          <div id="altb-chips-grid">
+          <span class="text-[9px] font-michroma text-white/40 uppercase tracking-widest block text-center">Opción B: Burbujas de Historias (Estilo Instagram / Pinterest)</span>
+          <div class="flex justify-between items-center gap-1.5 bg-[#0c0c0c]/80 p-3.5 rounded-2xl border border-white/10" id="altb-chips-stories">
             <!-- Renderizado por JS -->
           </div>
         </div>
 
-        <!-- ALTERNATIVA C: Selector Desplegable Único (Dropdown Compacto) -->
+        <!-- ALTERNATIVA C: Pestañas Minimalistas con Underline Deslizante (Estilo Spotify) -->
         <div class="space-y-2">
-          <span class="text-[9px] font-michroma text-white/40 uppercase tracking-widest block text-center">Opción C: Menú Desplegable Único (Filtro Compacto)</span>
-          <div class="relative flex items-center justify-center border-2 border-white/30 rounded-2xl bg-white/5 hover:border-white/70 transition-all duration-200" id="altc-dropdown-wrapper">
-            <select id="category-dropdown-select" onchange="onCategoryChipChange(this.value)" class="w-full bg-transparent border-none text-white font-michroma font-bold focus:outline-none uppercase cursor-pointer py-4 pl-6 pr-12 appearance-none text-sm text-center tracking-wider">
+          <span class="text-[9px] font-michroma text-white/40 uppercase tracking-widest block text-center">Opción C: Pestañas Minimalistas (Estilo Spotify / Twitter)</span>
+          <div class="bg-[#0c0c0c]/80 p-3 rounded-xl border border-white/10">
+            <div class="flex justify-between items-center w-full relative border-b border-white/5" id="altc-chips-tabs">
               <!-- Renderizado por JS -->
-            </select>
-            <span class="absolute right-6 pointer-events-none text-white/50 text-xs">▼</span>
+            </div>
           </div>
         </div>
 
@@ -771,7 +770,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=14.4"></script>
-  <script src="js/app.js?v=14.4"></script>
+  <script src="js/data.js?v=14.5"></script>
+  <script src="js/app.js?v=14.5"></script>
 </body>
 </html>
