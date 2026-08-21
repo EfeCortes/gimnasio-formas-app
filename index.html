@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=14.8">
+  <link rel="stylesheet" href="css/styles.css?v=14.9">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -233,13 +233,17 @@
         </div>
       </div>
 
-      <!-- Selector de disciplinas: Burbujas de Historias Visuales (Estilo Instagram) -->
-      <div class="mb-8 w-full max-w-lg mx-auto px-2 sm:px-0 text-center">
-        <div class="flex justify-center items-center gap-4 bg-[#0c0c0c]/80 p-3 rounded-2xl border border-white/10" id="schedule-category-chips-list">
-          <!-- Renderizado por JS -->
-        </div>
-        <div class="mt-3.5 text-xs font-michroma font-bold text-[#0effc7] uppercase tracking-widest" id="active-category-title-display">
-          Aeróbicos
+      <!-- Selector de disciplinas: Botones de Iconos y Texto Agrupados -->
+      <div class="mb-8 w-full max-w-lg mx-auto px-2 sm:px-0">
+        <div class="bg-[#0c0c0c]/80 p-3.5 rounded-2xl border border-white/10 flex flex-col items-center gap-3">
+          <!-- Botones de Iconos (Ancho completo flexible) -->
+          <div class="flex justify-between items-center w-full gap-2.5" id="schedule-category-chips-list">
+            <!-- Renderizado por JS -->
+          </div>
+          <!-- Nombre de la disciplina activa dentro del mismo contenedor -->
+          <div class="text-[10px] font-michroma font-bold text-[#0effc7] uppercase tracking-widest pt-2 border-t border-white/5 w-full text-center" id="active-category-title-display">
+            Aeróbicos
+          </div>
         </div>
       </div>
 
@@ -749,7 +753,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=14.8"></script>
-  <script src="js/app.js?v=14.8"></script>
+  <script src="js/data.js?v=14.9"></script>
+  <script src="js/app.js?v=14.9"></script>
 </body>
 </html>

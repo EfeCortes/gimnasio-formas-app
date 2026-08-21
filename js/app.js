@@ -454,8 +454,8 @@ window.renderCategorySelectors = function() {
     const icon = CATEGORY_ICONS[cat] || '';
     
     html += `
-      <button onclick="onCategoryChipChange('${cat}')" class="focus:outline-none transition-all duration-200">
-        <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/10 text-[#0effc7] shadow-[0_0_10px_rgba(14,255,199,0.35)] scale-110' : 'border-white/10 bg-transparent text-white/50 hover:border-white/30 hover:scale-105'}">
+      <button onclick="onCategoryChipChange('${cat}')" class="flex-1 focus:outline-none transition-all duration-200">
+        <div class="py-3 px-2 rounded-xl border-2 flex items-center justify-center transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/10 text-[#0effc7] shadow-[0_0_8px_rgba(14,255,199,0.3)] scale-105' : 'border-white/10 bg-transparent text-white/50 hover:border-white/30'}" style="min-height: 48px;">
           ${icon}
         </div>
       </button>
