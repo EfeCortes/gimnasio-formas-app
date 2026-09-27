@@ -223,7 +223,7 @@ const DISCIPLINES_CATALOG = [
     recommended: "Adultos para evitar la pérdida de masa muscular y ganar fuerza.",
     benefits: [
       { text: "Ganancia de fuerza", points: 5 },
-      { text: "Hipertrofia muscular", points: 5 },
+      { text: "Desarrollo muscular", points: 5 },
       { text: "Acondicionamiento físico", points: 4 }
     ]
   },
