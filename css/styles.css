@@ -741,3 +741,11 @@ input, select, textarea {
     box-shadow: 0 0 12px rgba(14, 255, 199, 0.1);
 }
 
+/* Selector de Día en Horarios: igualar ancho exacto a tarjetas de clase */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .day-selector-card-box {
+        width: calc((100% - 1.5rem) / 2) !important;
+    }
+}
+
+

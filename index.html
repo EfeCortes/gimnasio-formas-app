@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=15.7">
+  <link rel="stylesheet" href="css/styles.css?v=15.8">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -217,18 +217,20 @@
         <h1 class="text-3xl md:text-4xl font-michroma font-bold text-white tracking-wider mb-6 uppercase">
           HORARIOS
         </h1>
-        <div class="w-full max-w-md mx-auto px-2 sm:px-0">
-          <div class="relative w-full flex items-center justify-center border-2 border-white/30 rounded-2xl bg-white/5 hover:border-white/70 transition-all duration-200">
-            <select id="day-title-select" onchange="changeDay(this.value)" class="w-full bg-transparent border-none text-white font-michroma font-bold focus:outline-none uppercase cursor-pointer py-4 pl-6 pr-12 appearance-none text-sm text-center tracking-wider">
-              <option value="1" class="bg-[#121212] text-white">Lunes</option>
-              <option value="2" class="bg-[#121212] text-white">Martes</option>
-              <option value="3" class="bg-[#121212] text-white">Miércoles</option>
-              <option value="4" class="bg-[#121212] text-white">Jueves</option>
-              <option value="5" class="bg-[#121212] text-white">Viernes</option>
-              <option value="6" class="bg-[#121212] text-white">Sábado</option>
-            </select>
-            <!-- Flecha de dropdown personalizada -->
-            <span class="absolute right-6 pointer-events-none text-white/50 text-xs">▼</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2 sm:px-0 w-full">
+          <div class="col-span-1 md:col-span-2 lg:col-start-2 lg:col-span-1 flex justify-center">
+            <div class="day-selector-card-box relative w-full flex items-center justify-center border-2 border-white/30 rounded-2xl bg-white/5 hover:border-white/70 transition-all duration-200">
+              <select id="day-title-select" onchange="changeDay(this.value)" class="w-full bg-transparent border-none text-white font-michroma font-bold focus:outline-none uppercase cursor-pointer py-4 pl-6 pr-12 appearance-none text-sm text-center tracking-wider">
+                <option value="1" class="bg-[#121212] text-white">Lunes</option>
+                <option value="2" class="bg-[#121212] text-white">Martes</option>
+                <option value="3" class="bg-[#121212] text-white">Miércoles</option>
+                <option value="4" class="bg-[#121212] text-white">Jueves</option>
+                <option value="5" class="bg-[#121212] text-white">Viernes</option>
+                <option value="6" class="bg-[#121212] text-white">Sábado</option>
+              </select>
+              <!-- Flecha de dropdown personalizada -->
+              <span class="absolute right-6 pointer-events-none text-white/50 text-xs">▼</span>
+            </div>
           </div>
         </div>
       </div>
@@ -751,7 +753,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=15.7"></script>
-  <script src="js/app.js?v=15.7"></script>
+  <script src="js/data.js?v=15.8"></script>
+  <script src="js/app.js?v=15.8"></script>
 </body>
 </html>
