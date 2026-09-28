@@ -502,7 +502,7 @@ function getCatalogCategoryIconSvg(category) {
   // Limpiar cualquier clase y aplicar dimensiones para la imagen principal del catálogo
   return text.replace(/<svg\b([^>]*)>/i, (match, attrs) => {
     attrs = attrs.replace(/\b(width|height|class|fill)\s*=\s*"[^"]*"/gi, '');
-    return `<svg class="w-24 h-24 sm:w-28 sm:h-28 max-w-[120px] max-h-[120px] object-contain drop-shadow-[0_0_18px_rgba(14,255,199,0.35)]" fill="currentColor"${attrs}>`;
+    return `<svg class="w-24 h-24 sm:w-28 sm:h-28 max-w-[120px] max-h-[120px] object-contain" fill="currentColor"${attrs}>`;
   });
 }
 
@@ -1594,11 +1594,8 @@ function renderDisciplines() {
           
           <!-- HERO IMAGE DE LA CATEGORÍA (ÚNICO POR CATEGORÍA) -->
           <div class="w-full bg-gradient-to-b from-white/[0.08] via-black/40 to-black/60 border border-white/15 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
-            <!-- Resplandor ambiental de fondo -->
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,255,199,0.18)_0%,transparent_70%)] pointer-events-none"></div>
-
             <!-- Gran Icono Vectorial Hero de la Categoría -->
-            <div class="relative z-10 w-28 h-28 sm:w-36 sm:h-36 text-[#0effc7] drop-shadow-[0_0_24px_rgba(14,255,199,0.4)] flex items-center justify-center mb-3">
+            <div class="relative z-10 w-28 h-28 sm:w-36 sm:h-36 text-white flex items-center justify-center mb-3">
               ${iconSvg}
             </div>
 
