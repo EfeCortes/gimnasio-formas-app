@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=16.4">
+  <link rel="stylesheet" href="css/styles.css?v=16.5">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -235,14 +235,16 @@
         </div>
       </div>
 
-      <!-- Selector de disciplinas: Botones de Iconos y Texto Agrupados (Sin Fondo) -->
-      <div class="mb-8 w-full max-w-lg mx-auto px-2 sm:px-0 flex flex-col items-center gap-4">
-        <!-- Botones de Iconos (Ancho completo flexible) -->
-        <div class="flex justify-between items-center w-full gap-2.5" id="schedule-category-chips-list">
-          <!-- Renderizado por JS -->
+      <!-- Selector de disciplinas: Barra Toggle Deslizable (Segmented Control) -->
+      <div class="mb-8 w-full max-w-lg mx-auto px-2 sm:px-0 flex flex-col items-center gap-3">
+        <!-- Contenedor Track del Toggle Segmentado -->
+        <div class="w-full bg-[#121212]/95 backdrop-blur-md p-1 sm:p-1.5 rounded-2xl border border-white/15 shadow-[inset_0_2px_4px_rgba(0,0,0,0.8),0_6px_20px_rgba(0,0,0,0.6)] relative overflow-hidden" id="schedule-category-toggle-track">
+          <div class="relative w-full h-14 sm:h-16 flex items-center select-none" id="schedule-category-chips-list">
+            <!-- Renderizado dinámico: Indicador deslizante neón + segmentos -->
+          </div>
         </div>
         <!-- Nombre de la disciplina activa flotante -->
-        <div class="text-[10px] font-michroma font-bold text-[#0effc7] uppercase tracking-widest text-center" id="active-category-title-display">
+        <div class="text-[11px] sm:text-xs font-michroma font-bold text-[#0effc7] uppercase tracking-widest text-center transition-all duration-200" id="active-category-title-display">
           Aeróbicos
         </div>
       </div>
@@ -753,7 +755,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=16.4"></script>
-  <script src="js/app.js?v=16.4"></script>
+  <script src="js/data.js?v=16.5"></script>
+  <script src="js/app.js?v=16.5"></script>
 </body>
 </html>

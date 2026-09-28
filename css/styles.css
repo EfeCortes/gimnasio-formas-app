@@ -748,4 +748,18 @@ input, select, textarea {
     }
 }
 
+/* Barra Toggle Segmentada - Horarios */
+.category-toggle-btn {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.category-toggle-icon-wrap svg {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+}
+.category-toggle-btn:active .category-toggle-icon-wrap svg {
+    transform: scale(0.9);
+}
+
+
 

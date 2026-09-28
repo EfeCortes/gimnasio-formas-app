@@ -516,7 +516,7 @@ async function loadDynamicCategoryIcons() {
         let text = await res.text();
         text = text.replace(/<\?xml[\s\S]*?\?>/i, '').replace(/<!--[\s\S]*?-->/g, '');
         // Adaptar fill/stroke por defecto de Illustrator a currentColor
-        text = text.replace(/#231f20/gi, 'currentColor');
+        text = text.replace(/#231f20/gi, 'currentColor').replace(/fill="#000000"/gi, 'fill="currentColor"').replace(/fill="#000"/gi, 'fill="currentColor"');
         RAW_CATEGORY_SVGS[cat] = text;
         // Asegurar clases responsive y herencia de color para botones de selector
         CATEGORY_ICONS[cat] = text.replace(/<svg\b([^>]*)>/i, (match, attrs) => {
@@ -530,6 +530,8 @@ async function loadDynamicCategoryIcons() {
     }
   }
   if (updatedAny) {
+    const container = document.getElementById('schedule-category-chips-list');
+    if (container) container.innerHTML = '';
     if (typeof renderCategorySelectors === 'function') renderCategorySelectors();
     if (typeof renderDisciplines === 'function') renderDisciplines();
   }
@@ -542,30 +544,121 @@ function isCategoryMatched(classCategory, filter) {
   return classCategory === filter;
 }
 
+const SCHEDULE_TOGGLE_ITEMS = [
+  { id: 'ALL', label: 'Todas las disciplinas', iconType: 'grid' },
+  { id: 'Aeróbicos', label: 'Aeróbicos', iconType: 'cat' },
+  { id: 'Control', label: 'Control', iconType: 'cat' },
+  { id: 'Spinning', label: 'Spinning', iconType: 'cat' },
+  { id: 'Funcional', label: 'Funcional', iconType: 'cat' },
+  { id: 'Musculación', label: 'Musculación', iconType: 'cat' }
+];
+
+let toggleTouchStartX = 0;
+let toggleTouchStartY = 0;
+
+function initCategoryToggleSwipe() {
+  const track = document.getElementById('schedule-category-toggle-track');
+  if (!track || track.dataset.swipeInitialized) return;
+  track.dataset.swipeInitialized = 'true';
+
+  track.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      toggleTouchStartX = e.touches[0].clientX;
+      toggleTouchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  track.addEventListener('touchend', (e) => {
+    if (e.changedTouches.length === 1) {
+      const deltaX = e.changedTouches[0].clientX - toggleTouchStartX;
+      const deltaY = e.changedTouches[0].clientY - toggleTouchStartY;
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+        let curIdx = SCHEDULE_TOGGLE_ITEMS.findIndex(item => item.id === categoryFilter);
+        if (curIdx < 0) curIdx = 0;
+        if (deltaX < 0 && curIdx < SCHEDULE_TOGGLE_ITEMS.length - 1) {
+          onCategoryChipChange(SCHEDULE_TOGGLE_ITEMS[curIdx + 1].id);
+        } else if (deltaX > 0 && curIdx > 0) {
+          onCategoryChipChange(SCHEDULE_TOGGLE_ITEMS[curIdx - 1].id);
+        }
+      }
+    }
+  }, { passive: true });
+}
+
 window.renderCategorySelectors = function() {
   const container = document.getElementById('schedule-category-chips-list');
   const titleDisplay = document.getElementById('active-category-title-display');
   if (!container) return;
 
-  const categories = ['Aeróbicos', 'Control', 'Spinning', 'Funcional', 'Musculación'];
+  const total = SCHEDULE_TOGGLE_ITEMS.length;
+  let activeIdx = SCHEDULE_TOGGLE_ITEMS.findIndex(item => item.id === categoryFilter);
+  if (activeIdx < 0) activeIdx = 0;
 
-  let html = '';
-  categories.forEach(cat => {
-    const isActive = (categoryFilter === cat);
-    const icon = CATEGORY_ICONS[cat] || '';
-    
-    html += `
-      <button onclick="onCategoryChipChange('${cat}')" aria-pressed="${isActive}" title="${cat}" class="flex-1 focus:outline-none transition-all duration-200 active:scale-95 cursor-pointer">
-        <div class="aspect-square w-full rounded-2xl border-2 flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0d2a23] text-[#0effc7] shadow-[0_0_14px_rgba(14,255,199,0.4)] scale-105' : 'border-white/15 bg-[#161616] text-white/65 hover:border-white/35 hover:bg-[#202020]'}">
-          ${icon}
-        </div>
-      </button>
+  const existingThumb = document.getElementById('category-toggle-thumb');
+  const existingButtons = container.querySelectorAll('.category-toggle-btn');
+
+  if (existingThumb && existingButtons.length === total) {
+    // Animación fluida de deslizamiento
+    existingThumb.style.transform = `translateX(${activeIdx * 100}%)`;
+
+    existingButtons.forEach((btn, idx) => {
+      const isActive = (idx === activeIdx);
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      const iconWrap = btn.querySelector('.category-toggle-icon-wrap');
+      if (iconWrap) {
+        if (isActive) {
+          iconWrap.classList.remove('text-white/60', 'group-hover:text-white');
+          iconWrap.classList.add('text-black');
+        } else {
+          iconWrap.classList.remove('text-black');
+          iconWrap.classList.add('text-white/60', 'group-hover:text-white');
+        }
+      }
+    });
+  } else {
+    // Icono táctico de cuadrícula para "Todas las disciplinas"
+    const allGridIcon = `
+      <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+      </svg>
     `;
-  });
-  container.innerHTML = html;
+
+    let buttonsHtml = SCHEDULE_TOGGLE_ITEMS.map((item, idx) => {
+      const isActive = (idx === activeIdx);
+      const icon = item.iconType === 'grid' ? allGridIcon : (CATEGORY_ICONS[item.id] || '');
+      return `
+        <button onclick="onCategoryChipChange('${item.id}')"
+                aria-pressed="${isActive}"
+                title="${item.label}"
+                aria-label="${item.label}"
+                class="category-toggle-btn relative z-10 flex-1 h-full flex items-center justify-center cursor-pointer select-none group focus:outline-none transition-transform duration-150 active:scale-95">
+          <div class="category-toggle-icon-wrap w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center transition-colors duration-200 ${isActive ? 'text-black' : 'text-white/60 group-hover:text-white'}">
+            ${icon}
+          </div>
+        </button>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <!-- Thumb deslizante animado con resplandor neón -->
+      <div id="category-toggle-thumb"
+           class="absolute top-0 bottom-0 rounded-xl bg-[#0effc7] shadow-[0_0_18px_rgba(14,255,199,0.45)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none"
+           style="width: calc(100% / ${total}); transform: translateX(${activeIdx * 100}%);">
+      </div>
+      <!-- Segmentos interactivos del Toggle -->
+      ${buttonsHtml}
+    `;
+  }
+
+  // Inicializar swipe táctil una sola vez
+  initCategoryToggleSwipe();
 
   if (titleDisplay) {
-    titleDisplay.innerText = (categoryFilter === 'ALL' ? 'Todas las disciplinas' : categoryFilter);
+    const activeItem = SCHEDULE_TOGGLE_ITEMS[activeIdx];
+    titleDisplay.innerText = activeItem ? activeItem.label : 'Todas las disciplinas';
   }
 };
 
@@ -576,7 +669,9 @@ window.changeDay = function(dayIndex) {
 };
 
 window.onCategoryChipChange = function(cat) {
-  if (categoryFilter === cat) {
+  if (cat === 'ALL') {
+    categoryFilter = 'ALL';
+  } else if (categoryFilter === cat) {
     // Si ya está activo, funciona como interruptor apagándolo y mostrando todas las disciplinas
     categoryFilter = 'ALL';
   } else {
