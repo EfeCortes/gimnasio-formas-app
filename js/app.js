@@ -493,6 +493,18 @@ const CATEGORY_ICONS_CONFIG = {
   "Musculación": "assets/icons/musculacion.svg"
 };
 
+let RAW_CATEGORY_SVGS = { ...CATEGORY_ICONS };
+
+function getCatalogCategoryIconSvg(category) {
+  let text = RAW_CATEGORY_SVGS[category] || CATEGORY_ICONS[category] || '';
+  if (!text) return '';
+  // Limpiar cualquier clase y aplicar dimensiones para la imagen principal del catálogo
+  return text.replace(/<svg\b([^>]*)>/i, (match, attrs) => {
+    attrs = attrs.replace(/\b(width|height|class|fill)\s*=\s*"[^"]*"/gi, '');
+    return `<svg class="w-24 h-24 sm:w-28 sm:h-28 max-w-[120px] max-h-[120px] object-contain drop-shadow-[0_0_18px_rgba(14,255,199,0.35)]" fill="currentColor"${attrs}>`;
+  });
+}
+
 // Carga automática directa desde assets/icons/ con cache-busting dinámico
 async function loadDynamicCategoryIcons() {
   let updatedAny = false;
@@ -504,20 +516,21 @@ async function loadDynamicCategoryIcons() {
         text = text.replace(/<\?xml[\s\S]*?\?>/i, '').replace(/<!--[\s\S]*?-->/g, '');
         // Adaptar fill/stroke por defecto de Illustrator a currentColor
         text = text.replace(/#231f20/gi, 'currentColor');
-        // Asegurar clases responsive y herencia de color
-        text = text.replace(/<svg\b([^>]*)>/i, (match, attrs) => {
+        RAW_CATEGORY_SVGS[cat] = text;
+        // Asegurar clases responsive y herencia de color para botones de selector
+        CATEGORY_ICONS[cat] = text.replace(/<svg\b([^>]*)>/i, (match, attrs) => {
           attrs = attrs.replace(/\b(width|height|class|fill)\s*=\s*"[^"]*"/gi, '');
           return `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor"${attrs}>`;
         });
-        CATEGORY_ICONS[cat] = text;
         updatedAny = true;
       }
     } catch (e) {
       console.warn(`Could not auto-load icon for ${cat}:`, e);
     }
   }
-  if (updatedAny && typeof renderCategorySelectors === 'function') {
-    renderCategorySelectors();
+  if (updatedAny) {
+    if (typeof renderCategorySelectors === 'function') renderCategorySelectors();
+    if (typeof renderDisciplines === 'function') renderDisciplines();
   }
 }
 // Ejecutar carga dinámica al iniciar
@@ -1417,13 +1430,36 @@ function renderDisciplines() {
     }
 
     const imgPath = CATALOG_IMAGES[d.name] || 'assets/images/musculacion.jpg';
+    const iconSvg = getCatalogCategoryIconSvg(d.category);
 
     return `
-      <div class="glass-card rounded-xl flex flex-col justify-between overflow-hidden shrink-0 w-[85vw] md:w-[480px] snap-center" data-image="${imgPath}" onmouseenter="changeGlobalBackground('${imgPath}')">
+      <div class="glass-card rounded-2xl flex flex-col justify-between overflow-hidden shrink-0 w-[85vw] md:w-[480px] snap-center group border border-white/20" data-image="${imgPath}" onmouseenter="changeGlobalBackground('${imgPath}')">
+        <!-- IMAGEN PRINCIPAL DE LA TARJETA (ICONO VECTORIAL HERO) -->
+        <div class="w-full h-44 sm:h-52 bg-gradient-to-b from-white/[0.08] via-black/40 to-transparent flex items-center justify-center relative overflow-hidden border-b border-white/10">
+          <!-- Resplandor ambiental de fondo -->
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,255,199,0.14)_0%,transparent_70%)] pointer-events-none"></div>
+
+          <!-- Chip de Categoría flotante -->
+          <div class="absolute top-3.5 left-4 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#0effc7]"></span>
+            <span class="text-[10px] font-michroma font-bold text-white/90 uppercase tracking-wider">${d.category}</span>
+          </div>
+
+          <!-- Chip de Sala flotante -->
+          <div class="absolute top-3.5 right-4 z-10 px-3 py-1 rounded-full bg-black/60 border border-white/10 backdrop-blur-md">
+            <span class="text-[10px] font-michroma text-white/70 tracking-wider">${roomText}</span>
+          </div>
+
+          <!-- Icono SVG Principal -->
+          <div class="relative z-10 text-[#0effc7] group-hover:scale-105 transition-transform duration-300 flex items-center justify-center p-2">
+            ${iconSvg}
+          </div>
+        </div>
+
         <!-- Encabezado con Franja Sutilmente Más Clara -->
-        <div class="flex justify-between items-center bg-white/10 px-5 py-3.5 border-b border-white/5">
-          <h4 class="font-michroma text-base text-[#ffdd00] font-bold tracking-tight">${d.name}</h4>
-          <span class="text-xs font-sans text-white/70 font-semibold">${roomText}</span>
+        <div class="flex justify-between items-center bg-white/5 px-5 py-3.5 border-b border-white/5">
+          <h4 class="font-michroma text-base md:text-lg text-[#ffdd00] font-bold tracking-tight">${d.name}</h4>
+          <span class="text-xs font-sans text-white/60 font-semibold">Duración: ${d.duration}</span>
         </div>
 
         <!-- Cuerpo de la tarjeta con padding -->
@@ -1431,12 +1467,6 @@ function renderDisciplines() {
           <div class="space-y-3">
             <p class="text-sm text-white/80 font-sans leading-relaxed font-semibold">${d.description}</p>
             
-            <!-- Metadatos de Categoría y Duración -->
-            <div class="text-xs font-sans text-white/60 flex gap-4 font-bold pt-1">
-              <span>Categoría: <span class="text-white">${d.category}</span></span>
-              <span>Duración: <span class="text-white">${d.duration}</span></span>
-            </div>
-
             <!-- Recomendación concisa -->
             <div class="bg-black/30 border border-white/5 p-3 rounded-lg text-xs font-sans text-white/70 leading-relaxed font-semibold">
               <span class="text-[#ffdd00] uppercase font-bold tracking-wider text-[10px] block mb-1">Recomendado para:</span>
