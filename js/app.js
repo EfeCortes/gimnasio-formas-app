@@ -430,7 +430,7 @@ function updateClock() {
 
 // --- COMPONENTES COMPARATIVOS DE SELECTOR DE CATEGORÍAS ---
 const CATEGORY_ICONS = {
-  "Aeróbicos": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+  "Aeróbicos": `<svg class="w-full h-full object-contain shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <g>
       <polygon points="120.94 111.47 116.99 48.21 143.2 5.46 153.4 5.46 134.14 48.77 135.69 77.04 140.95 88.72 120.94 111.47"/>
       <path d="M202.1,155.06l-39.82-6.75-1.95-12.73,24.5,3.41-.99-9.01c-1.79-5.93-7.58-4.5-7.58-4.5l-15.56,4.31,20.54-27.72,1.46.16c7.91.59,14.42,7.56,15.24,15.45l4.16,37.39Z"/>
@@ -442,14 +442,14 @@ const CATEGORY_ICONS = {
     <rect x="69.68" y="268.92" width="45.85" height="7.55"/>
     <rect x="126.45" y="268.92" width="45.85" height="7.55"/>
   </svg>`,
-  "Control": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+  "Control": `<svg class="w-full h-full object-contain shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <path d="M55.34,249.43l-16.26-.52,42.01-61.3,28.75-54.58c7.34-13.94,26.84-15.64,36.2-2.97.07.1,1.12,4.88,1.19,4.97l-53.88,66.03-38.01,48.37Z"/>
     <polygon points="95.75 141.74 53 88.93 48.39 18.87 63.06 25.09 71.67 81.07 110.74 115.94 95.75 141.74"/>
     <path d="M232.99,253.07l-36.12-28.77-18.55-24.93c-1.94-3.43-3.65-8.16-7.25-9.34-5.92-1.95-20.9-2.02-20.9-2.02l24.05-29.87c8.47,6.52,15.78,14.03,20.11,23.22l17.02,36.06,29.11,28.18-7.47,7.48Z"/>
     <path d="M205.36,180.37h19.73s-4.04-10.1-4.04-10.1c-3.23-7.56-9.73-12.14-17.32-12.14h-10.03s11.67,22.24,11.67,22.24Z"/>
     <rect x="15.97" y="260.61" width="250.05" height="4"/>
   </svg>`,
-  "Spinning": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+  "Spinning": `<svg class="w-full h-full object-contain shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <path d="M131.64,60.01l-41.96,50.18c-.06.11-19.51,66.45-19.79,66.83l-34.73,49.68-17.09.69,35.54-63.02,13.1-79.82,2-5.12c4.59-11.72,15.91-19.42,28.5-19.42h34.43Z"/>
     <polygon points="109.76 197.69 95.93 197.63 131.4 147.53 100.68 119.41 117.52 97.94 160.37 150.37 109.76 197.69"/>
     <path d="M191.02,153.96l-36.98-41.21,7.96-32.79c.62-2.43,1.53-4.94-.72-6.31l-4.63-2.81c-2.46-1.5-2.93-4.88-.95-6.98h0c.86-.91,2.05-1.42,3.3-1.42h32.71c4.81,0,7.37,5.69,4.17,9.28l-19.81,40.81,24.83,33.69-9.88,7.73h0Z"/>
@@ -459,7 +459,7 @@ const CATEGORY_ICONS = {
     <path d="M53.01,252.59l-1.64-1.09-1.84.93c-.56-1.11-.33-1.43,1.48-3.9.84-1.15,2.04-2.78,3.48-4.73,2.88-3.9,6.73-9.09,10.58-14.28,7.7-10.38,15.41-20.74,15.41-20.74l3.21,2.39c-11.93,16.04-29.94,40.3-30.68,41.42Z"/>
     <polygon points="107.88 253.53 107.88 249.53 107.88 253.53 15.62 253.53 15.62 249.53 107.88 249.53 107.88 253.53"/>
   </svg>`,
-  "Funcional": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+  "Funcional": `<svg class="w-full h-full object-contain shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <polygon points="151.14 29.54 130.86 29.54 129.56 6.06 152.44 6.06 151.14 29.54"/>
     <polygon points="134.58 264.01 114.76 255.98 117.34 200.4 110.58 127.37 136.04 130.89 136.04 201.82 134.58 264.01"/>
     <polygon points="144.56 263.95 143.73 201.68 144.29 130.75 171.35 126 163.9 200.45 162.81 257.36 144.56 263.95"/>
@@ -468,7 +468,7 @@ const CATEGORY_ICONS = {
     <path d="M106.2,66.92l-12.31,21.34c-1.58,3.59-4.82,6.16-8.68,6.88l-35.99,7.32v-10.61l25.88-8.83c3.68-1.12,6.58-3.95,7.8-7.6l11.52-34.56h16.45s3.88,28.1,3.88,28.1l-8.55-2.05Z"/>
     <path d="M176.2,66.92l12.31,21.34c1.58,3.59,4.82,6.16,8.68,6.88l35.99,7.32v-10.61s-25.88-8.83-25.88-8.83c-3.68-1.12-6.58-3.95-7.8-7.6l-11.52-34.56h-16.45s-3.88,28.1-3.88,28.1l8.55-2.05Z"/>
   </svg>`,
-  "Musculación": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+  "Musculación": `<svg class="w-full h-full object-contain shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <g>
       <path d="M112.11,124.49l-16.38-13.29-36.54-2.18c-8.5-.51-13.55-9.7-9.43-17.15l23.84-39.28,13.18-.09-12.58,35.78h41.18l-3.28,36.22Z"/>
       <path d="M168.23,124.49l-3.28-36.22h41.18l-10.63-35.78,11.23.09,23.84,39.28c4.12,7.45-.94,16.64-9.43,17.15l-36.54,2.18-16.38,13.29Z"/>
@@ -521,7 +521,7 @@ async function loadDynamicCategoryIcons() {
         // Asegurar clases responsive y herencia de color para botones de selector
         CATEGORY_ICONS[cat] = text.replace(/<svg\b([^>]*)>/i, (match, attrs) => {
           attrs = attrs.replace(/\b(width|height|class|fill)\s*=\s*"[^"]*"/gi, '');
-          return `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor"${attrs}>`;
+          return `<svg class="w-full h-full object-contain shrink-0" fill="currentColor"${attrs}>`;
         });
         updatedAny = true;
       }
@@ -618,7 +618,7 @@ window.renderCategorySelectors = function() {
   } else {
     // Icono táctico de cuadrícula para "Todas las disciplinas"
     const allGridIcon = `
-      <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
+      <svg class="w-7 h-7 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="currentColor">
         <rect x="3" y="3" width="7" height="7" rx="1.5"/>
         <rect x="14" y="3" width="7" height="7" rx="1.5"/>
         <rect x="3" y="14" width="7" height="7" rx="1.5"/>
@@ -635,7 +635,7 @@ window.renderCategorySelectors = function() {
                 title="${item.label}"
                 aria-label="${item.label}"
                 class="category-toggle-btn relative z-10 flex-1 h-full flex items-center justify-center cursor-pointer select-none group focus:outline-none transition-transform duration-150 active:scale-95">
-          <div class="category-toggle-icon-wrap w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center transition-colors duration-200 ${isActive ? 'text-black' : 'text-white/60 group-hover:text-white'}">
+          <div class="category-toggle-icon-wrap w-10 h-10 sm:w-13 sm:h-13 flex items-center justify-center transition-colors duration-200 ${isActive ? 'text-black' : 'text-white/60 group-hover:text-white'}">
             ${icon}
           </div>
         </button>
