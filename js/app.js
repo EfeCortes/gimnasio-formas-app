@@ -429,7 +429,7 @@ function updateClock() {
 
 // --- COMPONENTES COMPARATIVOS DE SELECTOR DE CATEGORÍAS ---
 const CATEGORY_ICONS = {
-  "Aeróbicos": `<svg class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+  "Aeróbicos": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <g>
       <path d="M23.64,209.37l-15.34.27,52.03-43.27,33.72-42.18c6.18-8.05,15.74-12.78,25.89-12.83l15.86-.07-65.67,66.42-46.48,31.66Z"/>
       <path d="M107.53,163.19l10-9.53,26.82,5.77-9.53-31.64,22.22,1.17,9.53,34.23c2.14,7.69-4.91,14.78-12.62,12.68l-46.42-12.68Z"/>
@@ -439,14 +439,14 @@ const CATEGORY_ICONS = {
     </g>
     <path d="M202.16,227.43h-125.83c-6.62,0-12.27-4.05-14.41-10.31s-.14-12.92,5.09-16.97l.35-.27h130.18v2.61H68.27c-4.93,4.06-5.26,9.75-3.88,13.78,1.41,4.13,5.29,8.54,11.94,8.54h124.87c4.71-6.27,52.42-82.45,70.88-112.04l2.22,1.38c-26.06,41.77-70.06,112.01-71.83,113.08l-.31.19Z"/>
   </svg>`,
-  "Control": `<svg class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+  "Control": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <path d="M54.44,255.03l-16.65-.54,43.03-62.79,29.45-55.91c7.52-14.28,27.49-16.02,37.08-3.04.07.1,1.15,5,1.22,5.09l-55.19,67.64-38.93,49.55Z"/>
     <polygon points="95.84 144.73 52.05 90.63 47.33 18.87 62.36 25.24 71.17 82.58 111.19 118.3 95.84 144.73"/>
     <path d="M229.92,255.03l-30.5-25.74-19.01-25.54c-1.99-3.51-3.73-8.36-7.43-9.57-6.06-2-21.4-2.07-21.4-2.07l24.63-30.59c8.68,6.68,16.16,14.37,20.6,23.78l17.43,36.94,30.43,32.79h-14.76Z"/>
     <path d="M208.11,184.3h20.21s-4.14-10.34-4.14-10.34c-3.31-7.74-9.97-12.44-17.75-12.44h-10.28s11.96,22.78,11.96,22.78Z"/>
     <rect x="13.67" y="260.63" width="256.13" height="3.97"/>
   </svg>`,
-  "Spinning": `<svg class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+  "Spinning": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <path d="M24.08,206.46c-.15.15,35.37-52.62,35.37-52.62l29.25-66.63,19.18,21.4c-.05.09-34.6,55.46-34.82,55.79,0,0-34.71,41.18-34.71,41.47l-14.27.58ZM74.86,151.68h-.01.01Z"/>
     <polygon points="116.28 181.66 104.73 181.61 134.35 139.79 117.07 116.32 130.75 94.66 158.54 142.16 116.28 181.66"/>
     <path d="M197.73,131.47l-41.65-23.68,15.47-24.41c1.57-1.53,1.28-4.13-.6-5.26l-3.87-2.35c-2.06-1.25-2.44-4.08-.79-5.83h0c.71-.76,1.71-1.19,2.75-1.19h27.31c4.02,0,6.15,4.75,3.48,7.75l-18.84,30.73,24.99,17.78-8.25,6.45Z"/>
@@ -457,7 +457,7 @@ const CATEGORY_ICONS = {
     <rect x="21.31" y="231.14" width="77.02" height="3.04"/>
     <path d="M88.7,87.21l1.68-4.28c3.84-9.78,13.27-16.22,23.78-16.22h20.39l-26.67,41.9-19.18-21.4Z"/>
   </svg>`,
-  "Funcional": `<svg class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+  "Funcional": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <polygon points="150.46 26.05 133.2 26.05 132.09 6.06 151.57 6.06 150.46 26.05"/>
     <polygon points="135.5 263.21 119.31 263.68 118.86 205.79 112.33 132.07 136.92 135.62 136.92 207.23 135.5 263.21"/>
     <polygon points="145.15 263.15 144.34 207.09 144.89 135.48 171.01 130.68 163.82 205.85 162.77 263.82 145.15 263.15"/>
@@ -468,7 +468,7 @@ const CATEGORY_ICONS = {
     <path d="M109.85,64.21l-11.4,19.76c-1.46,3.32-4.47,5.7-8.03,6.37l-33.32,6.78v-9.83l23.96-8.17c3.4-1.04,6.09-3.66,7.22-7.04l10.67-32h15.23s3.59,26.02,3.59,26.02l-7.92-1.89Z"/>
     <path d="M172.49,64.21l11.4,19.76c1.46,3.32,4.47,5.7,8.03,6.37l33.32,6.78v-9.83s-23.96-8.17-23.96-8.17c-3.4-1.04-6.09-3.66-7.22-7.04l-10.67-32h-15.23s-3.59,26.02-3.59,26.02l7.92-1.89Z"/>
   </svg>`,
-  "Musculación": `<svg class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+  "Musculación": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <path d="M115.45,116.73l-15.02-12.19-33.53-2c-7.79-.47-12.44-8.9-8.66-15.74l21.88-39.53,12.09-.08-11.54,36.32h37.78l-3,33.23Z"/>
     <path d="M166.94,116.73l-3-33.23h37.78l-9.75-36.32,10.31.08,21.88,39.53c3.78,6.83-.86,15.27-8.66,15.74l-33.53,2-15.02,12.19Z"/>
     <polygon points="150.72 75.59 131.67 75.59 130.49 56.53 151.9 56.53 150.72 75.59"/>
@@ -503,7 +503,7 @@ window.renderCategorySelectors = function() {
     
     html += `
       <button onclick="onCategoryChipChange('${cat}')" class="flex-1 focus:outline-none transition-all duration-200">
-        <div class="py-3 px-2 rounded-xl border-2 flex items-center justify-center transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/10 text-[#0effc7] shadow-[0_0_8px_rgba(14,255,199,0.3)] scale-105' : 'border-white/10 bg-transparent text-white/50 hover:border-white/30'}" style="min-height: 48px;">
+        <div class="aspect-square w-full rounded-2xl border-2 flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/15 text-[#0effc7] shadow-[0_0_12px_rgba(14,255,199,0.35)] scale-105' : 'border-white/10 bg-transparent text-white/50 hover:border-white/30'}">
           ${icon}
         </div>
       </button>
