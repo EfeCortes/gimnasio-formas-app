@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=16.2">
+  <link rel="stylesheet" href="css/styles.css?v=16.3">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -471,15 +471,9 @@
 
       <!-- Catálogo de Disciplinas: Swipe por Categorías & Scroll por Disciplinas -->
       <div class="space-y-4 max-w-3xl mx-auto">
-        <!-- Selector de Categorías (Swipe / Tap) con Iconos -->
-        <div class="w-full max-w-lg mx-auto px-2 sm:px-0 flex flex-col items-center gap-3">
-          <div class="flex justify-between items-center w-full gap-2.5" id="catalog-category-chips-list">
-            <!-- Renderizado dinámico por JS -->
-          </div>
-          <!-- Nombre de la categoría activa e info de disciplinas -->
-          <div class="flex items-center justify-center gap-2 text-[10px] font-michroma font-bold text-[#0effc7] uppercase tracking-widest text-center" id="catalog-active-category-title">
-            Aeróbicos
-          </div>
+        <!-- Navegación de Categorías: Pills de Texto (Sin Iconos) -->
+        <div class="flex justify-center items-center gap-2 flex-wrap px-2" id="catalog-category-pills">
+          <!-- Renderizado dinámico por JS -->
         </div>
 
         <!-- Paginación de Puntos (Indicador de Swipe de Categoría) -->
@@ -764,7 +758,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=16.2"></script>
-  <script src="js/app.js?v=16.2"></script>
+  <script src="js/data.js?v=16.3"></script>
+  <script src="js/app.js?v=16.3"></script>
 </body>
 </html>

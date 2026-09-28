@@ -1394,35 +1394,19 @@ window.selectCatalogCategory = function(idx) {
 };
 
 function renderCatalogCategoryControls() {
-  const container = document.getElementById('catalog-category-chips-list');
-  const titleEl = document.getElementById('catalog-active-category-title');
+  const pillsContainer = document.getElementById('catalog-category-pills');
   const dotsContainer = document.getElementById('catalog-dots');
 
-  if (container) {
-    container.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => {
+  if (pillsContainer) {
+    pillsContainer.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => {
       const isActive = (currentCatalogCategoryIndex === idx);
-      const icon = CATEGORY_ICONS[cat] || '';
-      const zoomTransform = isActive ? (CATEGORY_HEAD_ZOOM_TRANSFORMS[cat] || 'scale(2.5)') : 'scale(1) translate(0, 0)';
+      const count = DISCIPLINES_CATALOG.filter(d => d.category === cat).length;
       return `
-        <button onclick="selectCatalogCategory(${idx})" aria-label="${cat}" class="flex-1 focus:outline-none transition-all duration-200 active:scale-95 cursor-pointer">
-          <div class="aspect-square w-full rounded-2xl border-2 overflow-hidden flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-300 ${isActive ? 'border-[#0effc7] bg-[#0d2a23] text-[#0effc7] shadow-[0_0_14px_rgba(14,255,199,0.4)] scale-105' : 'border-white/15 bg-[#161616] text-white/65 hover:border-white/35 hover:bg-[#202020]'}" style="transform: translateZ(0);">
-            <div class="w-full h-full flex items-center justify-center transition-transform duration-300 ease-out origin-center" style="transform: ${zoomTransform};">
-              ${icon}
-            </div>
-          </div>
+        <button onclick="selectCatalogCategory(${idx})" class="px-4 py-2 rounded-full text-[11px] font-michroma uppercase font-bold tracking-wider transition-all duration-200 cursor-pointer ${isActive ? 'bg-[#0effc7] text-black shadow-[0_0_12px_rgba(14,255,199,0.35)] scale-105' : 'bg-white/5 border border-white/10 text-white/60 hover:text-white hover:border-white/30'}">
+          ${cat} <span class="text-[9px] opacity-75 font-sans font-normal ml-0.5">(${count})</span>
         </button>
       `;
     }).join('');
-  }
-
-  if (titleEl) {
-    const cat = CATALOG_CATEGORIES[currentCatalogCategoryIndex] || 'Aeróbicos';
-    const count = DISCIPLINES_CATALOG.filter(d => d.category === cat).length;
-    titleEl.innerHTML = `
-      <span>${cat}</span>
-      <span class="text-white/40">•</span>
-      <span class="text-white/70">${count} ${count === 1 ? 'disciplina' : 'disciplinas'}</span>
-    `;
   }
 
   if (dotsContainer) {
