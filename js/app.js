@@ -451,10 +451,10 @@ const CATEGORY_ICONS = {
   "Spinning": `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
     <path d="M131.64,60.01l-41.96,50.18c-.06.11-19.51,66.45-19.79,66.83l-34.73,49.68-17.09.69,35.54-63.02,13.1-79.82,2-5.12c4.59-11.72,15.91-19.42,28.5-19.42h34.43Z"/>
     <polygon points="109.76 197.69 95.93 197.63 131.4 147.53 100.68 119.41 117.52 97.94 160.37 150.37 109.76 197.69"/>
-    <path d="M191.02,153.96l-36.98-41.21,7.96-32.79c.62-2.43,1.53-4.94-.72-6.31l-4.63-2.81c-2.46-1.5-2.93-4.88-.95-6.98h0c.86-.91,2.05-1.42,3.3-1.42h32.71c4.81,0,7.37,5.69,4.17,9.28l-19.81,40.81,24.83,33.69-9.88,7.73Z"/>
-    <path d="M210.22,55.39h-24.88l12.07-20.93h6.1c8.35,0,13.56,9.03,9.39,16.26l-2.69,4.67Z"/>
-    <path d="M205.64,254.87c-35.39,0-64.18-28.79-64.18-64.18s28.79-64.18,64.18-64.18,64.18,28.79,64.18,64.18-28.79,64.18-64.18,64.18ZM205.64,130.51c-33.18,0-60.18,27-60.18,60.18s27,60.18,60.18,60.18,60.18-27,60.18-60.18-27-60.18-60.18-60.18Z"/>
-    <path d="M55.08,213.55h-.08c-19.18,0-34.78-15.6-34.78-34.78,0-10.85,4.64-21.45,12.41-28.37,6.74-6,15.04-8.62,24.01-7.57,11.82,1.38,153.85,32.1,162.38,33.94,6.26.12,11.32,5.25,11.32,11.55s-5.13,11.5-11.46,11.55l-163.8,13.68ZM52.83,146.61c-8.09,0-13.93,3.57-17.54,6.78-6.93,6.17-11.07,15.66-11.07,25.38,0,16.94,13.76,30.73,30.69,30.78l163.8-13.68h.08c4.16,0,7.55-3.39,7.55-7.55s-3.39-7.55-7.55-7.55l-.42-.04c-1.5-.33-150.47-32.55-162.2-33.92-1.15-.13-2.27-.2-3.34-.2Z"/>
+    <path d="M191.02,153.96l-36.98-41.21,7.96-32.79c.62-2.43,1.53-4.94-.72-6.31l-4.63-2.81c-2.46-1.5-2.93-4.88-.95-6.98h0c.86-.91,2.05-1.42,3.3-1.42h32.71c4.81,0,7.37,5.69,4.17,9.28l-19.81,40.81,24.83,33.69-9.88,7.73h0Z"/>
+    <path d="M210.22,55.39h-24.88l12.07-20.93h6.1c8.35,0,13.56,9.03,9.39,16.26l-2.69,4.67h0Z"/>
+    <path d="M205.64,254.87c-35.39,0-64.18-28.79-64.18-64.18s28.79-64.18,64.18-64.18,64.18,28.79,64.18,64.18-28.79,64.18-64.18,64.18h0ZM205.64,130.51c-33.18,0-60.18,27-60.18,60.18s27,60.18,60.18,60.18,60.18-27,60.18-60.18-27-60.18-60.18-60.18h0Z"/>
+    <path d="M219.02,176.77c-6.31-1.36-85.66-18.52-131.33-27.93-.35,1.11-.76,2.41-1.21,3.85,46.96,9.67,130.77,27.79,131.89,28.04l.42.04c4.16,0,7.55,3.39,7.55,7.55s-3.39,7.55-7.55,7.55h-.08l-159.68,13.34c-.99,1.46-1.95,2.89-2.87,4.25l162.72-13.59c6.33-.05,11.46-5.25,11.46-11.55s-5.06-11.43-11.32-11.55Z"/>
     <path d="M53.01,252.59l-1.64-1.09-1.84.93c-.56-1.11-.33-1.43,1.48-3.9.84-1.15,2.04-2.78,3.48-4.73,2.88-3.9,6.73-9.09,10.58-14.28,7.7-10.38,15.41-20.74,15.41-20.74l3.21,2.39c-11.93,16.04-29.94,40.3-30.68,41.42Z"/>
     <polygon points="107.88 253.53 107.88 249.53 107.88 253.53 15.62 253.53 15.62 249.53 107.88 249.53 107.88 253.53"/>
   </svg>`,
@@ -484,6 +484,44 @@ const CATEGORY_ICONS = {
     </g>
   </svg>`
 };
+
+const CATEGORY_ICONS_CONFIG = {
+  "Aeróbicos": "assets/icons/aerobics.svg",
+  "Control": "assets/icons/control.svg",
+  "Spinning": "assets/icons/spinning.svg",
+  "Funcional": "assets/icons/funcional.svg",
+  "Musculación": "assets/icons/musculacion.svg"
+};
+
+// Carga automática directa desde assets/icons/ con cache-busting dinámico
+async function loadDynamicCategoryIcons() {
+  let updatedAny = false;
+  for (const [cat, path] of Object.entries(CATEGORY_ICONS_CONFIG)) {
+    try {
+      const res = await fetch(`${path}?t=${Date.now()}`);
+      if (res.ok) {
+        let text = await res.text();
+        text = text.replace(/<\?xml[\s\S]*?\?>/i, '').replace(/<!--[\s\S]*?-->/g, '');
+        // Adaptar fill/stroke por defecto de Illustrator a currentColor
+        text = text.replace(/#231f20/gi, 'currentColor');
+        // Asegurar clases responsive y herencia de color
+        text = text.replace(/<svg\b([^>]*)>/i, (match, attrs) => {
+          attrs = attrs.replace(/\b(width|height|class|fill)\s*=\s*"[^"]*"/gi, '');
+          return `<svg class="w-full h-full max-w-[52px] max-h-[52px] p-0.5 shrink-0" fill="currentColor"${attrs}>`;
+        });
+        CATEGORY_ICONS[cat] = text;
+        updatedAny = true;
+      }
+    } catch (e) {
+      console.warn(`Could not auto-load icon for ${cat}:`, e);
+    }
+  }
+  if (updatedAny && typeof renderCategorySelectors === 'function') {
+    renderCategorySelectors();
+  }
+}
+// Ejecutar carga dinámica al iniciar
+loadDynamicCategoryIcons();
 
 function isCategoryMatched(classCategory, filter) {
   if (filter === 'ALL') return true;
