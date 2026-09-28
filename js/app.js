@@ -379,6 +379,7 @@ window.switchTab = function(tabName) {
   }
 
   if (tabName === 'horarios') renderSchedule();
+  if (tabName === 'gimnasio') renderDisciplines();
   if (tabName === 'staff') renderStaffPortal();
 };
 
@@ -1362,13 +1363,71 @@ const CATALOG_IMAGES = {
   "Stretching": "assets/images/control.jpg"
 };
 
+const CATALOG_CATEGORIES = ['Aeróbicos', 'Control', 'Spinning', 'Funcional', 'Musculación'];
+let currentCatalogCategoryIndex = 0;
+
+window.selectCatalogCategory = function(idx) {
+  currentCatalogCategoryIndex = idx;
+  renderCatalogCategoryControls();
+  const cat = CATALOG_CATEGORIES[idx];
+  const imgPath = CATEGORY_IMAGES[cat] || 'assets/images/musculacion.jpg';
+  changeGlobalBackground(imgPath);
+
+  const grid = document.getElementById('disciplines-grid');
+  if (grid && grid.children[idx]) {
+    grid.scrollTo({
+      left: grid.children[idx].offsetLeft,
+      behavior: 'smooth'
+    });
+  }
+};
+
+function renderCatalogCategoryControls() {
+  const container = document.getElementById('catalog-category-chips-list');
+  const titleEl = document.getElementById('catalog-active-category-title');
+  const dotsContainer = document.getElementById('catalog-dots');
+
+  if (container) {
+    container.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => {
+      const isActive = (currentCatalogCategoryIndex === idx);
+      const icon = CATEGORY_ICONS[cat] || '';
+      return `
+        <button onclick="selectCatalogCategory(${idx})" aria-label="${cat}" class="flex-1 focus:outline-none transition-all duration-200 active:scale-95 cursor-pointer">
+          <div class="aspect-square w-full rounded-2xl border-2 flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0d2a23] text-[#0effc7] shadow-[0_0_14px_rgba(14,255,199,0.4)] scale-105' : 'border-white/15 bg-[#161616] text-white/65 hover:border-white/35 hover:bg-[#202020]'}">
+            ${icon}
+          </div>
+        </button>
+      `;
+    }).join('');
+  }
+
+  if (titleEl) {
+    const cat = CATALOG_CATEGORIES[currentCatalogCategoryIndex] || 'Aeróbicos';
+    const count = DISCIPLINES_CATALOG.filter(d => d.category === cat).length;
+    titleEl.innerHTML = `
+      <span>${cat}</span>
+      <span class="text-white/40">•</span>
+      <span class="text-white/70">${count} ${count === 1 ? 'disciplina' : 'disciplinas'}</span>
+    `;
+  }
+
+  if (dotsContainer) {
+    dotsContainer.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => `
+      <button onclick="selectCatalogCategory(${idx})" class="w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${idx === currentCatalogCategoryIndex ? 'bg-[#0effc7] scale-125' : 'bg-white/20 hover:bg-white/40'}" aria-label="Ir a ${cat}"></button>
+    `).join('');
+  }
+}
+
 function renderDisciplines() {
   const grid = document.getElementById('disciplines-grid');
   if (!grid) return;
 
-  // Cargar fondo inicial tras un pequeño delay
+  renderCatalogCategoryControls();
+
+  const activeCat = CATALOG_CATEGORIES[currentCatalogCategoryIndex] || 'Aeróbicos';
+  const initialBg = CATEGORY_IMAGES[activeCat] || 'assets/images/aerobicos.jpg';
   setTimeout(() => {
-    changeGlobalBackground('assets/images/musculacion.jpg');
+    changeGlobalBackground(initialBg);
   }, 50);
 
   function getBenefitSvg(benefit) {
@@ -1397,112 +1456,106 @@ function renderDisciplines() {
     return `<svg class="w-4 h-4 text-white/60 fill-current" viewBox="0 0 24 24">${path}</svg>`;
   }
 
-  // Generar paginación de puntos dinámicamente en base a las disciplinas
-  const dotsContainer = document.getElementById('catalog-dots');
-  if (dotsContainer) {
-    dotsContainer.innerHTML = DISCIPLINES_CATALOG.map((_, idx) => `
-      <span class="w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300 ${idx === 0 ? 'bg-[#0effc7] scale-125' : ''}" data-index="${idx}"></span>
-    `).join('');
-  }
+  grid.innerHTML = CATALOG_CATEGORIES.map((cat, catIdx) => {
+    const disciplines = DISCIPLINES_CATALOG.filter(d => d.category === cat);
+    const iconSvg = getCatalogCategoryIconSvg(cat);
+    const imgPath = CATEGORY_IMAGES[cat] || 'assets/images/musculacion.jpg';
 
-  grid.innerHTML = DISCIPLINES_CATALOG.map(d => {
-    // Generar badges de cualidades con escala de 5 puntos en tonos grises (cuadrados)
-    const benefitsHtml = d.benefits.map(b => {
-      const activeDots = '<span class="text-white/80 font-sans">■</span>'.repeat(b.points);
-      const inactiveDots = '<span class="text-white/20 font-sans">■</span>'.repeat(5 - b.points);
+    const cardsHtml = disciplines.map(d => {
+      // Generar badges de cualidades con escala de 5 puntos en tonos grises (cuadrados)
+      const benefitsHtml = d.benefits.map(b => {
+        const activeDots = '<span class="text-white/80 font-sans">■</span>'.repeat(b.points);
+        const inactiveDots = '<span class="text-white/20 font-sans">■</span>'.repeat(5 - b.points);
+        return `
+          <span class="text-xs bg-white/5 border border-white/10 px-3 py-1.5 rounded text-white/80 font-sans font-semibold flex items-center gap-2">
+            ${getBenefitSvg(b.text)}
+            <span>${b.text}</span>
+            <span class="flex gap-0.5 ml-1 tracking-tighter">${activeDots}${inactiveDots}</span>
+          </span>
+        `;
+      }).join('');
+
+      let roomText = d.room;
+      if (roomText.toLowerCase().startsWith("sala")) {
+        roomText = roomText;
+      } else if (roomText.toLowerCase().includes("piso")) {
+        roomText = `Aeróbicos ${roomText}`;
+      } else {
+        roomText = `Sala de ${roomText}`;
+      }
+
       return `
-        <span class="text-xs bg-white/5 border border-white/10 px-3 py-1.5 rounded text-white/80 font-sans font-semibold flex items-center gap-2">
-          ${getBenefitSvg(b.text)}
-          <span>${b.text}</span>
-          <span class="flex gap-0.5 ml-1 tracking-tighter">${activeDots}${inactiveDots}</span>
-        </span>
+        <div class="glass-card rounded-2xl flex flex-col justify-between overflow-hidden w-full group border border-white/20 shadow-xl shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
+          <!-- IMAGEN PRINCIPAL DE LA TARJETA (ICONO VECTORIAL HERO) -->
+          <div class="w-full h-40 sm:h-48 bg-gradient-to-b from-white/[0.08] via-black/40 to-transparent flex items-center justify-center relative overflow-hidden border-b border-white/10">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,255,199,0.14)_0%,transparent_70%)] pointer-events-none"></div>
+
+            <!-- Chip de Categoría flotante -->
+            <div class="absolute top-3.5 left-4 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#0effc7]"></span>
+              <span class="text-[10px] font-michroma font-bold text-white/90 uppercase tracking-wider">${d.category}</span>
+            </div>
+
+            <!-- Chip de Sala flotante -->
+            <div class="absolute top-3.5 right-4 z-10 px-3 py-1 rounded-full bg-black/60 border border-white/10 backdrop-blur-md">
+              <span class="text-[10px] font-michroma text-white/70 tracking-wider">${roomText}</span>
+            </div>
+
+            <!-- Icono SVG Principal -->
+            <div class="relative z-10 text-[#0effc7] group-hover:scale-105 transition-transform duration-300 flex items-center justify-center p-2">
+              ${iconSvg}
+            </div>
+          </div>
+
+          <!-- Encabezado con Nombre y Duración -->
+          <div class="flex justify-between items-center bg-white/5 px-5 py-3.5 border-b border-white/5">
+            <h4 class="font-michroma text-base md:text-lg text-[#ffdd00] font-bold tracking-tight">${d.name}</h4>
+            <span class="text-xs font-sans text-white/60 font-semibold">Duración: ${d.duration}</span>
+          </div>
+
+          <!-- Cuerpo de la tarjeta con padding -->
+          <div class="p-5 flex-1 flex flex-col justify-between gap-4">
+            <div class="space-y-3">
+              <p class="text-sm text-white/80 font-sans leading-relaxed font-semibold">${d.description}</p>
+              
+              <!-- Recomendación concisa -->
+              <div class="bg-black/30 border border-white/5 p-3 rounded-lg text-xs font-sans text-white/70 leading-relaxed font-semibold">
+                <span class="text-[#ffdd00] uppercase font-bold tracking-wider text-[10px] block mb-1">Recomendado para:</span>
+                ${d.recommended}
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex flex-wrap gap-2 pt-1">
+                ${benefitsHtml}
+              </div>
+            </div>
+          </div>
+        </div>
       `;
     }).join('');
 
-    // Formatear el nombre de la sala dinámicamente para evitar redundancias
-    let roomText = d.room;
-    if (roomText.toLowerCase().startsWith("sala")) {
-      roomText = roomText;
-    } else if (roomText.toLowerCase().includes("piso")) {
-      roomText = `Aeróbicos ${roomText}`;
-    } else {
-      roomText = `Sala de ${roomText}`;
-    }
-
-    const imgPath = CATALOG_IMAGES[d.name] || 'assets/images/musculacion.jpg';
-    const iconSvg = getCatalogCategoryIconSvg(d.category);
-
     return `
-      <div class="glass-card rounded-2xl flex flex-col justify-between overflow-hidden shrink-0 w-[85vw] md:w-[480px] snap-center group border border-white/20" data-image="${imgPath}" onmouseenter="changeGlobalBackground('${imgPath}')">
-        <!-- IMAGEN PRINCIPAL DE LA TARJETA (ICONO VECTORIAL HERO) -->
-        <div class="w-full h-44 sm:h-52 bg-gradient-to-b from-white/[0.08] via-black/40 to-transparent flex items-center justify-center relative overflow-hidden border-b border-white/10">
-          <!-- Resplandor ambiental de fondo -->
-          <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,255,199,0.14)_0%,transparent_70%)] pointer-events-none"></div>
-
-          <!-- Chip de Categoría flotante -->
-          <div class="absolute top-3.5 left-4 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#0effc7]"></span>
-            <span class="text-[10px] font-michroma font-bold text-white/90 uppercase tracking-wider">${d.category}</span>
-          </div>
-
-          <!-- Chip de Sala flotante -->
-          <div class="absolute top-3.5 right-4 z-10 px-3 py-1 rounded-full bg-black/60 border border-white/10 backdrop-blur-md">
-            <span class="text-[10px] font-michroma text-white/70 tracking-wider">${roomText}</span>
-          </div>
-
-          <!-- Icono SVG Principal -->
-          <div class="relative z-10 text-[#0effc7] group-hover:scale-105 transition-transform duration-300 flex items-center justify-center p-2">
-            ${iconSvg}
-          </div>
-        </div>
-
-        <!-- Encabezado con Franja Sutilmente Más Clara -->
-        <div class="flex justify-between items-center bg-white/5 px-5 py-3.5 border-b border-white/5">
-          <h4 class="font-michroma text-base md:text-lg text-[#ffdd00] font-bold tracking-tight">${d.name}</h4>
-          <span class="text-xs font-sans text-white/60 font-semibold">Duración: ${d.duration}</span>
-        </div>
-
-        <!-- Cuerpo de la tarjeta con padding -->
-        <div class="p-5 flex-1 flex flex-col justify-between gap-4">
-          <div class="space-y-3">
-            <p class="text-sm text-white/80 font-sans leading-relaxed font-semibold">${d.description}</p>
-            
-            <!-- Recomendación concisa -->
-            <div class="bg-black/30 border border-white/5 p-3 rounded-lg text-xs font-sans text-white/70 leading-relaxed font-semibold">
-              <span class="text-[#ffdd00] uppercase font-bold tracking-wider text-[10px] block mb-1">Recomendado para:</span>
-              ${d.recommended}
-            </div>
-          </div>
-
-          <div class="space-y-2">
-            <div class="flex flex-wrap gap-2 pt-1">
-              ${benefitsHtml}
-            </div>
-          </div>
+      <div class="w-full shrink-0 snap-center snap-always px-2 sm:px-4 flex flex-col items-center" data-category="${cat}" data-index="${catIdx}">
+        <div class="w-full max-w-xl flex flex-col gap-6 max-h-[66vh] md:max-h-[72vh] overflow-y-auto no-scrollbar pb-16 touch-pan-y" style="-webkit-overflow-scrolling: touch;">
+          ${cardsHtml}
         </div>
       </div>
     `;
   }).join('');
 
-  // Setup Intersection Observer para cambiar fondos y paginación al hacer scroll/swipe
+  // Setup Intersection Observer para sincronizar swipe horizontal con controles y fondos
   setTimeout(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const imgPath = entry.target.getAttribute('data-image');
-          changeGlobalBackground(imgPath);
-
-          // Actualizar indicador de punto de paginación
-          const index = Array.from(grid.children).indexOf(entry.target);
-          document.querySelectorAll('#catalog-dots span').forEach((dot, idx) => {
-            if (idx === index) {
-              dot.classList.add('bg-[#0effc7]', 'scale-125');
-              dot.classList.remove('bg-white/20');
-            } else {
-              dot.classList.remove('bg-[#0effc7]', 'scale-125');
-              dot.classList.add('bg-white/20');
-            }
-          });
+          const idx = parseInt(entry.target.getAttribute('data-index'), 10);
+          if (!isNaN(idx) && idx !== currentCatalogCategoryIndex) {
+            currentCatalogCategoryIndex = idx;
+            renderCatalogCategoryControls();
+            const cat = CATALOG_CATEGORIES[idx];
+            changeGlobalBackground(CATEGORY_IMAGES[cat] || 'assets/images/musculacion.jpg');
+          }
         }
       });
     }, {
@@ -1510,9 +1563,17 @@ function renderDisciplines() {
       threshold: 0.55
     });
 
-    document.querySelectorAll('#disciplines-grid .glass-card').forEach(card => {
-      observer.observe(card);
+    Array.from(grid.children).forEach(slide => {
+      observer.observe(slide);
     });
+
+    // Restaurar posición si ya había una categoría seleccionada
+    if (currentCatalogCategoryIndex > 0 && grid.children[currentCatalogCategoryIndex]) {
+      grid.scrollTo({
+        left: grid.children[currentCatalogCategoryIndex].offsetLeft,
+        behavior: 'auto'
+      });
+    }
   }, 100);
 }
 
