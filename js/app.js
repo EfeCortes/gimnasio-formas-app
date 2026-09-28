@@ -664,8 +664,11 @@ window.renderCategorySelectors = function() {
 
 // --- FILTROS DE HORARIO (OPCIÓN A) ---
 window.changeDay = function(dayIndex) {
-  selectedDayView = dayIndex;
+  selectedDayView = parseInt(dayIndex, 10);
   renderSchedule();
+  setTimeout(() => {
+    scrollToNextClass();
+  }, 100);
 };
 
 window.onCategoryChipChange = function(cat) {
@@ -680,7 +683,89 @@ window.onCategoryChipChange = function(cat) {
   }
   renderCategorySelectors();
   renderSchedule();
+
+  // Recorrido suave automático a la clase activa o siguiente
+  setTimeout(() => {
+    scrollToNextClass();
+  }, 100);
 };
+
+// Auto-scroll y realce de la siguiente clase disponible
+function scrollToNextClass() {
+  const scheduleArea = document.getElementById('dynamic-schedule-area');
+  if (!scheduleArea) return;
+
+  const now = getSimulatedDate();
+  const todayDayIndex = now.getDay();
+  const isToday = (selectedDayView === todayDayIndex || activeView === 'live');
+  const curMins = now.getHours() * 60 + now.getMinutes();
+
+  const cards = Array.from(scheduleArea.querySelectorAll('.class-card'));
+  if (cards.length === 0) return;
+
+  let targetCard = null;
+
+  if (isToday) {
+    let candidateActive = null;
+    let candidateUpcoming = null;
+
+    for (const card of cards) {
+      const mins = parseInt(card.dataset.mins, 10);
+      const isExpired = card.dataset.isExpired === 'true';
+      const hasStarted = card.dataset.hasStarted === 'true';
+
+      if (isExpired) continue;
+
+      // Clase en curso o recién comenzada
+      if (hasStarted && !candidateActive) {
+        candidateActive = card;
+      }
+
+      // Siguiente clase programada a partir de ahora
+      if (mins >= curMins) {
+        if (!candidateUpcoming || mins < parseInt(candidateUpcoming.dataset.mins, 10)) {
+          candidateUpcoming = card;
+        }
+      }
+    }
+
+    targetCard = candidateActive || candidateUpcoming;
+  } else {
+    // Si vemos otro día futuro, enfocar la primera clase del día
+    targetCard = cards[0];
+  }
+
+  if (targetCard) {
+    // Margen superior para preservar visibilidad del Toggle y cabecera
+    const headerOffset = 150;
+    const cardTop = targetCard.getBoundingClientRect().top;
+    const targetScrollY = window.pageYOffset + cardTop - headerOffset;
+
+    window.scrollTo({
+      top: Math.max(0, targetScrollY),
+      behavior: 'smooth'
+    });
+
+    // Disparar pulso luminoso en la tarjeta objetivo
+    targetCard.classList.remove('highlight-next-class');
+    void targetCard.offsetWidth;
+    targetCard.classList.add('highlight-next-class');
+
+    setTimeout(() => {
+      targetCard.classList.remove('highlight-next-class');
+    }, 2000);
+  } else if (isToday) {
+    // Si ya no quedan clases hoy, mantener en la parte superior del cronograma
+    const toggleTrack = document.getElementById('schedule-category-toggle-track');
+    if (toggleTrack) {
+      const trackTop = toggleTrack.getBoundingClientRect().top;
+      window.scrollTo({
+        top: Math.max(0, window.pageYOffset + trackTop - 80),
+        behavior: 'smooth'
+      });
+    }
+  }
+}
 
 // --- LOGICA DE RESERVAS EN CLOUD SIMULADO ---
 function getMyReservations() {
@@ -855,6 +940,38 @@ function renderSchedule() {
     });
     allDayList.sort((a, b) => a.mins - b.mins);
 
+    const todayDayIndex = now.getDay();
+    const isToday = (selectedDayView === todayDayIndex);
+    let allFinishedBannerHtml = '';
+    if (isToday && allDayList.length > 0) {
+      const allFinished = allDayList.every(cls => {
+        let endMins = cls.mins + 60;
+        if (cls.range) {
+          const parts = cls.range.split(' - ');
+          if (parts.length === 2) endMins = getMins(parts[1].trim());
+        }
+        return curMins >= endMins;
+      });
+
+      if (allFinished) {
+        const nextDayIdx = selectedDayView < 6 ? selectedDayView + 1 : 1;
+        const nextDayName = (nextDayIdx === 1 ? 'Lunes' : (nextDayIdx === 2 ? 'Martes' : (nextDayIdx === 3 ? 'Miércoles' : (nextDayIdx === 4 ? 'Jueves' : (nextDayIdx === 5 ? 'Viernes' : 'Sábado')))));
+        allFinishedBannerHtml = `
+          <div class="max-w-xl mx-auto mb-2 bg-[#161616] border border-white/15 p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-lg">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#ffdd00] shrink-0 animate-pulse"></span>
+              <span class="text-xs font-sans text-white/80">
+                No quedan más clases de <strong class="text-white">${categoryFilter === 'ALL' ? 'disciplinas' : categoryFilter}</strong> por hoy.
+              </span>
+            </div>
+            <button onclick="changeDay(${nextDayIdx})" class="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-[#0effc7] hover:text-black border border-white/20 text-[#0effc7] font-michroma font-bold text-[10px] tracking-wider uppercase transition-all duration-200 shrink-0">
+              Ver ${nextDayName} →
+            </button>
+          </div>
+        `;
+      }
+    }
+
     let muscHeaderHtml = '';
     if (categoryFilter === 'Musculación') {
       let muscHours = GYM_INFO.musculacionHours.weekdays;
@@ -879,6 +996,7 @@ function renderSchedule() {
     let html = `
       <section class="space-y-6">
         ${muscHeaderHtml}
+        ${allFinishedBannerHtml}
 
         ${allDayList.length > 0 ? `
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4 px-2 sm:px-0">
@@ -987,7 +1105,7 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
 
   if (cat === 'Musculación') {
     return `
-      <div class="class-card ${cardClass} ${expiredCardClass}" onmouseenter="changeGlobalBackground('${imgPath}')">
+      <div id="card-${item.id}" class="class-card ${cardClass} ${expiredCardClass}" data-mins="${classStartMins}" data-has-started="${hasStarted}" data-is-expired="${isExpired}" data-category="${cat}" onmouseenter="changeGlobalBackground('${imgPath}')">
         <div class="card-header-gray">
           <span>${roomName}</span>
           <span class="text-xs uppercase font-michroma opacity-75">${cat}</span>
@@ -1002,7 +1120,7 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
   }
 
   return `
-    <div class="class-card ${cardClass} ${expiredCardClass}" onmouseenter="changeGlobalBackground('${imgPath}')">
+    <div id="card-${item.id}" class="class-card ${cardClass} ${expiredCardClass}" data-mins="${classStartMins}" data-has-started="${hasStarted}" data-is-expired="${isExpired}" data-category="${cat}" onmouseenter="changeGlobalBackground('${imgPath}')">
       <div class="card-header-gray">
         <span>${roomName}</span>
         <span class="text-xs uppercase font-michroma opacity-75">${cat}</span>
