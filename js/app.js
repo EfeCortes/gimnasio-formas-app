@@ -503,7 +503,7 @@ window.renderCategorySelectors = function() {
     
     html += `
       <button onclick="onCategoryChipChange('${cat}')" class="flex-1 focus:outline-none transition-all duration-200">
-        <div class="aspect-square w-full rounded-2xl border-2 flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0effc7]/15 text-[#0effc7] shadow-[0_0_12px_rgba(14,255,199,0.35)] scale-105' : 'border-white/10 bg-transparent text-white/50 hover:border-white/30'}">
+        <div class="aspect-square w-full rounded-2xl border-2 flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0d2a23] text-[#0effc7] shadow-[0_0_14px_rgba(14,255,199,0.4)] scale-105' : 'border-white/15 bg-[#161616] text-white/65 hover:border-white/35 hover:bg-[#202020]'}">
           ${icon}
         </div>
       </button>
