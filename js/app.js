@@ -542,6 +542,14 @@ function isCategoryMatched(classCategory, filter) {
   return classCategory === filter;
 }
 
+const CATEGORY_HEAD_ZOOM_TRANSFORMS = {
+  "Aeróbicos": "scale(2.5) translate(-8%, 17%)",
+  "Control": "scale(2.5) translate(26%, 33%)",
+  "Spinning": "scale(2.5) translate(-20%, 28%)",
+  "Funcional": "scale(2.5) translate(0%, 35%)",
+  "Musculación": "scale(2.5) translate(0%, 18%)"
+};
+
 window.renderCategorySelectors = function() {
   const container = document.getElementById('schedule-category-chips-list');
   const titleDisplay = document.getElementById('active-category-title-display');
@@ -553,11 +561,14 @@ window.renderCategorySelectors = function() {
   categories.forEach(cat => {
     const isActive = (categoryFilter === cat);
     const icon = CATEGORY_ICONS[cat] || '';
+    const zoomTransform = isActive ? (CATEGORY_HEAD_ZOOM_TRANSFORMS[cat] || 'scale(2.5)') : 'scale(1) translate(0, 0)';
     
     html += `
       <button onclick="onCategoryChipChange('${cat}')" aria-pressed="${isActive}" title="${cat}" class="flex-1 focus:outline-none transition-all duration-200 active:scale-95 cursor-pointer">
-        <div class="aspect-square w-full rounded-2xl border-2 flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0d2a23] text-[#0effc7] shadow-[0_0_14px_rgba(14,255,199,0.4)] scale-105' : 'border-white/15 bg-[#161616] text-white/65 hover:border-white/35 hover:bg-[#202020]'}">
-          ${icon}
+        <div class="aspect-square w-full rounded-2xl border-2 overflow-hidden flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-300 ${isActive ? 'border-[#0effc7] bg-[#0d2a23] text-[#0effc7] shadow-[0_0_14px_rgba(14,255,199,0.4)] scale-105' : 'border-white/15 bg-[#161616] text-white/65 hover:border-white/35 hover:bg-[#202020]'}" style="transform: translateZ(0);">
+          <div class="w-full h-full flex items-center justify-center transition-transform duration-300 ease-out origin-center" style="transform: ${zoomTransform};">
+            ${icon}
+          </div>
         </div>
       </button>
     `;
@@ -1391,10 +1402,13 @@ function renderCatalogCategoryControls() {
     container.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => {
       const isActive = (currentCatalogCategoryIndex === idx);
       const icon = CATEGORY_ICONS[cat] || '';
+      const zoomTransform = isActive ? (CATEGORY_HEAD_ZOOM_TRANSFORMS[cat] || 'scale(2.5)') : 'scale(1) translate(0, 0)';
       return `
         <button onclick="selectCatalogCategory(${idx})" aria-label="${cat}" class="flex-1 focus:outline-none transition-all duration-200 active:scale-95 cursor-pointer">
-          <div class="aspect-square w-full rounded-2xl border-2 flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0d2a23] text-[#0effc7] shadow-[0_0_14px_rgba(14,255,199,0.4)] scale-105' : 'border-white/15 bg-[#161616] text-white/65 hover:border-white/35 hover:bg-[#202020]'}">
-            ${icon}
+          <div class="aspect-square w-full rounded-2xl border-2 overflow-hidden flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-300 ${isActive ? 'border-[#0effc7] bg-[#0d2a23] text-[#0effc7] shadow-[0_0_14px_rgba(14,255,199,0.4)] scale-105' : 'border-white/15 bg-[#161616] text-white/65 hover:border-white/35 hover:bg-[#202020]'}" style="transform: translateZ(0);">
+            <div class="w-full h-full flex items-center justify-center transition-transform duration-300 ease-out origin-center" style="transform: ${zoomTransform};">
+              ${icon}
+            </div>
           </div>
         </button>
       `;
