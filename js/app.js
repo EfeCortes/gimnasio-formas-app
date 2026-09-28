@@ -542,14 +542,6 @@ function isCategoryMatched(classCategory, filter) {
   return classCategory === filter;
 }
 
-const CATEGORY_HEAD_ZOOM_TRANSFORMS = {
-  "Aeróbicos": "scale(2.5) translate(-8%, 17%)",
-  "Control": "scale(2.5) translate(26%, 33%)",
-  "Spinning": "scale(2.5) translate(-20%, 28%)",
-  "Funcional": "scale(2.5) translate(0%, 35%)",
-  "Musculación": "scale(2.5) translate(0%, 18%)"
-};
-
 window.renderCategorySelectors = function() {
   const container = document.getElementById('schedule-category-chips-list');
   const titleDisplay = document.getElementById('active-category-title-display');
@@ -561,14 +553,11 @@ window.renderCategorySelectors = function() {
   categories.forEach(cat => {
     const isActive = (categoryFilter === cat);
     const icon = CATEGORY_ICONS[cat] || '';
-    const zoomTransform = isActive ? (CATEGORY_HEAD_ZOOM_TRANSFORMS[cat] || 'scale(2.5)') : 'scale(1) translate(0, 0)';
     
     html += `
       <button onclick="onCategoryChipChange('${cat}')" aria-pressed="${isActive}" title="${cat}" class="flex-1 focus:outline-none transition-all duration-200 active:scale-95 cursor-pointer">
-        <div class="aspect-square w-full rounded-2xl border-2 overflow-hidden flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-300 ${isActive ? 'border-[#0effc7] bg-[#0d2a23] text-[#0effc7] shadow-[0_0_14px_rgba(14,255,199,0.4)] scale-105' : 'border-white/15 bg-[#161616] text-white/65 hover:border-white/35 hover:bg-[#202020]'}" style="transform: translateZ(0);">
-          <div class="w-full h-full flex items-center justify-center transition-transform duration-300 ease-out origin-center" style="transform: ${zoomTransform};">
-            ${icon}
-          </div>
+        <div class="aspect-square w-full rounded-2xl border-2 flex items-center justify-center p-1.5 sm:p-2.5 transition-all duration-200 ${isActive ? 'border-[#0effc7] bg-[#0d2a23] text-[#0effc7] shadow-[0_0_14px_rgba(14,255,199,0.4)] scale-105' : 'border-white/15 bg-[#161616] text-white/65 hover:border-white/35 hover:bg-[#202020]'}">
+          ${icon}
         </div>
       </button>
     `;
@@ -1394,20 +1383,7 @@ window.selectCatalogCategory = function(idx) {
 };
 
 function renderCatalogCategoryControls() {
-  const pillsContainer = document.getElementById('catalog-category-pills');
   const dotsContainer = document.getElementById('catalog-dots');
-
-  if (pillsContainer) {
-    pillsContainer.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => {
-      const isActive = (currentCatalogCategoryIndex === idx);
-      const count = DISCIPLINES_CATALOG.filter(d => d.category === cat).length;
-      return `
-        <button onclick="selectCatalogCategory(${idx})" class="px-4 py-2 rounded-full text-[11px] font-michroma uppercase font-bold tracking-wider transition-all duration-200 cursor-pointer ${isActive ? 'bg-[#0effc7] text-black shadow-[0_0_12px_rgba(14,255,199,0.35)] scale-105' : 'bg-white/5 border border-white/10 text-white/60 hover:text-white hover:border-white/30'}">
-          ${cat} <span class="text-[9px] opacity-75 font-sans font-normal ml-0.5">(${count})</span>
-        </button>
-      `;
-    }).join('');
-  }
 
   if (dotsContainer) {
     dotsContainer.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => `
@@ -1458,6 +1434,7 @@ function renderDisciplines() {
     const disciplines = DISCIPLINES_CATALOG.filter(d => d.category === cat);
     const iconSvg = getCatalogCategoryIconSvg(cat);
     const imgPath = CATEGORY_IMAGES[cat] || 'assets/images/musculacion.jpg';
+    const countText = `${disciplines.length} ${disciplines.length === 1 ? 'disciplina disponible' : 'disciplinas disponibles'}`;
 
     const cardsHtml = disciplines.map(d => {
       // Generar badges de cualidades con escala de 5 puntos en tonos grises (cuadrados)
@@ -1483,50 +1460,33 @@ function renderDisciplines() {
       }
 
       return `
-        <div class="glass-card rounded-2xl flex flex-col justify-between overflow-hidden w-full group border border-white/20 shadow-xl shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
-          <!-- IMAGEN PRINCIPAL DE LA TARJETA (ICONO VECTORIAL HERO) -->
-          <div class="w-full h-40 sm:h-48 bg-gradient-to-b from-white/[0.08] via-black/40 to-transparent flex items-center justify-center relative overflow-hidden border-b border-white/10">
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,255,199,0.14)_0%,transparent_70%)] pointer-events-none"></div>
-
-            <!-- Chip de Categoría flotante -->
-            <div class="absolute top-3.5 left-4 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#0effc7]"></span>
-              <span class="text-[10px] font-michroma font-bold text-white/90 uppercase tracking-wider">${d.category}</span>
+        <div class="glass-card rounded-2xl overflow-hidden w-full border border-white/15 p-5 sm:p-6 space-y-4 shadow-xl shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
+          <!-- Encabezado de la Disciplina: Nombre, Sala y Duración -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 border-b border-white/10 pb-3">
+            <div>
+              <h4 class="font-michroma text-lg text-[#ffdd00] font-bold tracking-tight">${d.name}</h4>
+              <span class="text-xs font-sans text-white/60 font-semibold">${roomText}</span>
             </div>
-
-            <!-- Chip de Sala flotante -->
-            <div class="absolute top-3.5 right-4 z-10 px-3 py-1 rounded-full bg-black/60 border border-white/10 backdrop-blur-md">
-              <span class="text-[10px] font-michroma text-white/70 tracking-wider">${roomText}</span>
-            </div>
-
-            <!-- Icono SVG Principal -->
-            <div class="relative z-10 text-[#0effc7] group-hover:scale-105 transition-transform duration-300 flex items-center justify-center p-2">
-              ${iconSvg}
+            <div class="self-start sm:self-auto px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-sans text-white/80 font-semibold">
+              ${d.duration}
             </div>
           </div>
 
-          <!-- Encabezado con Nombre y Duración -->
-          <div class="flex justify-between items-center bg-white/5 px-5 py-3.5 border-b border-white/5">
-            <h4 class="font-michroma text-base md:text-lg text-[#ffdd00] font-bold tracking-tight">${d.name}</h4>
-            <span class="text-xs font-sans text-white/60 font-semibold">Duración: ${d.duration}</span>
+          <!-- Descripción y Recomendación -->
+          <div class="space-y-3">
+            <p class="text-sm text-white/85 font-sans leading-relaxed font-normal">${d.description}</p>
+            
+            <div class="bg-black/40 border border-white/5 p-3.5 rounded-xl text-xs font-sans text-white/75 leading-relaxed">
+              <span class="text-[#ffdd00] uppercase font-bold tracking-wider text-[10px] font-michroma block mb-1">Recomendado para:</span>
+              ${d.recommended}
+            </div>
           </div>
 
-          <!-- Cuerpo de la tarjeta con padding -->
-          <div class="p-5 flex-1 flex flex-col justify-between gap-4">
-            <div class="space-y-3">
-              <p class="text-sm text-white/80 font-sans leading-relaxed font-semibold">${d.description}</p>
-              
-              <!-- Recomendación concisa -->
-              <div class="bg-black/30 border border-white/5 p-3 rounded-lg text-xs font-sans text-white/70 leading-relaxed font-semibold">
-                <span class="text-[#ffdd00] uppercase font-bold tracking-wider text-[10px] block mb-1">Recomendado para:</span>
-                ${d.recommended}
-              </div>
-            </div>
-
-            <div class="space-y-2">
-              <div class="flex flex-wrap gap-2 pt-1">
-                ${benefitsHtml}
-              </div>
+          <!-- Beneficios / Cualidades -->
+          <div class="space-y-2 pt-1">
+            <span class="text-[10px] font-michroma text-white/40 uppercase tracking-widest block">Beneficios de la disciplina:</span>
+            <div class="flex flex-wrap gap-2">
+              ${benefitsHtml}
             </div>
           </div>
         </div>
@@ -1535,8 +1495,32 @@ function renderDisciplines() {
 
     return `
       <div class="w-full shrink-0 snap-center snap-always px-2 sm:px-4 flex flex-col items-center" data-category="${cat}" data-index="${catIdx}">
-        <div class="w-full max-w-xl flex flex-col gap-6 max-h-[66vh] md:max-h-[72vh] overflow-y-auto no-scrollbar pb-16 touch-pan-y" style="-webkit-overflow-scrolling: touch;">
-          ${cardsHtml}
+        <div class="w-full max-w-xl flex flex-col gap-6 max-h-[72vh] md:max-h-[78vh] overflow-y-auto no-scrollbar pb-16 touch-pan-y" style="-webkit-overflow-scrolling: touch;">
+          
+          <!-- HERO IMAGE DE LA CATEGORÍA (ÚNICO POR CATEGORÍA) -->
+          <div class="w-full bg-gradient-to-b from-white/[0.08] via-black/40 to-black/60 border border-white/15 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
+            <!-- Resplandor ambiental de fondo -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,255,199,0.18)_0%,transparent_70%)] pointer-events-none"></div>
+
+            <!-- Gran Icono Vectorial Hero de la Categoría -->
+            <div class="relative z-10 w-28 h-28 sm:w-36 sm:h-36 text-[#0effc7] drop-shadow-[0_0_24px_rgba(14,255,199,0.4)] flex items-center justify-center mb-3">
+              ${iconSvg}
+            </div>
+
+            <!-- Título y Contador de Disciplinas de la Categoría -->
+            <h3 class="relative z-10 text-xl sm:text-2xl font-michroma font-bold text-white uppercase tracking-wider mb-1">
+              ${cat}
+            </h3>
+            <span class="relative z-10 text-[11px] font-michroma font-bold text-[#0effc7] uppercase tracking-widest">
+              ${countText}
+            </span>
+          </div>
+
+          <!-- TARJETAS DE CADA DISCIPLINA (SIN REPETIR EL ICONO) -->
+          <div class="flex flex-col gap-4">
+            ${cardsHtml}
+          </div>
+
         </div>
       </div>
     `;

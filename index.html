@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=16.3">
+  <link rel="stylesheet" href="css/styles.css?v=16.4">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -471,17 +471,12 @@
 
       <!-- Catálogo de Disciplinas: Swipe por Categorías & Scroll por Disciplinas -->
       <div class="space-y-4 max-w-3xl mx-auto">
-        <!-- Navegación de Categorías: Pills de Texto (Sin Iconos) -->
-        <div class="flex justify-center items-center gap-2 flex-wrap px-2" id="catalog-category-pills">
-          <!-- Renderizado dinámico por JS -->
-        </div>
-
         <!-- Paginación de Puntos (Indicador de Swipe de Categoría) -->
-        <div id="catalog-dots" class="flex justify-center gap-2 mb-1 z-10 relative"></div>
+        <div id="catalog-dots" class="flex justify-center gap-2 mb-2 z-10 relative"></div>
 
         <!-- Contenedor Swipe Horizontal (Categorías) y Scroll Vertical (Disciplinas) -->
-        <div class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar pt-2 items-start w-full scroll-smooth" id="disciplines-grid">
-          <!-- Render por JS: Cada slide es una categoría; dentro, las disciplinas con scroll vertical -->
+        <div class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar pt-1 items-start w-full scroll-smooth" id="disciplines-grid">
+          <!-- Render por JS: Cada slide es una categoría con su Hero y disciplinas en scroll vertical -->
         </div>
       </div>
     </section>
@@ -758,7 +753,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=16.3"></script>
-  <script src="js/app.js?v=16.3"></script>
+  <script src="js/data.js?v=16.4"></script>
+  <script src="js/app.js?v=16.4"></script>
 </body>
 </html>
