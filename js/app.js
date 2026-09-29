@@ -1063,7 +1063,7 @@ function renderSchedule() {
     let upcomingContentHtml = '';
     if (upcomingClasses.length > 0) {
       upcomingContentHtml = `
-        <div id="upcoming-schedule-section" class="space-y-6">
+        <div id="upcoming-schedule-section" class="space-y-6" style="min-height: calc(100vh - 160px);">
           ${spotlightHtml}
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2 px-2 sm:px-0">
             ${upcomingClasses.map(c => renderCardHtml(c, c.isCurrentLive ? 'active' : (c.isNextUpcoming ? 'upcoming' : 'day-class'), false)).join('')}
@@ -1071,7 +1071,11 @@ function renderSchedule() {
         </div>
       `;
     } else if (isToday) {
-      upcomingContentHtml = allFinishedBannerHtml;
+      upcomingContentHtml = `
+        <div id="upcoming-schedule-section" class="space-y-6" style="min-height: calc(100vh - 160px);">
+          ${allFinishedBannerHtml}
+        </div>
+      `;
     } else {
       upcomingContentHtml = `
         <div class="text-center text-white/40 font-bold py-16 uppercase tracking-widest text-xs font-michroma">
@@ -1091,17 +1095,21 @@ function renderSchedule() {
 
     scheduleArea.innerHTML = html;
 
-    // Anclaje instantáneo al límite de hora (ya "recorrido" según la hora actual)
+    // Anclaje instantáneo al límite de hora (al filo del selector sticky)
     if (isToday && pastClasses.length > 0) {
-      requestAnimationFrame(() => {
+      setTimeout(() => {
         const horizon = document.getElementById('schedule-time-horizon');
         const stickyControls = document.getElementById('schedule-sticky-controls');
-        if (horizon) {
-          const headerOffset = (stickyControls ? stickyControls.offsetHeight : 0) + 65;
-          const targetTop = horizon.getBoundingClientRect().top + window.scrollY - headerOffset;
+        if (horizon && stickyControls) {
+          const stickyBottomWhenSticking = 58 + stickyControls.offsetHeight;
+          const targetTop = horizon.getBoundingClientRect().top + window.scrollY - stickyBottomWhenSticking - 8;
           window.scrollTo({ top: Math.max(0, targetTop), behavior: 'instant' });
         }
-      });
+      }, 16);
+    } else if (isToday) {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }, 16);
     }
   }
 }
