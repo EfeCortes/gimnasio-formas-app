@@ -1727,7 +1727,18 @@ const CATEGORY_PERSUASIVE_COPY = {
   "Musculación": "Desarrolla fuerza real, protege tus articulaciones y gana vitalidad duradera."
 };
 
+window.scrollCatalogPrev = function() {
+  const nextIdx = Math.max(0, currentCatalogCategoryIndex - 1);
+  selectCatalogCategory(nextIdx);
+};
+
+window.scrollCatalogNext = function() {
+  const nextIdx = Math.min(CATALOG_CATEGORIES.length - 1, currentCatalogCategoryIndex + 1);
+  selectCatalogCategory(nextIdx);
+};
+
 window.selectCatalogCategory = function(idx) {
+  if (idx < 0 || idx >= CATALOG_CATEGORIES.length) return;
   currentCatalogCategoryIndex = idx;
   renderCatalogCategoryControls();
   const cat = CATALOG_CATEGORIES[idx];
@@ -1736,20 +1747,33 @@ window.selectCatalogCategory = function(idx) {
 
   const grid = document.getElementById('disciplines-grid');
   if (grid && grid.children[idx]) {
+    const slide = grid.children[idx];
+    const targetLeft = slide.offsetLeft - (grid.offsetWidth - slide.offsetWidth) / 2;
     grid.scrollTo({
-      left: grid.children[idx].offsetLeft,
+      left: Math.max(0, targetLeft),
       behavior: 'smooth'
     });
   }
 };
 
 function renderCatalogCategoryControls() {
-  const dotsContainer = document.getElementById('catalog-dots');
+  const chipsContainer = document.getElementById('catalog-category-chips');
+  const counterEl = document.getElementById('catalog-page-counter');
 
-  if (dotsContainer) {
-    dotsContainer.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => `
-      <button onclick="selectCatalogCategory(${idx})" class="w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${idx === currentCatalogCategoryIndex ? 'bg-white scale-125 shadow-md shadow-white/40' : 'bg-white/20 hover:bg-white/40'}" aria-label="Ir a ${cat}"></button>
-    `).join('');
+  if (chipsContainer) {
+    chipsContainer.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => {
+      const isActive = (idx === currentCatalogCategoryIndex);
+      return `
+        <button onclick="selectCatalogCategory(${idx})"
+                class="px-4 py-1.5 rounded-full text-xs font-michroma uppercase tracking-wider transition-all duration-300 cursor-pointer whitespace-nowrap ${isActive ? 'bg-white text-black font-bold shadow-lg shadow-white/30 scale-105' : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'}">
+          ${cat}
+        </button>
+      `;
+    }).join('');
+  }
+
+  if (counterEl) {
+    counterEl.innerText = `(${currentCatalogCategoryIndex + 1} / ${CATALOG_CATEGORIES.length})`;
   }
 }
 
@@ -1797,13 +1821,13 @@ function renderDisciplines() {
     const imgPath = CATEGORY_IMAGES[cat] || 'assets/images/musculacion.jpg';
     const persuasiveCopy = CATEGORY_PERSUASIVE_COPY[cat] || "Entrenamientos diseñados para alcanzar tu máximo potencial.";
 
-    const cardsHtml = disciplines.map(d => {
+    const disciplinesListHtml = disciplines.map((d, dIdx) => {
       // Generar badges de cualidades con escala de 5 puntos en tonos grises (cuadrados)
       const benefitsHtml = d.benefits.map(b => {
         const activeDots = '<span class="text-white/80 font-sans">■</span>'.repeat(b.points);
         const inactiveDots = '<span class="text-white/20 font-sans">■</span>'.repeat(5 - b.points);
         return `
-          <span class="text-xs bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full text-white/80 font-sans font-semibold flex items-center gap-2">
+          <span class="text-xs bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-white/80 font-sans font-semibold flex items-center gap-2">
             ${getBenefitSvg(b.text)}
             <span>${b.text}</span>
             <span class="flex gap-0.5 ml-1 tracking-tighter">${activeDots}${inactiveDots}</span>
@@ -1821,14 +1845,14 @@ function renderDisciplines() {
       }
 
       return `
-        <div class="glass-card rounded-[28px] overflow-hidden w-full border border-white/15 p-5 sm:p-6 space-y-4 shadow-xl shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
+        <div class="${dIdx > 0 ? 'pt-6 border-t border-white/10' : ''} space-y-3.5 text-left">
           <!-- Encabezado de la Disciplina: Nombre, Sala y Duración -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 border-b border-white/10 pb-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
             <div>
               <h4 class="font-michroma text-lg sm:text-xl text-white font-black tracking-tight">${d.name}</h4>
               <span class="text-xs font-sans text-white/60 font-semibold">${roomText}</span>
             </div>
-            <div class="self-start sm:self-auto px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-sans text-white/80 font-semibold">
+            <div class="self-start sm:self-auto px-3.5 py-1 rounded-full bg-white/10 border border-white/10 text-xs font-sans text-white/80 font-semibold">
               ${d.duration}
             </div>
           </div>
@@ -1837,14 +1861,14 @@ function renderDisciplines() {
           <div class="space-y-3">
             <p class="text-sm text-white/85 font-sans leading-relaxed font-normal">${d.description}</p>
             
-            <div class="bg-black/40 border border-white/5 p-4 rounded-2xl text-xs font-sans text-white/75 leading-relaxed">
+            <div class="bg-black/35 border border-white/5 p-3.5 rounded-2xl text-xs font-sans text-white/75 leading-relaxed">
               <span class="text-white/90 uppercase font-black tracking-wider text-[10px] font-michroma block mb-1">Recomendado para:</span>
               ${d.recommended}
             </div>
           </div>
 
           <!-- Beneficios / Cualidades -->
-          <div class="space-y-2 pt-1">
+          <div class="space-y-1.5 pt-1">
             <span class="text-[10px] font-michroma text-white/40 uppercase tracking-widest block">Beneficios de la disciplina:</span>
             <div class="flex flex-wrap gap-2">
               ${benefitsHtml}
@@ -1855,28 +1879,30 @@ function renderDisciplines() {
     }).join('');
 
     return `
-      <div class="w-full shrink-0 snap-center snap-always px-2 sm:px-4 flex flex-col items-center" data-category="${cat}" data-index="${catIdx}">
-        <div class="w-full max-w-xl flex flex-col gap-6 max-h-[72vh] md:max-h-[78vh] overflow-y-auto no-scrollbar pb-16 touch-pan-y" style="-webkit-overflow-scrolling: touch;">
+      <div class="w-[86vw] sm:w-[540px] md:w-[600px] shrink-0 snap-center snap-always flex flex-col items-center select-none" data-category="${cat}" data-index="${catIdx}">
+        <div class="catalog-glass-panel w-full p-6 sm:p-8 flex flex-col overflow-y-auto no-scrollbar shadow-2xl relative" onmouseenter="changeGlobalBackground('${imgPath}')">
           
-          <!-- HERO IMAGE DE LA CATEGORÍA (ÚNICO POR CATEGORÍA) -->
-          <div class="w-full bg-gradient-to-b from-white/[0.08] via-black/40 to-black/60 border border-white/15 rounded-[32px] p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
+          <!-- CABECERA HERO INTEGRADA (Icono, Título y Copy persuasivo en el mismo panel de vidrio) -->
+          <div class="flex flex-col items-center text-center pb-6 border-b border-white/15 shrink-0">
             <!-- Gran Icono Vectorial Hero de la Categoría -->
-            <div class="relative z-10 w-28 h-28 sm:w-36 sm:h-36 text-white flex items-center justify-center mb-3">
+            <div class="w-24 h-24 sm:w-28 sm:h-28 text-white flex items-center justify-center mb-2">
               ${iconSvg}
             </div>
 
-            <!-- Título y Copy persuasivo de la Categoría -->
-            <h3 class="relative z-10 text-xl sm:text-2xl font-michroma font-bold text-white uppercase tracking-wider mb-2">
+            <!-- Título de la Categoría -->
+            <h3 class="text-xl sm:text-2xl font-michroma font-bold text-white uppercase tracking-wider mb-2">
               ${cat}
             </h3>
-            <p class="relative z-10 text-xs sm:text-sm font-sans font-medium text-white/80 max-w-sm mx-auto leading-relaxed">
+
+            <!-- Copy persuasivo de la Categoría -->
+            <p class="text-xs sm:text-sm font-sans font-medium text-white/80 max-w-sm mx-auto leading-relaxed">
               ${persuasiveCopy}
             </p>
           </div>
 
-          <!-- TARJETAS DE CADA DISCIPLINA (SIN REPETIR EL ICONO) -->
-          <div class="flex flex-col gap-4">
-            ${cardsHtml}
+          <!-- LISTA UNIFICADA DE DISCIPLINAS (Integradas sin cajas sueltas) -->
+          <div class="space-y-6 pt-6">
+            ${disciplinesListHtml}
           </div>
 
         </div>
@@ -1909,8 +1935,10 @@ function renderDisciplines() {
 
     // Restaurar posición si ya había una categoría seleccionada
     if (currentCatalogCategoryIndex > 0 && grid.children[currentCatalogCategoryIndex]) {
+      const slide = grid.children[currentCatalogCategoryIndex];
+      const targetLeft = slide.offsetLeft - (grid.offsetWidth - slide.offsetWidth) / 2;
       grid.scrollTo({
-        left: grid.children[currentCatalogCategoryIndex].offsetLeft,
+        left: Math.max(0, targetLeft),
         behavior: 'auto'
       });
     }

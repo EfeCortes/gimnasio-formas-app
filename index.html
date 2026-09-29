@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=17.4">
+  <link rel="stylesheet" href="css/styles.css?v=17.6">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -479,13 +479,37 @@
       <div class="status-header">CATÁLOGO</div>
 
       <!-- Catálogo de Disciplinas: Swipe por Categorías & Scroll por Disciplinas -->
-      <div class="space-y-4 max-w-3xl mx-auto">
-        <!-- Paginación de Puntos (Indicador de Swipe de Categoría) -->
-        <div id="catalog-dots" class="flex justify-center gap-2 mb-2 z-10 relative"></div>
+      <div class="space-y-4 max-w-4xl mx-auto relative px-1 sm:px-2">
+        <!-- Barra de Categorías Chips & Píldora de Deslizar -->
+        <div class="flex flex-col items-center gap-3 mb-2 z-10 relative">
+          <!-- Chips de navegación rápida de categoría -->
+          <div id="catalog-category-chips" class="flex gap-2 overflow-x-auto no-scrollbar py-1 px-2 max-w-full justify-center"></div>
+          
+          <!-- Píldora animada de ayuda: Desliza para explorar -->
+          <div id="catalog-swipe-hint" class="flex items-center gap-2 text-white/50 text-[10px] font-michroma uppercase tracking-widest animate-pulse">
+            <span>◂</span>
+            <span>Desliza para explorar</span>
+            <span id="catalog-page-counter" class="text-white/80 font-bold">(1 / 6)</span>
+            <span>▸</span>
+          </div>
+        </div>
 
-        <!-- Contenedor Swipe Horizontal (Categorías) y Scroll Vertical (Disciplinas) -->
-        <div class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar pt-1 items-start w-full scroll-smooth" id="disciplines-grid">
-          <!-- Render por JS: Cada slide es una categoría con su Hero y disciplinas en scroll vertical -->
+        <!-- Contenedor con flechas laterales de navegación -->
+        <div class="relative w-full">
+          <!-- Flecha izquierda flotante -->
+          <button onclick="scrollCatalogPrev()" aria-label="Categoría anterior" class="hidden sm:flex absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/70 border border-white/25 backdrop-blur-xl text-white items-center justify-center hover:bg-white hover:text-black transition-all shadow-xl active:scale-95 cursor-pointer">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          
+          <!-- Contenedor Swipe Horizontal (Categorías con Peeking) -->
+          <div class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar py-2 items-start w-full scroll-smooth gap-4 sm:gap-6 px-4" id="disciplines-grid">
+            <!-- Render por JS: Cada slide es un solo panel de vidrio monolítico -->
+          </div>
+
+          <!-- Flecha derecha flotante -->
+          <button onclick="scrollCatalogNext()" aria-label="Categoría siguiente" class="hidden sm:flex absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/70 border border-white/25 backdrop-blur-xl text-white items-center justify-center hover:bg-white hover:text-black transition-all shadow-xl active:scale-95 cursor-pointer">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -762,7 +786,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=17.5"></script>
-  <script src="js/app.js?v=17.5"></script>
+  <script src="js/data.js?v=17.6"></script>
+  <script src="js/app.js?v=17.6"></script>
 </body>
 </html>
