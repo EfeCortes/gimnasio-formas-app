@@ -1768,6 +1768,18 @@ window.selectCatalogCategory = function(idx) {
       behavior: 'smooth'
     });
   }
+
+  // Reposicionar suavemente la vista vertical si el usuario había scrolleado hacia abajo
+  const storiesIndicator = document.getElementById('catalog-stories-indicator');
+  if (storiesIndicator) {
+    const rect = storiesIndicator.getBoundingClientRect();
+    if (rect.top < 60) {
+      window.scrollTo({
+        top: Math.max(0, window.pageYOffset + rect.top - 80),
+        behavior: 'smooth'
+      });
+    }
+  }
 };
 
 function renderCatalogCategoryControls() {
@@ -1901,7 +1913,7 @@ function renderDisciplines() {
 
     return `
       <div class="w-[86vw] sm:w-[540px] md:w-[600px] shrink-0 snap-center snap-always flex flex-col items-center select-none" data-category="${cat}" data-index="${catIdx}">
-        <div class="catalog-glass-panel w-full p-6 sm:p-8 flex flex-col overflow-y-auto no-scrollbar shadow-2xl relative" onmouseenter="changeGlobalBackground('${imgPath}')">
+        <div class="catalog-glass-panel w-full p-6 sm:p-8 flex flex-col shadow-2xl relative" onmouseenter="changeGlobalBackground('${imgPath}')">
           
           <!-- CABECERA HERO INTEGRADA (Icono, Título y Copy persuasivo en el mismo panel de vidrio) -->
           <div class="flex flex-col items-center text-center pb-6 border-b border-white/15 shrink-0">

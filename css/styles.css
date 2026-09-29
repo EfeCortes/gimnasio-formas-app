@@ -885,16 +885,11 @@ input, select, textarea {
   border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
   border-radius: 32px !important;
   box-shadow: 0 24px 60px 0 rgba(0, 0, 0, 0.65), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.32);
-  height: 72vh;
-  max-height: 720px;
-  min-height: 520px;
+  height: auto;
 }
 
 @media (max-width: 768px) {
   .catalog-glass-panel {
-    height: 70vh;
-    max-height: 680px;
-    min-height: 480px;
     border-radius: 28px !important;
   }
 }
