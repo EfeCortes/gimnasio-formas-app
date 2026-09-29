@@ -1771,7 +1771,6 @@ window.selectCatalogCategory = function(idx) {
 };
 
 function renderCatalogCategoryControls() {
-  const chipsContainer = document.getElementById('catalog-category-chips');
   const storiesContainer = document.getElementById('catalog-stories-indicator');
 
   if (storiesContainer) {
@@ -1789,22 +1788,10 @@ function renderCatalogCategoryControls() {
       return `
         <button type="button"
                 onclick="selectCatalogCategory(${idx})"
-                class="flex-1 py-1.5 flex flex-col justify-center cursor-pointer group focus:outline-none transition-transform active:scale-95"
+                class="flex-1 py-2 flex flex-col justify-center cursor-pointer group focus:outline-none transition-transform active:scale-95"
                 title="${cat} (${idx + 1} de ${CATALOG_CATEGORIES.length})"
                 aria-label="Ver categoría ${cat}">
           <span class="w-full ${barClass} rounded-full transition-all duration-300 block group-hover:bg-white/90"></span>
-        </button>
-      `;
-    }).join('');
-  }
-
-  if (chipsContainer) {
-    chipsContainer.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => {
-      const isActive = (idx === currentCatalogCategoryIndex);
-      return `
-        <button onclick="selectCatalogCategory(${idx})"
-                class="px-4 py-1.5 rounded-full text-xs font-michroma uppercase tracking-wider transition-all duration-300 cursor-pointer whitespace-nowrap ${isActive ? 'bg-white text-black font-bold shadow-lg shadow-white/30 scale-105' : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'}">
-          ${cat}
         </button>
       `;
     }).join('');
