@@ -30,11 +30,11 @@ const CATEGORY_MAP = {
   "BODY PUMP": "Aeróbicos",
   "ZUMBA": "Aeróbicos",
   "BODY JAM": "Aeróbicos",
-  "BODY ATTACK": "Cardio",
-  "LESMILLS GRIT": "Cardio",
+  "BODY ATTACK": "Aeróbicos",
+  "LESMILLS GRIT": "Aeróbicos",
   "LESMILLS CORE": "Aeróbicos",
-  "BODY COMBAT": "Cardio",
-  "POWER JUMP": "Cardio",
+  "BODY COMBAT": "Aeróbicos",
+  "POWER JUMP": "Aeróbicos",
   "HORARIO DE SALA (ABIERTO)": "Musculación",
   "TURNO MAÑANA": "Musculación",
   "TURNO TARDE": "Musculación",
@@ -43,6 +43,8 @@ const CATEGORY_MAP = {
   "SALA ABIERTA (ENTRENAMIENTO LIBRE)": "Musculación",
   "GUÍA DE ENTRENAMIENTO": "Musculación",
   "MUSCULACIÓN": "Musculación",
+  "CARDIO": "Cardio",
+  "SALA DE CARDIO": "Cardio",
 
   "Pilates": "Control",
   "Stretching": "Control",
@@ -55,11 +57,11 @@ const CATEGORY_MAP = {
   "Body Pump": "Aeróbicos",
   "Zumba": "Aeróbicos",
   "Body Jam": "Aeróbicos",
-  "Body Attack": "Cardio",
-  "LesMills Grit": "Cardio",
+  "Body Attack": "Aeróbicos",
+  "LesMills Grit": "Aeróbicos",
   "LesMills Core": "Aeróbicos",
-  "Body Combat": "Cardio",
-  "Power Jump": "Cardio",
+  "Body Combat": "Aeróbicos",
+  "Power Jump": "Aeróbicos",
   "Musculación": "Musculación",
   "Horario de Sala (Abierto)": "Musculación",
   "Turno Mañana": "Musculación",
@@ -67,7 +69,9 @@ const CATEGORY_MAP = {
   "Turno Noche": "Musculación",
   "Turno Sábado": "Musculación",
   "Sala Abierta (Entrenamiento Libre)": "Musculación",
-  "Guía de Entrenamiento": "Musculación"
+  "Guía de Entrenamiento": "Musculación",
+  "Cardio": "Cardio",
+  "Sala de Cardio": "Cardio"
 };
 
 // Cronograma semanal con IDs únicos por clase
@@ -311,7 +315,7 @@ const DISCIPLINES_CATALOG = [
   },
   {
     name: "POWER JUMP",
-    category: "Cardio",
+    category: "Aeróbicos",
     intensity: "Alta",
     room: "Piso 2",
     duration: "50 min",
@@ -353,7 +357,7 @@ const DISCIPLINES_CATALOG = [
   },
   {
     name: "BODY COMBAT",
-    category: "Cardio",
+    category: "Aeróbicos",
     intensity: "Alta",
     room: "Piso 2",
     duration: "50 min",
@@ -367,7 +371,7 @@ const DISCIPLINES_CATALOG = [
   },
   {
     name: "LESMILLS GRIT",
-    category: "Cardio",
+    category: "Aeróbicos",
     intensity: "Muy Alta (HIIT)",
     room: "Piso 2",
     duration: "30 min",
@@ -377,6 +381,20 @@ const DISCIPLINES_CATALOG = [
       { text: "Quema calórica post-entreno", points: 5 },
       { text: "Potencia cardiovascular", points: 5 },
       { text: "Resistencia anaeróbica", points: 4 }
+    ]
+  },
+  {
+    name: "CARDIO",
+    category: "Cardio",
+    intensity: "Libre / Variable",
+    room: "Sala de Cardio",
+    duration: "Libre",
+    description: "Sala de equipamiento cardiovascular con escaladoras, bicicletas estáticas y cintas de correr. Funciona en modalidad de entrenamiento libre a tu propio ritmo (sin instructor), equipada con pantallas de televisión para ver programas y entretenimiento mientras entrenas.",
+    recommended: "Cualquier persona que busque acondicionamiento cardiovascular, quemar calorías o complementar su entrenamiento de musculación.",
+    benefits: [
+      { text: "Salud cardiovascular", points: 5 },
+      { text: "Quema de calorías", points: 5 },
+      { text: "Resistencia física", points: 4 }
     ]
   },
   {

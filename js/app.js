@@ -553,7 +553,6 @@ loadDynamicCategoryIcons();
 
 function isCategoryMatched(classCategory, filter) {
   if (filter === 'ALL') return true;
-  if (filter === 'Aeróbicos' && (classCategory === 'Aeróbicos' || classCategory === 'Cardio')) return true;
   return classCategory === filter;
 }
 
@@ -1733,8 +1732,8 @@ const CATALOG_CATEGORIES = ['Aeróbicos', 'Cardio', 'Control', 'Spinning', 'Func
 let currentCatalogCategoryIndex = 0;
 
 const CATEGORY_PERSUASIVE_COPY = {
-  "Aeróbicos": "Entrena al ritmo de la música, tonifica tu cuerpo y recárgate de energía en grupo.",
-  "Cardio": "Eleva tu resistencia, libera adrenalina y quema calorías desafiando tus propios límites.",
+  "Aeróbicos": "Clases grupales llenas de energía, música y dinamismo: Body Pump, Power Jump, Combat, Zumba y más.",
+  "Cardio": "Cintas de correr, bicicletas y escaladoras para tu entrenamiento libre, con pantallas de TV para entrenar a tu ritmo.",
   "Control": "Alinea tu columna, fortalece tu zona media y recupera la armonía de tu cuerpo.",
   "Spinning": "Pedalea con potencia y ritmo: máxima quema metabólica cuidando tus articulaciones.",
   "Funcional": "Movimientos ágiles y fuerza inteligente para rendir al máximo en tu día a día.",
@@ -1873,6 +1872,8 @@ function renderDisciplines() {
         roomText = roomText;
       } else if (roomText.toLowerCase().includes("piso")) {
         roomText = `Aeróbicos ${roomText}`;
+      } else if (roomText.toLowerCase().includes("planta")) {
+        roomText = `Planta Baja`;
       } else {
         roomText = `Sala de ${roomText}`;
       }
