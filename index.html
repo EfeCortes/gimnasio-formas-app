@@ -11,10 +11,10 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,700&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=17.6">
+  <link rel="stylesheet" href="css/styles.css?v=17.7">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -46,7 +46,7 @@
 
       <!-- VISTA 1: Selector de Rol -->
       <div id="role-view-select" class="space-y-6">
-        <h2 class="text-white font-michroma text-sm tracking-widest uppercase">Selecciona tu Rol</h2>
+        <h2 class="text-white font-exo font-bold text-sm tracking-widest uppercase">Selecciona tu Rol</h2>
         <p class="text-xs text-white/50 font-sans">Elige tu forma de ingreso para adaptar el contenido.</p>
         
         <div class="space-y-4 pt-2">
@@ -61,7 +61,7 @@
 
       <!-- VISTA 2: Login de Staff -->
       <div id="role-view-login" class="space-y-5 hidden">
-        <h2 class="text-white font-michroma text-sm tracking-widest uppercase">Ingreso Personal</h2>
+        <h2 class="text-white font-exo font-bold text-sm tracking-widest uppercase">Ingreso Personal</h2>
         <p class="text-xs text-white/50 font-sans">Introduce tus credenciales para acceder a los paneles.</p>
         
         <form onsubmit="handleStaffAuth(event)" class="space-y-4 font-sans text-left">
@@ -111,7 +111,7 @@
 
       <!-- ESTADO A: Formulario de Registro -->
       <div id="reg-step-form" class="space-y-4">
-        <h2 class="text-xl font-michroma text-white uppercase tracking-wider">Registro de Socio</h2>
+        <h2 class="text-xl font-exo font-bold text-white uppercase tracking-wider">Registro de Socio</h2>
         <p class="text-xs text-white/50 font-sans">Ingresa tus datos para registrar este dispositivo en el sistema de reservas.</p>
         
         <form onsubmit="handleRegistration(event)" class="space-y-4 font-sans text-left">
@@ -131,7 +131,7 @@
 
       <!-- ESTADO B: Esperando Activación -->
       <div id="reg-step-pending" class="space-y-5 hidden">
-        <h2 class="text-xl font-michroma text-[#fddb00] uppercase tracking-wider">PENDIENTE DE ACTIVACIÓN</h2>
+        <h2 class="text-xl font-exo font-bold text-[#fddb00] uppercase tracking-wider">PENDIENTE DE ACTIVACIÓN</h2>
         <p class="text-xs text-white/70 font-sans leading-relaxed">
           Tu dispositivo se ha registrado correctamente. Envía tu código a la recepción del gimnasio por WhatsApp para darte de alta.
         </p>
@@ -159,7 +159,7 @@
 
       <!-- ESTADO C: Cuenta Inactiva/Suspendida -->
       <div id="reg-step-inactive" class="space-y-4 hidden">
-        <h2 class="text-xl font-michroma text-red-500 uppercase tracking-wider">CUENTA SUSPENDIDA / INACTIVA</h2>
+        <h2 class="text-xl font-exo font-bold text-red-500 uppercase tracking-wider">CUENTA SUSPENDIDA / INACTIVA</h2>
         <p class="text-xs text-white/70 font-sans leading-relaxed">
           Tu cuenta ha sido desactivada temporalmente por la administración del gimnasio. Por favor comunícate con recepción.
         </p>
@@ -217,7 +217,7 @@
     <section id="tab-section-horarios" class="tab-section hidden">
       <!-- Cabecera de Horarios Simplificada y Centrada -->
       <div class="text-center mb-4">
-        <h1 class="text-3xl md:text-4xl font-michroma font-bold text-white tracking-wider uppercase">
+        <h1 class="text-3xl md:text-4xl font-exo font-bold text-white tracking-wider uppercase">
           HORARIOS
         </h1>
       </div>
@@ -266,7 +266,7 @@
 
       <div class="max-w-md mx-auto bg-[#161616] p-6 rounded-2xl border border-[#282828] space-y-6 text-center font-sans">
         <div class="space-y-1">
-          <h2 class="text-base font-michroma text-[#ffdd00] uppercase tracking-wider">📌 GIMNASIO FORMAS</h2>
+          <h2 class="text-base font-exo font-bold text-[#ffdd00] uppercase tracking-wider">📌 GIMNASIO FORMAS</h2>
           <p class="text-[10px] text-white/50 uppercase tracking-widest font-michroma">Centro de entrenamiento y salud</p>
         </div>
 
@@ -336,7 +336,7 @@
       <!-- Sugerencias integradas en sección contacto -->
       <div class="max-w-xl mx-auto bg-[#161616] p-6 sm:p-8 rounded-[28px] border border-white/15 space-y-5 mt-8 shadow-xl">
         <div class="text-center space-y-1">
-          <h2 class="text-base font-michroma text-white font-bold uppercase tracking-wider">💡 Propón una nueva clase u horario</h2>
+          <h2 class="text-base font-exo font-bold text-white uppercase tracking-wider">💡 Propón una nueva clase u horario</h2>
           <p class="text-xs text-white/60 font-sans">
             ¿Quieres otra disciplina o un horario que se adapte mejor a ti? Dinos tu propuesta.
           </p>
@@ -395,7 +395,7 @@
         
         <!-- Login del Staff -->
         <div id="staff-login-card" class="bg-[#0a0a0a] border-2 border-[#222] p-6 rounded-2xl max-w-md mx-auto space-y-4">
-          <h3 class="text-center font-michroma text-white text-base uppercase">Ingreso del Personal</h3>
+          <h3 class="text-center font-exo font-bold text-white text-base uppercase">Ingreso del Personal</h3>
           
           <div class="space-y-3 font-sans">
             <div>
@@ -416,7 +416,7 @@
         <!-- PANEL DE ADMINISTRACIÓN / RECEPCIÓN (Escondido al inicio) -->
         <div id="panel-admin" class="space-y-6 hidden">
           <div class="flex justify-between items-center border-b border-[#222] pb-4">
-            <h2 class="font-michroma text-lg text-white">PANEL DE RECEPCIÓN & SOCIOS</h2>
+            <h2 class="font-exo font-bold text-lg text-white">PANEL DE RECEPCIÓN & SOCIOS</h2>
             <button onclick="logoutStaff()" class="border border-red-500/50 text-red-400 font-michroma text-[9px] px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
               SALIR PANEL
             </button>
@@ -425,7 +425,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Columna Izquierda: Control de Activaciones -->
             <div class="lg:col-span-2 bg-[#0a0a0a] border-2 border-[#222] p-5 rounded-xl space-y-4">
-              <h3 class="font-michroma text-xs text-white/50 uppercase tracking-widest">Control de Socios y Dispositivos</h3>
+              <h3 class="font-exo font-bold text-xs text-white/50 uppercase tracking-widest">Control de Socios y Dispositivos</h3>
               
               <div class="overflow-x-auto">
                 <table class="w-full text-left font-sans text-xs text-white/80">
@@ -446,7 +446,7 @@
 
             <!-- Columna Derecha: Monitoreo de Clases -->
             <div class="bg-[#0a0a0a] border-2 border-[#222] p-5 rounded-xl space-y-4">
-              <h3 class="font-michroma text-xs text-white/50 uppercase tracking-widest">Reservas Hoy</h3>
+              <h3 class="font-exo font-bold text-xs text-white/50 uppercase tracking-widest">Reservas Hoy</h3>
               <div id="admin-reservas-stats" class="space-y-2 max-h-[400px] overflow-y-auto pr-1">
                 <!-- Dinámico -->
               </div>
@@ -458,7 +458,7 @@
         <div id="panel-instructor" class="space-y-6 hidden">
           <div class="flex justify-between items-center border-b border-[#222] pb-4">
             <div>
-              <h2 class="font-michroma text-lg text-white" id="instructor-welcome-title">CLASES DE INSTRUCTOR</h2>
+              <h2 class="font-exo font-bold text-lg text-white" id="instructor-welcome-title">CLASES DE INSTRUCTOR</h2>
               <span class="text-[10px] text-white/40 font-michroma" id="instructor-name-badge">INSTRUCTOR</span>
             </div>
             <button onclick="logoutStaff()" class="border border-red-500/50 text-red-400 font-michroma text-[9px] px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
@@ -525,7 +525,7 @@
           <div class="space-y-4">
             <div class="text-center md:text-left">
               <span class="text-[10px] font-michroma text-white/50 uppercase tracking-widest block mb-1">Para entrenar a tu ritmo</span>
-              <h2 class="text-lg md:text-xl font-michroma text-white font-black leading-tight">Si entrenas de forma intermitente</h2>
+              <h2 class="text-xl md:text-2xl font-exo font-bold text-white leading-tight">Si entrenas de forma intermitente</h2>
             </div>
             
             <!-- LISTA DE PRECIOS -->
@@ -586,7 +586,7 @@
           <div class="space-y-4">
             <div class="text-center md:text-left">
               <span class="text-[10px] font-michroma text-white/50 uppercase tracking-widest block mb-1">Para máximo rendimiento</span>
-              <h2 class="text-lg md:text-xl font-michroma text-white font-black leading-tight">Si estás comprometido con tu entrenamiento</h2>
+              <h2 class="text-xl md:text-2xl font-exo font-bold text-white leading-tight">Si estás comprometido con tu entrenamiento</h2>
             </div>
             
             <!-- SUSCRIPCIÓN MENSUAL -->
@@ -675,7 +675,7 @@
       
       <div class="text-center space-y-4 font-sans">
         <span class="text-xs font-michroma text-white/50 uppercase tracking-widest block">Confirmar Reserva</span>
-        <h3 id="modal-class-title" class="text-2xl font-michroma text-white">BODY PUMP</h3>
+        <h3 id="modal-class-title" class="text-2xl font-exo font-bold text-white">BODY PUMP</h3>
         
         <div id="modal-class-details" class="bg-[#141414] border border-white/15 p-5 rounded-2xl text-left text-xs space-y-2 text-white/80">
           <!-- Render dinámico -->
@@ -709,7 +709,7 @@
           <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         </div>
 
-        <h3 id="profile-modal-name" class="text-xl font-michroma text-white font-bold">Nombre de Usuario</h3>
+        <h3 id="profile-modal-name" class="text-xl font-exo font-bold text-white">Nombre de Usuario</h3>
         
         <div class="bg-[#141414] border border-white/15 p-5 rounded-2xl text-left text-xs space-y-3 text-white/80">
           <div class="flex justify-between border-b border-white/10 pb-2">
@@ -759,7 +759,7 @@
       <div class="space-y-4 font-sans">
         <div class="text-center">
           <span class="text-xs font-michroma text-white/50 uppercase tracking-widest block">Tablero de Avisos</span>
-          <h3 class="text-lg font-michroma text-white mt-1 font-bold">NOVEDADES EN FORMAS</h3>
+          <h3 class="text-lg font-exo font-bold text-white mt-1">NOVEDADES EN FORMAS</h3>
         </div>
         
         <div class="space-y-3 max-h-[300px] overflow-y-auto pr-1">
@@ -786,7 +786,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=17.6"></script>
-  <script src="js/app.js?v=17.6"></script>
+  <script src="js/data.js?v=17.7"></script>
+  <script src="js/app.js?v=17.7"></script>
 </body>
 </html>

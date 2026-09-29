@@ -1002,7 +1002,7 @@ function renderSchedule() {
                     ${spotCat}
                   </span>
                 </div>
-                <h3 class="text-2xl sm:text-3xl font-michroma font-bold text-white tracking-wide">
+                <h3 class="text-2xl sm:text-3xl font-exo font-bold text-white tracking-wide">
                   ${spotClass.n}
                 </h3>
                 <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 text-white/70 text-xs sm:text-sm font-sans">
@@ -1439,7 +1439,7 @@ function renderReservations() {
     <div class="bg-[#181818]/90 backdrop-blur-md border border-white/20 p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
       <div class="space-y-1 font-sans">
         <span class="text-xs font-michroma font-black text-white/90 uppercase tracking-widest block">RESERVADO</span>
-        <h4 class="text-xl font-michroma font-bold text-white">${r.className}</h4>
+        <h4 class="text-xl font-exo font-bold text-white">${r.className}</h4>
         <div class="text-xs text-white/70">
           ${r.dayName} • ${r.time} hs • ${ROOM_MAP[r.roomCode] || r.roomCode} • Instructora: ${formatInstructor(r.instructor)}
         </div>
@@ -1658,7 +1658,7 @@ function renderInstructorPanel(instructorName) {
       <div class="bg-[#0a0a0a] border-2 border-[#222] p-5 rounded-xl space-y-4">
         <div class="flex justify-between items-center border-b border-[#222] pb-3">
           <div>
-            <h4 class="font-michroma text-base text-[#0effc7]">${c.n}</h4>
+            <h4 class="font-exo font-bold text-base text-[#0effc7]">${c.n}</h4>
             <div class="text-xs text-white/50">${c.t} • ${c.roomName}</div>
           </div>
           <div class="text-right">
@@ -1849,7 +1849,7 @@ function renderDisciplines() {
           <!-- Encabezado de la Disciplina: Nombre, Sala y Duración -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
             <div>
-              <h4 class="font-michroma text-lg sm:text-xl text-white font-black tracking-tight">${d.name}</h4>
+              <h4 class="font-exo font-bold text-lg sm:text-xl text-white tracking-tight">${d.name}</h4>
               <span class="text-xs font-sans text-white/60 font-semibold">${roomText}</span>
             </div>
             <div class="self-start sm:self-auto px-3.5 py-1 rounded-full bg-white/10 border border-white/10 text-xs font-sans text-white/80 font-semibold">
@@ -1890,7 +1890,7 @@ function renderDisciplines() {
             </div>
 
             <!-- Título de la Categoría -->
-            <h3 class="text-xl sm:text-2xl font-michroma font-bold text-white uppercase tracking-wider mb-2">
+            <h3 class="text-xl sm:text-2xl font-exo font-bold text-white uppercase tracking-wider mb-2">
               ${cat}
             </h3>
 
