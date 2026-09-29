@@ -955,16 +955,28 @@ function renderSchedule() {
 
     const todayDayIndex = now.getDay();
     const isToday = (selectedDayView === todayDayIndex);
+    
+    let foundNext = false;
+    allDayList.forEach(cls => {
+      let endMins = cls.mins + 60;
+      if (cls.range) {
+        const parts = cls.range.split(' - ');
+        if (parts.length === 2) endMins = getMins(parts[1].trim());
+      }
+      cls.endMins = endMins;
+      if (isToday) {
+        if (curMins >= cls.mins && curMins < endMins) {
+          cls.isCurrentLive = true;
+        } else if (!foundNext && curMins < cls.mins) {
+          cls.isNextUpcoming = true;
+          foundNext = true;
+        }
+      }
+    });
+
     let allFinishedBannerHtml = '';
     if (isToday && allDayList.length > 0) {
-      const allFinished = allDayList.every(cls => {
-        let endMins = cls.mins + 60;
-        if (cls.range) {
-          const parts = cls.range.split(' - ');
-          if (parts.length === 2) endMins = getMins(parts[1].trim());
-        }
-        return curMins >= endMins;
-      });
+      const allFinished = allDayList.every(cls => curMins >= cls.endMins);
 
       if (allFinished) {
         const nextDayIdx = selectedDayView < 6 ? selectedDayView + 1 : 1;
@@ -977,7 +989,7 @@ function renderSchedule() {
                 No quedan más clases de <strong class="text-white">${categoryFilter === 'ALL' ? 'disciplinas' : categoryFilter}</strong> por hoy.
               </span>
             </div>
-            <button onclick="changeDay(${nextDayIdx})" class="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white hover:text-black border border-white/20 text-white font-michroma font-bold text-[10px] tracking-wider uppercase transition-all duration-200 shrink-0">
+            <button onclick="changeDay(${nextDayIdx})" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white hover:text-black border border-white/20 text-white font-michroma font-bold text-[10px] tracking-wider uppercase transition-all duration-200 shrink-0">
               Ver ${nextDayName} →
             </button>
           </div>
@@ -992,7 +1004,7 @@ function renderSchedule() {
       if (selectedDayView === 0) muscHours = GYM_INFO.musculacionHours.sundays;
       muscHeaderHtml = `
         <div class="space-y-4 max-w-xl mx-auto mb-6">
-          <div class="bg-[#0a0a0a] border border-white/15 p-4 rounded-xl text-center">
+          <div class="bg-[#0a0a0a] border border-white/15 p-4 rounded-2xl text-center">
             <span class="text-[10px] font-michroma text-white/60 uppercase tracking-widest block mb-1">Horario de Atención de la Sala</span>
             <div class="text-base md:text-lg font-michroma text-white font-bold">${muscHours}</div>
           </div>
@@ -1013,7 +1025,7 @@ function renderSchedule() {
 
         ${allDayList.length > 0 ? `
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4 px-2 sm:px-0">
-            ${allDayList.map(c => renderCardHtml(c, 'soon', true)).join('')}
+            ${allDayList.map(c => renderCardHtml(c, c.isCurrentLive ? 'active' : (c.isNextUpcoming ? 'upcoming' : 'day-class'), false)).join('')}
           </div>
         ` : `
           <div class="text-center text-white/40 font-bold py-16 uppercase tracking-widest text-xs font-michroma">
@@ -1031,27 +1043,19 @@ function renderSchedule() {
 function renderCardHtml(item, statusType, forceWhiteBorder = false) {
   let label = '';
   let cardClass = '';
-  let color = '';
 
-  if (forceWhiteBorder) {
-    cardClass = 'status-white';
-    color = '#ffffff';
-  } else if (statusType === 'just-started') { 
+  if (statusType === 'just-started') { 
     label = 'Acaba de comenzar'; 
     cardClass = 'status-just-started'; 
-    color = 'var(--color-just-started)'; 
   } else if (statusType === 'active') { 
     label = 'Ahora mismo'; 
     cardClass = 'status-active'; 
-    color = 'var(--color-active)'; 
   } else if (statusType === 'later') { 
     label = 'Espera'; 
     cardClass = 'status-later'; 
-    color = 'var(--color-later)'; 
-  } else { 
+  } else if (statusType === 'upcoming') { 
     label = 'Siguiente'; 
     cardClass = 'status-upcoming'; 
-    color = 'var(--color-upcoming)'; 
   }
 
   const cat = CATEGORY_MAP[item.n] || "Grupales";
@@ -1059,53 +1063,83 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
   const isBooked = isClassBooked(item.id);
   const seatsAvailable = getAvailableSeats(item.id, item.cap || 20);
 
-  let seatsBadgeClass = 'seats-badge';
-  if (seatsAvailable <= 3) seatsBadgeClass += ' low';
-  if (seatsAvailable === 0) seatsBadgeClass += ' full';
-
-  const statusLabel = (activeView === 'live' && label) ? `
-    <div class="status-label tactic-bold text-white flex items-center justify-center gap-2">
-      <span class="w-2 h-2 rounded-full bg-white shrink-0 animate-ping"></span>
-      <span class="text-xs font-black tracking-widest text-white">${label}</span>
-    </div>
-  ` : '';
-
   const now = getSimulatedDate();
   const todayDayIndex = now.getDay();
   const isToday = (activeView === 'live' || selectedDayView === todayDayIndex);
   const curMins = now.getHours() * 60 + now.getMinutes();
   const classStartMins = getMins(item.t);
   const hasStarted = isToday && (curMins >= classStartMins);
-  let isExpired = false;
-  if (isToday) {
-    let endMins = classStartMins + 60; // por defecto 60 min
-    if (item.range) {
-      const parts = item.range.split(' - ');
-      if (parts.length === 2) {
-        endMins = getMins(parts[1].trim());
-      }
-    }
-    if (curMins >= endMins) {
-      isExpired = true;
+  
+  let endMins = classStartMins + 60; // por defecto 60 min
+  if (item.range) {
+    const parts = item.range.split(' - ');
+    if (parts.length === 2) {
+      endMins = getMins(parts[1].trim());
     }
   }
+  const isExpired = isToday && (curMins >= endMins);
+  const isCurrentLive = isToday && (curMins >= classStartMins && curMins < endMins);
+  const isNextUpcoming = !isExpired && (item.isNextUpcoming || statusType === 'upcoming');
+  const isHero = !isExpired && (isCurrentLive || isNextUpcoming || statusType === 'active' || statusType === 'just-started');
 
+  // Top Badge (Status / Category Pill)
+  let topBadgeHtml = '';
+  if (isCurrentLive || statusType === 'active' || statusType === 'just-started') {
+    topBadgeHtml = `
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-black font-michroma font-black text-[9px] tracking-widest uppercase shadow-md shadow-white/20">
+        <span class="w-1.5 h-1.5 rounded-full bg-black shrink-0 animate-ping"></span>
+        EN VIVO
+      </span>
+    `;
+  } else if (isNextUpcoming) {
+    topBadgeHtml = `
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-michroma font-bold text-[9px] tracking-wider uppercase border border-white/30">
+        <span class="w-1.5 h-1.5 rounded-full bg-white shrink-0"></span>
+        PRÓXIMA
+      </span>
+    `;
+  } else if (isExpired) {
+    topBadgeHtml = `
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/5 text-white/40 text-[9px] font-michroma uppercase tracking-wider">
+        FINALIZADA
+      </span>
+    `;
+  } else {
+    topBadgeHtml = `
+      <span class="text-[10px] font-michroma font-bold uppercase tracking-widest text-white/50 px-2 py-0.5">
+        ${cat}
+      </span>
+    `;
+  }
+
+  // Botón de Reserva en cápsula completa
   let btnHtml = '';
   if (cat === 'Musculación') {
-    // Musculación no tiene reservas individuales por turno de instructor
     btnHtml = '';
   } else if (hasStarted) {
     if (isBooked) {
-      btnHtml = `<button onclick="openUserProfileModal()" class="btn-reserve btn-started-inactive" style="border: none;">✓ EN CURSO</button>`;
+      btnHtml = `<button onclick="openUserProfileModal()" class="btn-reserve reserved">✓ EN CURSO</button>`;
     } else {
-      btnHtml = `<button onclick="handleStartedClassClick('${item.n}')" class="btn-reserve btn-started-inactive" style="border: none;">INICIADA</button>`;
+      btnHtml = `<button onclick="handleStartedClassClick('${item.n}')" class="btn-reserve btn-started-inactive">INICIADA</button>`;
     }
   } else if (isBooked) {
-    btnHtml = `<button onclick="openUserProfileModal()" class="btn-reserve reserved" style="border: none;">✓ RESERVADO</button>`;
+    btnHtml = `<button onclick="openUserProfileModal()" class="btn-reserve reserved">✓ RESERVADO</button>`;
   } else if (seatsAvailable === 0) {
-    btnHtml = `<button class="btn-reserve full" disabled style="border: none; background: #e11d48 !important; color: #ffffff !important; opacity: 1 !important;">CLASE LLENA</button>`;
+    btnHtml = `<button class="btn-reserve full" disabled style="background: #e11d48 !important; color: #ffffff !important; opacity: 1 !important;">CLASE LLENA</button>`;
   } else {
-    btnHtml = `<button onclick="openReserveModal('${item.id}', '${item.n}', '${item.t}', '${item.roomCode}', '${item.i}')" class="btn-reserve" style="border: none;">RESERVAR</button>`;
+    btnHtml = `<button onclick="openReserveModal('${item.id}', '${item.n}', '${item.t}', '${item.roomCode}', '${item.i}')" class="btn-reserve">RESERVAR</button>`;
+  }
+
+  // Seats Availability micro-tag
+  let seatsHtml = '';
+  if (cat !== 'Musculación' && !isExpired) {
+    if (seatsAvailable === 0) {
+      seatsHtml = `<div class="text-[10px] font-michroma font-bold text-white/40 uppercase tracking-widest mt-1">Clase Completa</div>`;
+    } else if (seatsAvailable <= 3) {
+      seatsHtml = `<div class="text-[10px] font-michroma font-bold text-white/80 uppercase tracking-widest mt-1">¡Últimos ${seatsAvailable} Cupos!</div>`;
+    } else {
+      seatsHtml = `<div class="text-[10px] font-sans font-medium text-white/40 tracking-wider mt-1">${seatsAvailable} cupos disponibles</div>`;
+    }
   }
 
   const displayTime = item.range || `${item.t} hs`;
@@ -1114,43 +1148,57 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
   // Clase CSS de vigencia por expiración
   let expiredCardClass = '';
   if (isExpired) {
-    expiredCardClass = 'opacity-65 border-white/5 bg-[#121212]/50 grayscale-[40%] pointer-events-none';
+    expiredCardClass = 'opacity-35 border-white/5 bg-[#101010]/40 grayscale-[70%] pointer-events-none';
   }
 
   if (cat === 'Musculación') {
     return `
-      <div id="card-${item.id}" class="class-card ${cardClass} ${expiredCardClass}" data-mins="${classStartMins}" data-has-started="${hasStarted}" data-is-expired="${isExpired}" data-category="${cat}" onmouseenter="changeGlobalBackground('${imgPath}')">
-        <div class="card-header-gray">
-          <span>${roomName}</span>
-          <span class="text-xs uppercase font-michroma opacity-75">${cat}</span>
+      <div id="card-${item.id}" class="class-card ${isHero ? 'hero-class-card' : ''} ${expiredCardClass}" data-mins="${classStartMins}" data-has-started="${hasStarted}" data-is-expired="${isExpired}" data-category="${cat}" onmouseenter="changeGlobalBackground('${imgPath}')">
+        <!-- Barra Superior con Píldoras -->
+        <div class="flex items-center justify-between gap-2 px-1 pt-1 pb-1">
+          <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 text-white/90 text-[11px] font-sans font-semibold tracking-wide border border-white/10">
+            ${roomName}
+          </span>
+          ${topBadgeHtml}
         </div>
+
+        <!-- Contenido Central con Jerarquía Tipográfica Escalar -->
         <div class="card-body">
-          ${statusLabel}
-          <div class="text-xl md:text-2xl font-michroma font-black text-white tracking-tight mb-1">${displayTime}</div>
+          <div class="class-time-display">${displayTime}</div>
           <div class="class-name tactic-bold">${formatInstructor(item.i)}</div>
+          <div class="instructor-name">Asistencia y Guía Personalizada</div>
+          <div class="text-[10px] font-sans text-white/40 tracking-wider mt-1">Acceso libre en sala</div>
         </div>
+
+        <div class="pb-1"></div>
       </div>
     `;
   }
 
   return `
-    <div id="card-${item.id}" class="class-card ${cardClass} ${expiredCardClass}" data-mins="${classStartMins}" data-has-started="${hasStarted}" data-is-expired="${isExpired}" data-category="${cat}" onmouseenter="changeGlobalBackground('${imgPath}')">
-      <div class="card-header-gray">
-        <span>${roomName}</span>
-        <span class="text-xs uppercase font-michroma opacity-75">${cat}</span>
+    <div id="card-${item.id}" class="class-card ${isHero ? 'hero-class-card' : ''} ${expiredCardClass}" data-mins="${classStartMins}" data-has-started="${hasStarted}" data-is-expired="${isExpired}" data-category="${cat}" onmouseenter="changeGlobalBackground('${imgPath}')">
+      <!-- Barra Superior con Píldoras -->
+      <div class="flex items-center justify-between gap-2 px-1 pt-1 pb-1">
+        <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 text-white/90 text-[11px] font-sans font-semibold tracking-wide border border-white/10">
+          ${roomName}
+        </span>
+        ${topBadgeHtml}
       </div>
+
+      <!-- Contenido Central con Jerarquía Tipográfica Escalar -->
       <div class="card-body">
-        ${statusLabel}
-        <div class="text-xl md:text-2xl font-michroma font-black text-white tracking-tight mb-1">${displayTime}</div>
+        <div class="class-time-display">${displayTime}</div>
         <div class="class-name tactic-bold">${item.n}</div>
         <div class="instructor-name">Con ${formatInstructor(item.i)}</div>
-        
-        ${btnHtml ? `
-        <div class="pt-1 flex flex-col gap-3">
-          ${btnHtml}
-        </div>
-        ` : ''}
+        ${seatsHtml}
       </div>
+
+      <!-- Botón de Acción en Cápsula Completa -->
+      ${btnHtml ? `
+      <div class="w-full pt-1">
+        ${btnHtml}
+      </div>
+      ` : '<div class="pb-1"></div>'}
     </div>
   `;
 }
@@ -1680,7 +1728,7 @@ function renderDisciplines() {
         const activeDots = '<span class="text-white/80 font-sans">■</span>'.repeat(b.points);
         const inactiveDots = '<span class="text-white/20 font-sans">■</span>'.repeat(5 - b.points);
         return `
-          <span class="text-xs bg-white/5 border border-white/10 px-3 py-1.5 rounded text-white/80 font-sans font-semibold flex items-center gap-2">
+          <span class="text-xs bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full text-white/80 font-sans font-semibold flex items-center gap-2">
             ${getBenefitSvg(b.text)}
             <span>${b.text}</span>
             <span class="flex gap-0.5 ml-1 tracking-tighter">${activeDots}${inactiveDots}</span>
@@ -1698,14 +1746,14 @@ function renderDisciplines() {
       }
 
       return `
-        <div class="glass-card rounded-2xl overflow-hidden w-full border border-white/15 p-5 sm:p-6 space-y-4 shadow-xl shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
+        <div class="glass-card rounded-[28px] overflow-hidden w-full border border-white/15 p-5 sm:p-6 space-y-4 shadow-xl shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
           <!-- Encabezado de la Disciplina: Nombre, Sala y Duración -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 border-b border-white/10 pb-3">
             <div>
               <h4 class="font-michroma text-lg sm:text-xl text-white font-black tracking-tight">${d.name}</h4>
               <span class="text-xs font-sans text-white/60 font-semibold">${roomText}</span>
             </div>
-            <div class="self-start sm:self-auto px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-sans text-white/80 font-semibold">
+            <div class="self-start sm:self-auto px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-sans text-white/80 font-semibold">
               ${d.duration}
             </div>
           </div>
@@ -1714,7 +1762,7 @@ function renderDisciplines() {
           <div class="space-y-3">
             <p class="text-sm text-white/85 font-sans leading-relaxed font-normal">${d.description}</p>
             
-            <div class="bg-black/40 border border-white/5 p-3.5 rounded-xl text-xs font-sans text-white/75 leading-relaxed">
+            <div class="bg-black/40 border border-white/5 p-4 rounded-2xl text-xs font-sans text-white/75 leading-relaxed">
               <span class="text-white/90 uppercase font-black tracking-wider text-[10px] font-michroma block mb-1">Recomendado para:</span>
               ${d.recommended}
             </div>
@@ -1736,7 +1784,7 @@ function renderDisciplines() {
         <div class="w-full max-w-xl flex flex-col gap-6 max-h-[72vh] md:max-h-[78vh] overflow-y-auto no-scrollbar pb-16 touch-pan-y" style="-webkit-overflow-scrolling: touch;">
           
           <!-- HERO IMAGE DE LA CATEGORÍA (ÚNICO POR CATEGORÍA) -->
-          <div class="w-full bg-gradient-to-b from-white/[0.08] via-black/40 to-black/60 border border-white/15 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
+          <div class="w-full bg-gradient-to-b from-white/[0.08] via-black/40 to-black/60 border border-white/15 rounded-[32px] p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden shrink-0" onmouseenter="changeGlobalBackground('${imgPath}')">
             <!-- Gran Icono Vectorial Hero de la Categoría -->
             <div class="relative z-10 w-28 h-28 sm:w-36 sm:h-36 text-white flex items-center justify-center mb-3">
               ${iconSvg}
