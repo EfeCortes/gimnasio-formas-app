@@ -805,6 +805,11 @@ input, select, textarea {
     transform: scale(0.9);
 }
 
+#schedule-sticky-controls {
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+}
+
 /* Pulso y realce de la siguiente clase activa */
 @keyframes pulseNextClass {
   0% {

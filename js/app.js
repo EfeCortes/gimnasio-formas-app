@@ -679,6 +679,11 @@ window.renderCategorySelectors = function() {
 // --- FILTROS DE HORARIO (OPCIÓN A) ---
 window.changeDay = function(dayIndex) {
   selectedDayView = parseInt(dayIndex, 10);
+  const now = getSimulatedDate();
+  const isTargetToday = (selectedDayView === now.getDay());
+  if (!isTargetToday) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
   renderSchedule();
 };
 
@@ -1016,25 +1021,88 @@ function renderSchedule() {
       }
     }
 
+    // Separar clases pasadas de clases actuales/futuras cuando estamos en HOY
+    const pastClasses = isToday ? allDayList.filter(c => curMins >= c.endMins) : [];
+    const upcomingClasses = isToday ? allDayList.filter(c => curMins < c.endMins) : allDayList;
+
+    let pastClassesHtml = '';
+    if (isToday && pastClasses.length > 0) {
+      pastClassesHtml = `
+        <div id="past-schedule-section" class="space-y-4 pt-2 pb-2">
+          <div class="flex items-center justify-center gap-3 py-2 text-white/50 text-[10px] font-michroma uppercase tracking-widest">
+            <span class="h-[1px] bg-white/15 flex-1"></span>
+            <span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+              <svg class="w-3.5 h-3.5 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+              ${pastClasses.length} ${pastClasses.length === 1 ? 'clase anterior de hoy' : 'clases anteriores de hoy'} (Finalizadas)
+            </span>
+            <span class="h-[1px] bg-white/15 flex-1"></span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2 sm:px-0 opacity-40 grayscale-[60%] hover:opacity-90 hover:grayscale-0 transition-all duration-300">
+            ${pastClasses.map(c => renderCardHtml(c, 'day-class', false)).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    let timeHorizonMarkerHtml = '';
+    if (isToday && pastClasses.length > 0) {
+      const curHours = String(Math.floor(curMins / 60)).padStart(2, '0');
+      const curMinutes = String(curMins % 60).padStart(2, '0');
+      timeHorizonMarkerHtml = `
+        <div id="schedule-time-horizon" class="py-3 my-1 flex items-center justify-center gap-3 select-none">
+          <span class="h-[1px] bg-gradient-to-r from-transparent via-white/30 to-white/10 flex-1"></span>
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/25 text-white font-michroma font-bold text-[9px] sm:text-[10px] tracking-widest uppercase shadow-[0_0_15px_rgba(255,255,255,0.15)]">
+            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+            LÍMITE DE HORA • ${curHours}:${curMinutes} HS
+          </span>
+          <span class="h-[1px] bg-gradient-to-l from-transparent via-white/30 to-white/10 flex-1"></span>
+        </div>
+      `;
+    }
+
+    let upcomingContentHtml = '';
+    if (upcomingClasses.length > 0) {
+      upcomingContentHtml = `
+        <div id="upcoming-schedule-section" class="space-y-6">
+          ${spotlightHtml}
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2 px-2 sm:px-0">
+            ${upcomingClasses.map(c => renderCardHtml(c, c.isCurrentLive ? 'active' : (c.isNextUpcoming ? 'upcoming' : 'day-class'), false)).join('')}
+          </div>
+        </div>
+      `;
+    } else if (isToday) {
+      upcomingContentHtml = allFinishedBannerHtml;
+    } else {
+      upcomingContentHtml = `
+        <div class="text-center text-white/40 font-bold py-16 uppercase tracking-widest text-xs font-michroma">
+          No hay clases programadas para este día o filtro
+        </div>
+      `;
+    }
+
     let html = `
       <section class="space-y-6">
         ${muscHeaderHtml}
-        ${allFinishedBannerHtml}
-        ${spotlightHtml}
-
-        ${allDayList.length > 0 ? `
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2 px-2 sm:px-0">
-            ${allDayList.map(c => renderCardHtml(c, c.isCurrentLive ? 'active' : (c.isNextUpcoming ? 'upcoming' : 'day-class'), false)).join('')}
-          </div>
-        ` : `
-          <div class="text-center text-white/40 font-bold py-16 uppercase tracking-widest text-xs font-michroma">
-            No hay clases programadas para este día o filtro
-          </div>
-        `}
+        ${pastClassesHtml}
+        ${timeHorizonMarkerHtml}
+        ${upcomingContentHtml}
       </section>
     `;
 
     scheduleArea.innerHTML = html;
+
+    // Anclaje instantáneo al límite de hora (ya "recorrido" según la hora actual)
+    if (isToday && pastClasses.length > 0) {
+      requestAnimationFrame(() => {
+        const horizon = document.getElementById('schedule-time-horizon');
+        const stickyControls = document.getElementById('schedule-sticky-controls');
+        if (horizon) {
+          const headerOffset = (stickyControls ? stickyControls.offsetHeight : 0) + 65;
+          const targetTop = horizon.getBoundingClientRect().top + window.scrollY - headerOffset;
+          window.scrollTo({ top: Math.max(0, targetTop), behavior: 'instant' });
+        }
+      });
+    }
   }
 }
 
