@@ -6,13 +6,13 @@
     --border-light: #333333;
     --text-dim: #949494; /* Contraste mejorado para accesibilidad WCAG AA */
     
-    /* Colores Neón Tácticos */
-    --color-active: #faa0c3;
-    --color-just-started: #fddb00;
-    --color-upcoming: #0effc7;
-    --color-later: #444444;
-    --color-accent: #0effc7;
-    --color-purple: #bb86fc;
+    /* Paleta Monocromática Minimalista Táctica: Jerarquía por peso y tamaño */
+    --color-active: #ffffff;
+    --color-just-started: #ffffff;
+    --color-upcoming: #ffffff;
+    --color-later: #555555;
+    --color-accent: #ffffff;
+    --color-purple: #ffffff;
 }
 
 .hidden {
@@ -104,7 +104,7 @@ body {
 }
 
 .header-icon-btn.active {
-    color: var(--color-just-started) !important;
+    color: #ffffff !important;
 }
 
 .header-icon-btn:hover {
@@ -113,15 +113,15 @@ body {
 }
 
 .header-icon-btn.wa-btn:hover {
-    color: #25D366;
+    color: #ffffff;
 }
 
 .header-icon-btn.bell-btn:hover {
-    color: #faa0c3;
+    color: #ffffff;
 }
 
 .header-icon-btn.user-btn:hover {
-    color: #0effc7;
+    color: #ffffff;
 }
 
 .date-phrase {
@@ -161,8 +161,8 @@ body {
 }
 
 .view-tab.active {
-    border-color: var(--color-just-started); /* Amarillo #ffdd00 */
-    background-color: var(--color-just-started);
+    border-color: #ffffff;
+    background-color: #ffffff;
     color: #000000;
     font-weight: 900;
 }
@@ -277,12 +277,12 @@ body {
 .seats-badge {
     font-family: 'Inter', sans-serif;
     font-size: 0.98rem; /* Mayor tamaño para presbicia (14px) */
-    font-weight: 800;
+    font-weight: 700;
     padding: 0.45rem 1rem;
     border-radius: 12px;
-    background: rgba(14, 255, 199, 0.12);
-    color: var(--color-upcoming);
-    border: 1px solid rgba(14, 255, 199, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
@@ -290,42 +290,47 @@ body {
 }
 
 .seats-badge.low {
-    background: rgba(253, 219, 0, 0.1);
-    color: var(--color-just-started);
-    border-color: rgba(253, 219, 0, 0.3);
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    font-weight: 900;
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .seats-badge.full {
-    background: rgba(250, 160, 195, 0.1);
-    color: var(--color-active);
-    border-color: rgba(250, 160, 195, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.08);
+    font-weight: 500;
 }
 
 /* Botón de Reserva */
 .btn-reserve {
     font-family: 'Michroma', sans-serif;
     font-size: 1.05rem; /* Aumentado de 0.88rem a 1.05rem para legibilidad */
-    font-weight: 700;
-    letter-spacing: 0.05em;
+    font-weight: 900;
+    letter-spacing: 0.06em;
     padding: 1.05rem 1.5rem;
     border-radius: 8px;
     border: none; /* Sin borde para evitar línea dentro de línea */
-    background: var(--color-upcoming); /* Verde brillante por defecto (Apretable) */
-    color: #000000; /* Alto contraste sobre fondo verde */
+    background: #ffffff; /* Alto contraste blanco puro */
+    color: #000000; /* Tipografía negra sobre blanco */
     cursor: pointer;
     transition: all 0.2s ease;
     text-transform: uppercase;
     width: 100%;
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
 }
 
 .btn-reserve:hover {
-    background: #00ffc2;
+    background: rgba(255, 255, 255, 0.88);
     transform: scale(1.02);
 }
 
 .btn-reserve.reserved {
-    background: var(--color-active); /* Rosa para cosas reservadas / en curso / pasadas */
-    color: #000000;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: none;
 }
 
 .btn-reserve.btn-started-inactive {
@@ -400,10 +405,11 @@ body {
 }
 
 .day-btn.active {
-    background-color: var(--color-just-started); /* Amarillo #ffdd00 */
+    background-color: #ffffff;
     color: #000000;
-    border-color: var(--color-just-started);
+    border-color: #ffffff;
     font-weight: 900;
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
 }
 
 /* Badge de Día de Hoy */
@@ -411,9 +417,9 @@ body {
     font-size: 0.52rem;
     font-family: 'Inter', sans-serif;
     font-weight: 900;
-    color: var(--color-just-started); /* Amarillo #ffdd00 */
-    border: 1px solid rgba(255, 221, 0, 0.4);
-    background: rgba(255, 221, 0, 0.12);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
     padding: 0.05rem 0.35rem;
     border-radius: 4px;
     letter-spacing: 0.05em;
@@ -423,11 +429,11 @@ body {
 .day-btn.active .today-badge {
     color: #000000;
     border-color: rgba(0, 0, 0, 0.2);
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.12);
 }
 
 .day-today {
-    border-color: rgba(255, 221, 0, 0.45); /* Amarillo #ffdd00 */
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 /* BARRA DE NAVEGACIÓN INFERIOR (BOTTOM NAV) */
@@ -477,12 +483,12 @@ body {
 }
 
 .nav-item.active {
-    color: var(--color-just-started);
+    color: #ffffff;
     font-weight: 800;
 }
 
 .nav-item.active svg {
-    fill: var(--color-just-started);
+    fill: #ffffff;
     transform: translateY(-2px);
 }
 
@@ -490,11 +496,11 @@ body {
     content: '';
     position: absolute;
     top: 0;
-    width: 32px;
-    height: 3px;
-    background: var(--color-just-started);
+    width: 28px;
+    height: 2.5px;
+    background: #ffffff;
     border-radius: 0 0 4px 4px;
-    box-shadow: 0 0 10px var(--color-just-started);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .nav-badge {
@@ -502,8 +508,8 @@ body {
     top: 2px;
     right: 50%;
     transform: translateX(14px);
-    background: var(--color-active);
-    color: #000;
+    background: #ffffff;
+    color: #000000;
     font-size: 0.65rem;
     font-weight: 900;
     width: 18px;
@@ -590,15 +596,16 @@ body {
 }
 
 .toast {
-    background: #111;
-    border: 2px solid var(--color-upcoming);
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     color: #fff;
     padding: 1rem 1.5rem;
-    border-radius: 10px;
+    border-radius: 12px;
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.8);
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -725,7 +732,7 @@ input, select, textarea {
 
 /* Botones de Filtro en el Bottom Sheet */
 .temp-view-btn-active {
-    background-color: #0effc7 !important;
+    background-color: #ffffff !important;
     color: #000000 !important;
 }
 .temp-view-btn-inactive {
@@ -735,10 +742,10 @@ input, select, textarea {
 
 /* Botones Activos de Día / Categoría */
 .filter-btn-active {
-    background-color: rgba(14, 255, 199, 0.12) !important;
-    border-color: #0effc7 !important;
-    color: #0effc7 !important;
-    box-shadow: 0 0 12px rgba(14, 255, 199, 0.1);
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.15);
 }
 
 /* Selector de Día en Horarios: igualar ancho exacto a tarjetas de clase */
@@ -764,23 +771,23 @@ input, select, textarea {
 /* Pulso y realce de la siguiente clase activa */
 @keyframes pulseNextClass {
   0% {
-    box-shadow: 0 0 0 0 rgba(14, 255, 199, 0.7);
-    border-color: #0effc7;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    border-color: #ffffff;
     transform: scale(1);
   }
   25% {
-    box-shadow: 0 0 24px 4px rgba(14, 255, 199, 0.5);
-    border-color: #0effc7;
+    box-shadow: 0 0 28px 4px rgba(255, 255, 255, 0.45);
+    border-color: #ffffff;
     transform: scale(1.02);
   }
   60% {
-    box-shadow: 0 0 16px 2px rgba(14, 255, 199, 0.3);
-    border-color: #0effc7;
+    box-shadow: 0 0 16px 2px rgba(255, 255, 255, 0.25);
+    border-color: #ffffff;
     transform: scale(1.01);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(14, 255, 199, 0);
-    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    border-color: rgba(255, 255, 255, 0.2);
     transform: scale(1);
   }
 }

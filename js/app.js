@@ -656,9 +656,9 @@ window.renderCategorySelectors = function() {
     }).join('');
 
     container.innerHTML = `
-      <!-- Thumb deslizante animado con resplandor neón -->
+      <!-- Thumb deslizante animado en blanco de alto contraste -->
       <div id="category-toggle-thumb"
-           class="absolute top-0 bottom-0 rounded-xl bg-[#0effc7] shadow-[0_0_18px_rgba(14,255,199,0.45)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none"
+           class="absolute top-0 bottom-0 rounded-xl bg-white shadow-[0_4px_20px_rgba(255,255,255,0.25)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none"
            style="width: calc(100% / ${total}); transform: translateX(${activeIdx * 100}%);">
       </div>
       <!-- Segmentos interactivos del Toggle -->
@@ -972,12 +972,12 @@ function renderSchedule() {
         allFinishedBannerHtml = `
           <div class="max-w-xl mx-auto mb-2 bg-[#161616] border border-white/15 p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-lg">
             <div class="flex items-center gap-2.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-[#ffdd00] shrink-0 animate-pulse"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-white shrink-0 animate-pulse"></span>
               <span class="text-xs font-sans text-white/80">
                 No quedan más clases de <strong class="text-white">${categoryFilter === 'ALL' ? 'disciplinas' : categoryFilter}</strong> por hoy.
               </span>
             </div>
-            <button onclick="changeDay(${nextDayIdx})" class="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-[#0effc7] hover:text-black border border-white/20 text-[#0effc7] font-michroma font-bold text-[10px] tracking-wider uppercase transition-all duration-200 shrink-0">
+            <button onclick="changeDay(${nextDayIdx})" class="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white hover:text-black border border-white/20 text-white font-michroma font-bold text-[10px] tracking-wider uppercase transition-all duration-200 shrink-0">
               Ver ${nextDayName} →
             </button>
           </div>
@@ -992,12 +992,12 @@ function renderSchedule() {
       if (selectedDayView === 0) muscHours = GYM_INFO.musculacionHours.sundays;
       muscHeaderHtml = `
         <div class="space-y-4 max-w-xl mx-auto mb-6">
-          <div class="bg-[#0a0a0a] border border-[#0effc7]/20 p-4 rounded-xl text-center">
-            <span class="text-[10px] font-michroma text-[#0effc7]/70 uppercase tracking-widest block mb-1">Horario de Atención de la Sala</span>
+          <div class="bg-[#0a0a0a] border border-white/15 p-4 rounded-xl text-center">
+            <span class="text-[10px] font-michroma text-white/60 uppercase tracking-widest block mb-1">Horario de Atención de la Sala</span>
             <div class="text-base md:text-lg font-michroma text-white font-bold">${muscHours}</div>
           </div>
           <div class="bg-[#0b0b0b]/60 border border-white/10 p-5 rounded-2xl text-center">
-            <span class="text-[10px] font-michroma text-[#0effc7] uppercase tracking-widest block mb-1">Guía de Entrenamiento</span>
+            <span class="text-[10px] font-michroma text-white font-bold uppercase tracking-widest block mb-1">Guía de Entrenamiento</span>
             <p class="text-xs text-white/80 font-sans leading-relaxed">
               La sala de Musculación está disponible para libre entrenamiento durante todo el día. Revisa los turnos de los instructores en cada tarjeta a continuación para contar con asistencia presencial y guía de rutina.
             </p>
@@ -1064,8 +1064,9 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
   if (seatsAvailable === 0) seatsBadgeClass += ' full';
 
   const statusLabel = (activeView === 'live' && label) ? `
-    <div class="status-label tactic-bold" style="color: ${color}">
-      <span class="pulse-dot" style="background: ${color}"></span> ${label}
+    <div class="status-label tactic-bold text-white flex items-center justify-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-white shrink-0 animate-ping"></span>
+      <span class="text-xs font-black tracking-widest text-white">${label}</span>
     </div>
   ` : '';
 
@@ -1125,7 +1126,7 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
         </div>
         <div class="card-body">
           ${statusLabel}
-          <div class="text-lg md:text-xl font-michroma font-bold text-[#ffdd00] tracking-tight mb-1.5">${displayTime}</div>
+          <div class="text-xl md:text-2xl font-michroma font-black text-white tracking-tight mb-1">${displayTime}</div>
           <div class="class-name tactic-bold">${formatInstructor(item.i)}</div>
         </div>
       </div>
@@ -1140,7 +1141,7 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
       </div>
       <div class="card-body">
         ${statusLabel}
-        <div class="text-lg md:text-xl font-michroma font-bold text-[#ffdd00] tracking-tight mb-1.5">${displayTime}</div>
+        <div class="text-xl md:text-2xl font-michroma font-black text-white tracking-tight mb-1">${displayTime}</div>
         <div class="class-name tactic-bold">${item.n}</div>
         <div class="instructor-name">Con ${formatInstructor(item.i)}</div>
         
@@ -1303,7 +1304,7 @@ function renderReservations() {
     container.innerHTML = `
       <div class="text-center py-12 space-y-4">
         <div class="text-white/30 font-michroma text-xs uppercase tracking-widest font-michroma">No tienes reservas activas</div>
-        <button onclick="switchTab('horarios')" class="bg-white text-black font-michroma font-bold text-xs px-6 py-3 rounded-lg hover:bg-[#0effc7] font-michroma">
+        <button onclick="switchTab('horarios')" class="bg-white text-black font-michroma font-bold text-xs px-6 py-3 rounded-lg hover:bg-white/90 font-michroma">
           EXPLORAR CLASES
         </button>
       </div>
@@ -1312,10 +1313,10 @@ function renderReservations() {
   }
 
   container.innerHTML = reservations.map(r => `
-    <div class="bg-[#202020] border-2 border-[#0effc7] p-5 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div class="bg-[#181818]/90 backdrop-blur-md border border-white/20 p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
       <div class="space-y-1 font-sans">
-        <span class="text-xs font-michroma text-[#0effc7] uppercase tracking-wider block">RESERVADO</span>
-        <h4 class="text-xl font-michroma text-white">${r.className}</h4>
+        <span class="text-xs font-michroma font-black text-white/90 uppercase tracking-widest block">RESERVADO</span>
+        <h4 class="text-xl font-michroma font-bold text-white">${r.className}</h4>
         <div class="text-xs text-white/70">
           ${r.dayName} • ${r.time} hs • ${ROOM_MAP[r.roomCode] || r.roomCode} • Instructora: ${formatInstructor(r.instructor)}
         </div>
@@ -1624,7 +1625,7 @@ function renderCatalogCategoryControls() {
 
   if (dotsContainer) {
     dotsContainer.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => `
-      <button onclick="selectCatalogCategory(${idx})" class="w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${idx === currentCatalogCategoryIndex ? 'bg-[#0effc7] scale-125' : 'bg-white/20 hover:bg-white/40'}" aria-label="Ir a ${cat}"></button>
+      <button onclick="selectCatalogCategory(${idx})" class="w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${idx === currentCatalogCategoryIndex ? 'bg-white scale-125 shadow-md shadow-white/40' : 'bg-white/20 hover:bg-white/40'}" aria-label="Ir a ${cat}"></button>
     `).join('');
   }
 }
@@ -1701,7 +1702,7 @@ function renderDisciplines() {
           <!-- Encabezado de la Disciplina: Nombre, Sala y Duración -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 border-b border-white/10 pb-3">
             <div>
-              <h4 class="font-michroma text-lg text-[#ffdd00] font-bold tracking-tight">${d.name}</h4>
+              <h4 class="font-michroma text-lg sm:text-xl text-white font-black tracking-tight">${d.name}</h4>
               <span class="text-xs font-sans text-white/60 font-semibold">${roomText}</span>
             </div>
             <div class="self-start sm:self-auto px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-sans text-white/80 font-semibold">
@@ -1714,7 +1715,7 @@ function renderDisciplines() {
             <p class="text-sm text-white/85 font-sans leading-relaxed font-normal">${d.description}</p>
             
             <div class="bg-black/40 border border-white/5 p-3.5 rounded-xl text-xs font-sans text-white/75 leading-relaxed">
-              <span class="text-[#ffdd00] uppercase font-bold tracking-wider text-[10px] font-michroma block mb-1">Recomendado para:</span>
+              <span class="text-white/90 uppercase font-black tracking-wider text-[10px] font-michroma block mb-1">Recomendado para:</span>
               ${d.recommended}
             </div>
           </div>
@@ -1745,7 +1746,7 @@ function renderDisciplines() {
             <h3 class="relative z-10 text-xl sm:text-2xl font-michroma font-bold text-white uppercase tracking-wider mb-2">
               ${cat}
             </h3>
-            <p class="relative z-10 text-xs sm:text-sm font-sans font-medium text-[#0effc7] max-w-sm mx-auto leading-relaxed">
+            <p class="relative z-10 text-xs sm:text-sm font-sans font-medium text-white/80 max-w-sm mx-auto leading-relaxed">
               ${persuasiveCopy}
             </p>
           </div>
@@ -1801,7 +1802,7 @@ function showToast(message, type = 'info') {
   const toast = document.createElement('div');
   toast.className = 'toast';
   toast.innerHTML = `
-    <svg class="w-4 h-4 fill-current text-[#0effc7]" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    <svg class="w-4 h-4 fill-current text-white" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
     <span>${message}</span>
   `;
 
@@ -1875,7 +1876,7 @@ window.openUserProfileModal = function() {
     if (codeEl) codeEl.innerText = profile.id;
     if (statusEl) {
       statusEl.innerText = currentStatus;
-      statusEl.className = currentStatus === 'Activo' ? 'font-bold text-[#0effc7]' : 'font-bold text-[#fddb00]';
+      statusEl.className = currentStatus === 'Activo' ? 'font-bold text-white' : 'font-bold text-white/50';
     }
     if (phoneEl) phoneEl.innerText = profile.phone;
   } else {
@@ -1996,9 +1997,9 @@ function updateTempFilterUI() {
     const btn = document.getElementById(`temp-day-${d}`);
     if (btn) {
       if (tempSelectedDayView === d) {
-        btn.className = 'border border-[#0effc7] bg-white/5 text-[#0effc7] py-2.5 rounded-xl text-xs font-bold filter-btn-active';
+        btn.className = 'border border-white bg-white text-black py-2.5 rounded-xl text-xs font-black filter-btn-active';
       } else {
-        btn.className = 'border border-white/10 bg-white/5 hover:border-white/30 text-white py-2.5 rounded-xl text-xs font-bold transition-all';
+        btn.className = 'border border-white/10 bg-white/5 hover:border-white/30 text-white/70 hover:text-white py-2.5 rounded-xl text-xs font-bold transition-all';
       }
     }
   }
@@ -2009,9 +2010,9 @@ function updateTempFilterUI() {
     const btn = document.getElementById(`temp-cat-${cat}`);
     if (btn) {
       if (tempCategoryFilter === cat) {
-        btn.className = 'border border-[#0effc7] bg-white/5 text-[#0effc7] py-2.5 rounded-xl text-xs font-bold filter-btn-active';
+        btn.className = 'border border-white bg-white text-black py-2.5 rounded-xl text-xs font-black filter-btn-active';
       } else {
-        btn.className = 'border border-white/10 bg-white/5 hover:border-white/30 text-white py-2.5 rounded-xl text-xs font-bold transition-all';
+        btn.className = 'border border-white/10 bg-white/5 hover:border-white/30 text-white/70 hover:text-white py-2.5 rounded-xl text-xs font-bold transition-all';
       }
     }
   });
