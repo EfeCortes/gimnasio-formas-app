@@ -679,9 +679,6 @@ window.renderCategorySelectors = function() {
 window.changeDay = function(dayIndex) {
   selectedDayView = parseInt(dayIndex, 10);
   renderSchedule();
-  setTimeout(() => {
-    scrollToNextClass();
-  }, 100);
 };
 
 window.onCategoryChipChange = function(cat) {
@@ -696,89 +693,7 @@ window.onCategoryChipChange = function(cat) {
   }
   renderCategorySelectors();
   renderSchedule();
-
-  // Recorrido suave automático a la clase activa o siguiente
-  setTimeout(() => {
-    scrollToNextClass();
-  }, 100);
 };
-
-// Auto-scroll y realce de la siguiente clase disponible
-function scrollToNextClass() {
-  const scheduleArea = document.getElementById('dynamic-schedule-area');
-  if (!scheduleArea) return;
-
-  const now = getSimulatedDate();
-  const todayDayIndex = now.getDay();
-  const isToday = (selectedDayView === todayDayIndex || activeView === 'live');
-  const curMins = now.getHours() * 60 + now.getMinutes();
-
-  const cards = Array.from(scheduleArea.querySelectorAll('.class-card'));
-  if (cards.length === 0) return;
-
-  let targetCard = null;
-
-  if (isToday) {
-    let candidateActive = null;
-    let candidateUpcoming = null;
-
-    for (const card of cards) {
-      const mins = parseInt(card.dataset.mins, 10);
-      const isExpired = card.dataset.isExpired === 'true';
-      const hasStarted = card.dataset.hasStarted === 'true';
-
-      if (isExpired) continue;
-
-      // Clase en curso o recién comenzada
-      if (hasStarted && !candidateActive) {
-        candidateActive = card;
-      }
-
-      // Siguiente clase programada a partir de ahora
-      if (mins >= curMins) {
-        if (!candidateUpcoming || mins < parseInt(candidateUpcoming.dataset.mins, 10)) {
-          candidateUpcoming = card;
-        }
-      }
-    }
-
-    targetCard = candidateActive || candidateUpcoming;
-  } else {
-    // Si vemos otro día futuro, enfocar la primera clase del día
-    targetCard = cards[0];
-  }
-
-  if (targetCard) {
-    // Margen superior para preservar visibilidad del Toggle y cabecera
-    const headerOffset = 150;
-    const cardTop = targetCard.getBoundingClientRect().top;
-    const targetScrollY = window.pageYOffset + cardTop - headerOffset;
-
-    window.scrollTo({
-      top: Math.max(0, targetScrollY),
-      behavior: 'smooth'
-    });
-
-    // Disparar pulso luminoso en la tarjeta objetivo
-    targetCard.classList.remove('highlight-next-class');
-    void targetCard.offsetWidth;
-    targetCard.classList.add('highlight-next-class');
-
-    setTimeout(() => {
-      targetCard.classList.remove('highlight-next-class');
-    }, 2000);
-  } else if (isToday) {
-    // Si ya no quedan clases hoy, mantener en la parte superior del cronograma
-    const toggleTrack = document.getElementById('schedule-category-toggle-track');
-    if (toggleTrack) {
-      const trackTop = toggleTrack.getBoundingClientRect().top;
-      window.scrollTo({
-        top: Math.max(0, window.pageYOffset + trackTop - 80),
-        behavior: 'smooth'
-      });
-    }
-  }
-}
 
 // --- LOGICA DE RESERVAS EN CLOUD SIMULADO ---
 function getMyReservations() {
