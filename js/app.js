@@ -2085,6 +2085,41 @@ function renderOfertas() {
   }, 50);
 }
 
+// --- ACCIÓN Y MODAL DE CONFIRMACIÓN DE OFERTAS (WHATSAPP) ---
+let pendingOfferData = null;
+
+window.requestOffer = function(offerName, price, type) {
+  pendingOfferData = { offerName, price, type };
+
+  const titleEl = document.getElementById('modal-offer-title');
+  const nameEl = document.getElementById('modal-offer-name');
+  const priceEl = document.getElementById('modal-offer-price');
+
+  if (titleEl) titleEl.innerText = offerName;
+  if (nameEl) nameEl.innerText = offerName;
+  if (priceEl) priceEl.innerText = price;
+
+  const modal = document.getElementById('modal-confirm-offer');
+  if (modal) modal.classList.add('active');
+};
+
+window.proceedToWhatsApp = function() {
+  if (!pendingOfferData) return;
+
+  const profile = JSON.parse(localStorage.getItem(MY_PROFILE));
+  const userGreeting = profile && profile.name 
+    ? `Hola Gym Formas, soy ${profile.name} (Código: ${profile.id}).` 
+    : `Hola Gym Formas.`;
+
+  const text = `${userGreeting} Deseo información para suscribirme / adquirir:\n\n• *${pendingOfferData.offerName}* (${pendingOfferData.price})\n\n¿Podrían indicarme los pasos para el pago por QR y habilitación de mi acceso? Muchas gracias.`;
+
+  const phone = '59177012345';
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+
+  window.open(url, '_blank');
+  closeModal('modal-confirm-offer');
+};
+
 // --- TOAST NOTIFICATIONS ---
 function showToast(message, type = 'info') {
   const container = document.getElementById('toast-container');
