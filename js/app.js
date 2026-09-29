@@ -611,7 +611,8 @@ window.renderCategorySelectors = function() {
   const existingButtons = container.querySelectorAll('.category-toggle-btn');
 
   if (existingThumb && existingButtons.length === total) {
-    // Animación fluida de deslizamiento
+    // Animación fluida con física elástica de resorte (spring micro-gestures)
+    existingThumb.style.transition = 'transform 0.44s cubic-bezier(0.34, 1.56, 0.64, 1)';
     existingThumb.style.transform = `translateX(${activeIdx * 100}%)`;
 
     existingButtons.forEach((btn, idx) => {
@@ -621,9 +622,9 @@ window.renderCategorySelectors = function() {
       if (iconWrap) {
         if (isActive) {
           iconWrap.classList.remove('text-white/60', 'group-hover:text-white');
-          iconWrap.classList.add('text-black');
+          iconWrap.classList.add('text-black', 'scale-110');
         } else {
-          iconWrap.classList.remove('text-black');
+          iconWrap.classList.remove('text-black', 'scale-110');
           iconWrap.classList.add('text-white/60', 'group-hover:text-white');
         }
       }
@@ -647,8 +648,8 @@ window.renderCategorySelectors = function() {
                 aria-pressed="${isActive}"
                 title="${item.label}"
                 aria-label="${item.label}"
-                class="category-toggle-btn relative z-10 flex-1 h-full flex items-center justify-center cursor-pointer select-none group focus:outline-none transition-transform duration-150 active:scale-95">
-          <div class="category-toggle-icon-wrap w-10 h-10 sm:w-13 sm:h-13 flex items-center justify-center transition-colors duration-200 ${isActive ? 'text-black' : 'text-white/60 group-hover:text-white'}">
+                class="category-toggle-btn relative z-10 flex-1 h-full flex items-center justify-center cursor-pointer select-none group focus:outline-none transition-transform duration-200 active:scale-90">
+          <div class="category-toggle-icon-wrap w-10 h-10 sm:w-13 sm:h-13 flex items-center justify-center transition-all duration-300 ${isActive ? 'text-black scale-110' : 'text-white/60 group-hover:text-white group-hover:scale-105'}">
             ${icon}
           </div>
         </button>
@@ -656,10 +657,10 @@ window.renderCategorySelectors = function() {
     }).join('');
 
     container.innerHTML = `
-      <!-- Thumb deslizante animado en blanco de alto contraste -->
+      <!-- Thumb deslizante animado en blanco de alto contraste con spring physics -->
       <div id="category-toggle-thumb"
-           class="absolute top-0 bottom-0 rounded-xl bg-white shadow-[0_4px_20px_rgba(255,255,255,0.25)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none"
-           style="width: calc(100% / ${total}); transform: translateX(${activeIdx * 100}%);">
+           class="absolute top-0 bottom-0 rounded-xl bg-white shadow-[0_4px_24px_rgba(255,255,255,0.40)] z-0 pointer-events-none"
+           style="width: calc(100% / ${total}); transform: translateX(${activeIdx * 100}%); transition: transform 0.44s cubic-bezier(0.34, 1.56, 0.64, 1);">
       </div>
       <!-- Segmentos interactivos del Toggle -->
       ${buttonsHtml}
@@ -933,13 +934,96 @@ function renderSchedule() {
       `;
     }
 
+    let spotlightHtml = '';
+    if (isToday && allDayList.length > 0) {
+      // Priorizar clase activa en curso, o la próxima a iniciar en <= 50 minutos
+      const spotClass = allDayList.find(c => c.isCurrentLive && (CATEGORY_MAP[c.n] !== 'Musculación'))
+        || allDayList.find(c => c.isNextUpcoming && (c.mins - curMins <= 50) && (CATEGORY_MAP[c.n] !== 'Musculación'))
+        || allDayList.find(c => c.isCurrentLive)
+        || allDayList.find(c => c.isNextUpcoming && (c.mins - curMins <= 50));
+
+      if (spotClass) {
+        const spotCat = CATEGORY_MAP[spotClass.n] || "Grupales";
+        const spotRoom = ROOM_MAP[spotClass.roomCode] || spotClass.roomCode;
+        const spotBooked = isClassBooked(spotClass.id);
+        const spotSeats = getAvailableSeats(spotClass.id, spotClass.cap || 20);
+        const spotTime = spotClass.range || `${spotClass.t} hs`;
+        const spotMinsLeft = spotClass.mins - curMins;
+        
+        let spotBadge = '';
+        if (spotClass.isCurrentLive) {
+          spotBadge = `
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-black font-michroma font-bold text-[9px] sm:text-[10px] tracking-wider uppercase shadow-[0_0_16px_rgba(255,255,255,0.45)]">
+              <span class="w-2 h-2 rounded-full bg-black shrink-0 animate-ping"></span>
+              EN VIVO AHORA
+            </span>
+          `;
+        } else {
+          spotBadge = `
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-michroma font-bold text-[9px] sm:text-[10px] tracking-wider uppercase border border-white/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-white shrink-0 animate-pulse"></span>
+              INICIA EN ${spotMinsLeft} MIN
+            </span>
+          `;
+        }
+
+        let spotCta = '';
+        if (spotCat === 'Musculación') {
+          spotCta = `<span class="px-5 py-2.5 rounded-full bg-white/10 text-white/90 font-michroma text-[11px] uppercase tracking-wider border border-white/15">Sala Libre</span>`;
+        } else if (spotClass.isCurrentLive) {
+          if (spotBooked) {
+            spotCta = `<button onclick="openUserProfileModal()" class="px-5 py-2.5 rounded-full bg-white text-black font-michroma font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer">✓ Mi Reserva</button>`;
+          } else {
+            spotCta = `<button onclick="handleStartedClassClick('${spotClass.n}')" class="px-5 py-2.5 rounded-full bg-white/15 text-white/80 font-michroma text-xs uppercase tracking-wider border border-white/20 hover:bg-white/25 active:scale-95 transition-all cursor-pointer">En Curso</button>`;
+          }
+        } else if (spotBooked) {
+          spotCta = `<button onclick="openUserProfileModal()" class="px-5 py-2.5 rounded-full bg-white text-black font-michroma font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer">✓ Reservada</button>`;
+        } else if (spotSeats === 0) {
+          spotCta = `<span class="px-5 py-2.5 rounded-full bg-neutral-800 text-white/50 font-michroma font-bold text-xs uppercase tracking-wider border border-white/10">Clase Llena</span>`;
+        } else {
+          spotCta = `<button onclick="openReserveModal('${spotClass.id}', '${spotClass.n}', '${spotClass.t}', '${spotClass.roomCode}', '${spotClass.i}')" class="px-6 py-3 rounded-full bg-white text-black font-michroma font-bold text-xs uppercase tracking-widest shadow-[0_4px_24px_rgba(255,255,255,0.4)] hover:bg-white/90 hover:scale-105 active:scale-95 transition-all cursor-pointer">RESERVAR AHORA</button>`;
+        }
+
+        spotlightHtml = `
+          <div class="spotlight-hero-card p-5 sm:p-6 mb-6 transition-all duration-300">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-left">
+              <div class="flex flex-col items-center md:items-start gap-2.5 w-full md:w-auto">
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
+                  ${spotBadge}
+                  <span class="px-3 py-1 rounded-full bg-white/10 text-white/90 font-sans text-xs font-semibold tracking-wide border border-white/15">
+                    ${spotRoom}
+                  </span>
+                  <span class="text-[10px] font-michroma text-white/50 uppercase tracking-widest px-1">
+                    ${spotCat}
+                  </span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-michroma font-bold text-white tracking-wide">
+                  ${spotClass.n}
+                </h3>
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 text-white/70 text-xs sm:text-sm font-sans">
+                  <span class="font-michroma font-bold text-white">${spotTime}</span>
+                  <span>•</span>
+                  <span>Prof. ${formatInstructor(spotClass.i)}</span>
+                  ${spotSeats > 0 && spotCat !== 'Musculación' ? `<span>•</span><span class="text-white/90 font-medium">${spotSeats} cupos</span>` : ''}
+                </div>
+              </div>
+              <div class="shrink-0 flex items-center justify-center">
+                ${spotCta}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
     let html = `
       <section class="space-y-6">
         ${muscHeaderHtml}
         ${allFinishedBannerHtml}
+        ${spotlightHtml}
 
         ${allDayList.length > 0 ? `
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4 px-2 sm:px-0">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2 px-2 sm:px-0">
             ${allDayList.map(c => renderCardHtml(c, c.isCurrentLive ? 'active' : (c.isNextUpcoming ? 'upcoming' : 'day-class'), false)).join('')}
           </div>
         ` : `

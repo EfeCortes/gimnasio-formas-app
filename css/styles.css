@@ -206,12 +206,12 @@ body {
     text-align: center;
 }
 
-/* Tarjeta de Clase OLED con Glassmorphism & Squircle Continuous Curvature */
+/* Tarjeta de Clase OLED con Glassmorphism Enfatizado & Squircle Continuous Curvature */
 .class-card {
-    background: rgba(12, 12, 12, 0.72) !important;
-    backdrop-filter: blur(28px) saturate(140%);
-    -webkit-backdrop-filter: blur(28px) saturate(140%);
-    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.09) 0%, rgba(14, 14, 14, 0.50) 100%) !important;
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
     border-radius: 26px !important;
     padding: 1.25rem 1.25rem 1.4rem 1.25rem;
     position: relative;
@@ -221,29 +221,32 @@ body {
     text-align: center;
     min-height: 250px;
     overflow: hidden;
+    box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.30);
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .class-card:hover {
     transform: translateY(-4px);
-    background: rgba(20, 20, 20, 0.82) !important;
-    border-color: rgba(255, 255, 255, 0.35) !important;
-    box-shadow: 0 20px 48px 0 rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.05);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.15) 0%, rgba(18, 18, 18, 0.62) 100%) !important;
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 24px 54px 0 rgba(0, 0, 0, 0.7), inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), 0 0 24px rgba(255, 255, 255, 0.10);
 }
 
 /* Tarjeta Hero / Próxima Clase Destacada (Rompe la monotonía visual) */
 .class-card.hero-class-card {
-    border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(14, 14, 14, 0.78) 100%) !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 24px rgba(255, 255, 255, 0.08) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.55) !important;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.20) 0%, rgba(14, 14, 14, 0.55) 100%) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7), inset 0 1px 2px 0 rgba(255, 255, 255, 0.5), 0 0 32px rgba(255, 255, 255, 0.12) !important;
 }
 
-/* Pulso de auto-recorrido y foco */
-.class-card.highlight-next-class {
-    border-color: #ffffff !important;
-    box-shadow: 0 0 32px rgba(255, 255, 255, 0.45), 0 20px 48px rgba(0,0,0,0.9) !important;
-    transform: scale(1.02);
-    transition: all 0.3s ease;
+/* Widget Spotlight Live Activity de Apertura */
+.spotlight-hero-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(14, 14, 14, 0.52) 100%) !important;
+    backdrop-filter: blur(32px) saturate(190%);
+    -webkit-backdrop-filter: blur(32px) saturate(190%);
+    border: 1.5px solid rgba(255, 255, 255, 0.38) !important;
+    border-radius: 30px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), inset 0 1px 2px 0 rgba(255, 255, 255, 0.45), 0 0 32px rgba(255, 255, 255, 0.08);
 }
 
 .card-header-gray {
@@ -698,12 +701,12 @@ body {
 }
 
 .glass-card {
-    background: rgba(14, 14, 14, 0.72) !important;
-    backdrop-filter: blur(28px) saturate(140%);
-    -webkit-backdrop-filter: blur(28px) saturate(140%);
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.09) 0%, rgba(14, 14, 14, 0.50) 100%) !important;
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
     border-radius: 28px !important;
-    box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.6);
+    box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.28);
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     
     /* Altura estirada porcentual para pantallas medianas/grandes */
@@ -727,9 +730,9 @@ body {
 
 .glass-card:hover {
     transform: translateY(-4px);
-    background: rgba(22, 22, 22, 0.82) !important;
-    border-color: rgba(255, 255, 255, 0.32) !important;
-    box-shadow: 0 20px 54px 0 rgba(0, 0, 0, 0.75);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.15) 0%, rgba(18, 18, 18, 0.60) 100%) !important;
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 24px 54px 0 rgba(0, 0, 0, 0.65), inset 0 1px 1px 0 rgba(255, 255, 255, 0.40);
 }
 
 /* Ocultar barra de desplazamiento */
