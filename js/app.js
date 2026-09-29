@@ -853,7 +853,7 @@ function renderSchedule() {
 
     if (activeList.length === 0 && soonList.length === 0 && laterList.length === 0) {
       html += `
-        <div class="text-center text-white/40 font-bold py-16 uppercase tracking-widest text-xs font-michroma">
+        <div class="text-center text-white/40 font-bold py-16 uppercase tracking-widest text-xs font-jura">
           Sin actividades pendientes para esta categoría hoy
         </div>
       `;
@@ -910,7 +910,7 @@ function renderSchedule() {
                 No quedan más clases de <strong class="text-white">${categoryFilter === 'ALL' ? 'disciplinas' : categoryFilter}</strong> por hoy.
               </span>
             </div>
-            <button onclick="changeDay(${nextDayIdx})" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white hover:text-black border border-white/20 text-white font-michroma font-bold text-[10px] tracking-wider uppercase transition-all duration-200 shrink-0">
+            <button onclick="changeDay(${nextDayIdx})" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white hover:text-black border border-white/20 text-white font-jura font-bold text-[10px] tracking-wider uppercase transition-all duration-200 shrink-0">
               Ver ${nextDayName} →
             </button>
           </div>
@@ -926,11 +926,11 @@ function renderSchedule() {
       muscHeaderHtml = `
         <div class="space-y-4 max-w-xl mx-auto mb-6">
           <div class="bg-[#0a0a0a] border border-white/15 p-4 rounded-2xl text-center">
-            <span class="text-[10px] font-michroma text-white/60 uppercase tracking-widest block mb-1">Horario de Atención de la Sala</span>
-            <div class="text-base md:text-lg font-michroma text-white font-bold">${muscHours}</div>
+            <span class="text-[10px] font-jura text-white/60 uppercase tracking-widest block mb-1">Horario de Atención de la Sala</span>
+            <div class="text-base md:text-lg font-jura text-white font-bold">${muscHours}</div>
           </div>
           <div class="bg-[#0b0b0b]/60 border border-white/10 p-5 rounded-2xl text-center">
-            <span class="text-[10px] font-michroma text-white font-bold uppercase tracking-widest block mb-1">Guía de Entrenamiento</span>
+            <span class="text-[10px] font-jura text-white font-bold uppercase tracking-widest block mb-1">Guía de Entrenamiento</span>
             <p class="text-xs text-white/80 font-sans leading-relaxed">
               La sala de Musculación está disponible para libre entrenamiento durante todo el día. Revisa los turnos de los instructores en cada tarjeta a continuación para contar con asistencia presencial y guía de rutina.
             </p>
@@ -958,14 +958,14 @@ function renderSchedule() {
         let spotBadge = '';
         if (spotClass.isCurrentLive) {
           spotBadge = `
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-black font-michroma font-bold text-[9px] sm:text-[10px] tracking-wider uppercase shadow-[0_0_16px_rgba(255,255,255,0.45)]">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-black font-jura font-bold text-[9px] sm:text-[10px] tracking-wider uppercase shadow-[0_0_16px_rgba(255,255,255,0.45)]">
               <span class="w-2 h-2 rounded-full bg-black shrink-0 animate-ping"></span>
               EN VIVO AHORA
             </span>
           `;
         } else {
           spotBadge = `
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-michroma font-bold text-[9px] sm:text-[10px] tracking-wider uppercase border border-white/30">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-jura font-bold text-[9px] sm:text-[10px] tracking-wider uppercase border border-white/30">
               <span class="w-1.5 h-1.5 rounded-full bg-white shrink-0 animate-pulse"></span>
               INICIA EN ${spotMinsLeft} MIN
             </span>
@@ -974,19 +974,19 @@ function renderSchedule() {
 
         let spotCta = '';
         if (spotCat === 'Musculación') {
-          spotCta = `<span class="px-5 py-2.5 rounded-full bg-white/10 text-white/90 font-michroma text-[11px] uppercase tracking-wider border border-white/15">Sala Libre</span>`;
+          spotCta = `<span class="px-5 py-2.5 rounded-full bg-white/10 text-white/90 font-jura text-[11px] uppercase tracking-wider border border-white/15">Sala Libre</span>`;
         } else if (spotClass.isCurrentLive) {
           if (spotBooked) {
-            spotCta = `<button onclick="openUserProfileModal()" class="px-5 py-2.5 rounded-full bg-white text-black font-michroma font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer">✓ Mi Reserva</button>`;
+            spotCta = `<button onclick="openUserProfileModal()" class="px-5 py-2.5 rounded-full bg-white text-black font-jura font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer">✓ Mi Reserva</button>`;
           } else {
-            spotCta = `<button onclick="handleStartedClassClick('${spotClass.n}')" class="px-5 py-2.5 rounded-full bg-white/15 text-white/80 font-michroma text-xs uppercase tracking-wider border border-white/20 hover:bg-white/25 active:scale-95 transition-all cursor-pointer">En Curso</button>`;
+            spotCta = `<button onclick="handleStartedClassClick('${spotClass.n}')" class="px-5 py-2.5 rounded-full bg-white/15 text-white/80 font-jura text-xs uppercase tracking-wider border border-white/20 hover:bg-white/25 active:scale-95 transition-all cursor-pointer">En Curso</button>`;
           }
         } else if (spotBooked) {
-          spotCta = `<button onclick="openUserProfileModal()" class="px-5 py-2.5 rounded-full bg-white text-black font-michroma font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer">✓ Reservada</button>`;
+          spotCta = `<button onclick="openUserProfileModal()" class="px-5 py-2.5 rounded-full bg-white text-black font-jura font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer">✓ Reservada</button>`;
         } else if (spotSeats === 0) {
-          spotCta = `<span class="px-5 py-2.5 rounded-full bg-neutral-800 text-white/50 font-michroma font-bold text-xs uppercase tracking-wider border border-white/10">Clase Llena</span>`;
+          spotCta = `<span class="px-5 py-2.5 rounded-full bg-neutral-800 text-white/50 font-jura font-bold text-xs uppercase tracking-wider border border-white/10">Clase Llena</span>`;
         } else {
-          spotCta = `<button onclick="openReserveModal('${spotClass.id}', '${spotClass.n}', '${spotClass.t}', '${spotClass.roomCode}', '${spotClass.i}')" class="px-6 py-3 rounded-full bg-white text-black font-michroma font-bold text-xs uppercase tracking-widest shadow-[0_4px_24px_rgba(255,255,255,0.4)] hover:bg-white/90 hover:scale-105 active:scale-95 transition-all cursor-pointer">RESERVAR AHORA</button>`;
+          spotCta = `<button onclick="openReserveModal('${spotClass.id}', '${spotClass.n}', '${spotClass.t}', '${spotClass.roomCode}', '${spotClass.i}')" class="px-6 py-3 rounded-full bg-white text-black font-jura font-bold text-xs uppercase tracking-widest shadow-[0_4px_24px_rgba(255,255,255,0.4)] hover:bg-white/90 hover:scale-105 active:scale-95 transition-all cursor-pointer">RESERVAR AHORA</button>`;
         }
 
         spotlightHtml = `
@@ -998,15 +998,15 @@ function renderSchedule() {
                   <span class="px-3 py-1 rounded-full bg-white/10 text-white/90 font-sans text-xs font-semibold tracking-wide border border-white/15">
                     ${spotRoom}
                   </span>
-                  <span class="text-[10px] font-michroma text-white/50 uppercase tracking-widest px-1">
+                  <span class="text-[10px] font-jura text-white/50 uppercase tracking-widest px-1">
                     ${spotCat}
                   </span>
                 </div>
-                <h3 class="text-2xl sm:text-3xl font-exo font-bold text-white tracking-wide">
+                <h3 class="text-2xl sm:text-3xl font-jura font-bold text-white tracking-wide">
                   ${spotClass.n}
                 </h3>
                 <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 text-white/70 text-xs sm:text-sm font-sans">
-                  <span class="font-michroma font-bold text-white">${spotTime}</span>
+                  <span class="font-jura font-bold text-white">${spotTime}</span>
                   <span>•</span>
                   <span>Prof. ${formatInstructor(spotClass.i)}</span>
                   ${spotSeats > 0 && spotCat !== 'Musculación' ? `<span>•</span><span class="text-white/90 font-medium">${spotSeats} cupos</span>` : ''}
@@ -1029,7 +1029,7 @@ function renderSchedule() {
     if (isToday && pastClasses.length > 0) {
       pastClassesHtml = `
         <div id="past-schedule-section" class="space-y-4 pt-2 pb-2">
-          <div class="flex items-center justify-center gap-3 py-2 text-white/50 text-[10px] font-michroma uppercase tracking-widest">
+          <div class="flex items-center justify-center gap-3 py-2 text-white/50 text-[10px] font-jura uppercase tracking-widest">
             <span class="h-[1px] bg-white/15 flex-1"></span>
             <span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
               <svg class="w-3.5 h-3.5 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
@@ -1051,7 +1051,7 @@ function renderSchedule() {
       timeHorizonMarkerHtml = `
         <div id="schedule-time-horizon" class="py-3 my-1 flex items-center justify-center gap-3 select-none">
           <span class="h-[1px] bg-gradient-to-r from-transparent via-white/30 to-white/10 flex-1"></span>
-          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/25 text-white font-michroma font-bold text-[9px] sm:text-[10px] tracking-widest uppercase shadow-[0_0_15px_rgba(255,255,255,0.15)]">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/25 text-white font-jura font-bold text-[9px] sm:text-[10px] tracking-widest uppercase shadow-[0_0_15px_rgba(255,255,255,0.15)]">
             <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
             LÍMITE DE HORA • ${curHours}:${curMinutes} HS
           </span>
@@ -1078,7 +1078,7 @@ function renderSchedule() {
       `;
     } else {
       upcomingContentHtml = `
-        <div class="text-center text-white/40 font-bold py-16 uppercase tracking-widest text-xs font-michroma">
+        <div class="text-center text-white/40 font-bold py-16 uppercase tracking-widest text-xs font-jura">
           No hay clases programadas para este día o filtro
         </div>
       `;
@@ -1161,27 +1161,27 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
   let topBadgeHtml = '';
   if (isCurrentLive || statusType === 'active' || statusType === 'just-started') {
     topBadgeHtml = `
-      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-black font-michroma font-black text-[9px] tracking-widest uppercase shadow-md shadow-white/20">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-black font-jura font-black text-[9px] tracking-widest uppercase shadow-md shadow-white/20">
         <span class="w-1.5 h-1.5 rounded-full bg-black shrink-0 animate-ping"></span>
         EN VIVO
       </span>
     `;
   } else if (isNextUpcoming) {
     topBadgeHtml = `
-      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-michroma font-bold text-[9px] tracking-wider uppercase border border-white/30">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-jura font-bold text-[9px] tracking-wider uppercase border border-white/30">
         <span class="w-1.5 h-1.5 rounded-full bg-white shrink-0"></span>
         PRÓXIMA
       </span>
     `;
   } else if (isExpired) {
     topBadgeHtml = `
-      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/5 text-white/40 text-[9px] font-michroma uppercase tracking-wider">
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/5 text-white/40 text-[9px] font-jura uppercase tracking-wider">
         FINALIZADA
       </span>
     `;
   } else {
     topBadgeHtml = `
-      <span class="text-[10px] font-michroma font-bold uppercase tracking-widest text-white/50 px-2 py-0.5">
+      <span class="text-[10px] font-jura font-bold uppercase tracking-widest text-white/50 px-2 py-0.5">
         ${cat}
       </span>
     `;
@@ -1209,9 +1209,9 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
   let seatsHtml = '';
   if (cat !== 'Musculación' && !isExpired) {
     if (seatsAvailable === 0) {
-      seatsHtml = `<div class="text-[10px] font-michroma font-bold text-white/40 uppercase tracking-widest mt-1">Clase Completa</div>`;
+      seatsHtml = `<div class="text-[10px] font-jura font-bold text-white/40 uppercase tracking-widest mt-1">Clase Completa</div>`;
     } else if (seatsAvailable <= 3) {
-      seatsHtml = `<div class="text-[10px] font-michroma font-bold text-white/80 uppercase tracking-widest mt-1">¡Últimos ${seatsAvailable} Cupos!</div>`;
+      seatsHtml = `<div class="text-[10px] font-jura font-bold text-white/80 uppercase tracking-widest mt-1">¡Últimos ${seatsAvailable} Cupos!</div>`;
     } else {
       seatsHtml = `<div class="text-[10px] font-sans font-medium text-white/40 tracking-wider mt-1">${seatsAvailable} cupos disponibles</div>`;
     }
@@ -1426,8 +1426,8 @@ function renderReservations() {
   if (reservations.length === 0) {
     container.innerHTML = `
       <div class="text-center py-12 space-y-4">
-        <div class="text-white/30 font-michroma text-xs uppercase tracking-widest font-michroma">No tienes reservas activas</div>
-        <button onclick="switchTab('horarios')" class="bg-white text-black font-michroma font-bold text-xs px-6 py-3 rounded-lg hover:bg-white/90 font-michroma">
+        <div class="text-white/30 font-jura text-xs uppercase tracking-widest font-jura">No tienes reservas activas</div>
+        <button onclick="switchTab('horarios')" class="bg-white text-black font-jura font-bold text-xs px-6 py-3 rounded-lg hover:bg-white/90 font-jura">
           EXPLORAR CLASES
         </button>
       </div>
@@ -1438,14 +1438,14 @@ function renderReservations() {
   container.innerHTML = reservations.map(r => `
     <div class="bg-[#181818]/90 backdrop-blur-md border border-white/20 p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
       <div class="space-y-1 font-sans">
-        <span class="text-xs font-michroma font-black text-white/90 uppercase tracking-widest block">RESERVADO</span>
-        <h4 class="text-xl font-exo font-bold text-white">${r.className}</h4>
+        <span class="text-xs font-jura font-black text-white/90 uppercase tracking-widest block">RESERVADO</span>
+        <h4 class="text-xl font-jura font-bold text-white">${r.className}</h4>
         <div class="text-xs text-white/70">
           ${r.dayName} • ${r.time} hs • ${ROOM_MAP[r.roomCode] || r.roomCode} • Instructora: ${formatInstructor(r.instructor)}
         </div>
       </div>
       <div class="flex gap-2 w-full md:w-auto">
-        <button onclick="cancelBooking('${r.classId}')" class="flex-1 md:flex-none border border-red-500/50 text-red-400 font-michroma text-[10px] px-4 py-2.5 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
+        <button onclick="cancelBooking('${r.classId}')" class="flex-1 md:flex-none border border-red-500/50 text-red-400 font-jura text-[10px] px-4 py-2.5 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
           CANCELAR
         </button>
       </div>
@@ -1544,11 +1544,11 @@ function renderAdminPanel() {
       return `
         <tr class="border-b border-[#111]">
           <td class="py-3 font-mono font-bold">${d.id}</td>
-          <td class="py-3 font-michroma text-[10px] text-white">${d.name}</td>
+          <td class="py-3 font-jura text-[10px] text-white">${d.name}</td>
           <td class="py-3">${d.phone}</td>
           <td class="py-3 text-center">
             <div class="flex items-center justify-center gap-3">
-              <span class="text-[9px] uppercase font-michroma ${statusColor}">${d.status}</span>
+              <span class="text-[9px] uppercase font-jura ${statusColor}">${d.status}</span>
               <button 
                 onclick="toggleSocioStatus('${d.id}', '${d.status}')"
                 class="px-3 py-1 rounded text-[10px] font-bold uppercase transition-colors ${isActive ? 'bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white' : 'bg-[#0effc7]/20 text-[#0effc7] hover:bg-[#0effc7] hover:text-black'}"
@@ -1585,11 +1585,11 @@ function renderAdminPanel() {
     statsContainer.innerHTML = classesArray.map(c => `
       <div class="bg-[#141414] border border-[#222] p-3 rounded-lg flex justify-between items-center text-xs">
         <div>
-          <div class="font-bold text-white font-michroma text-[10px]">${c.n}</div>
+          <div class="font-bold text-white font-jura text-[10px]">${c.n}</div>
           <div class="text-white/50">${c.t} • ${c.roomName} • ${formatInstructor(c.i)}</div>
         </div>
         <div class="text-right">
-          <span class="font-bold font-michroma text-[#0effc7]">${c.bookedCount} / ${c.cap || 20}</span>
+          <span class="font-bold font-jura text-[#0effc7]">${c.bookedCount} / ${c.cap || 20}</span>
           <div class="text-[9px] text-white/30">Cupos Reservados</div>
         </div>
       </div>
@@ -1637,7 +1637,7 @@ function renderInstructorPanel(instructorName) {
 
   if (myClasses.length === 0) {
     container.innerHTML = `
-      <div class="text-center py-12 text-white/40 text-xs font-michroma uppercase">
+      <div class="text-center py-12 text-white/40 text-xs font-jura uppercase">
         No tienes clases programadas para el día de hoy
       </div>
     `;
@@ -1649,7 +1649,7 @@ function renderInstructorPanel(instructorName) {
       ? `<div class="text-white/30 italic py-2">No hay alumnos registrados en esta clase aún.</div>`
       : c.users.map((u, index) => `
           <div class="flex justify-between items-center py-2 border-b border-[#222] last:border-b-0 text-white/80">
-            <span>${index + 1}. <strong class="font-michroma text-[9px] text-white">${u.userName}</strong></span>
+            <span>${index + 1}. <strong class="font-jura text-[9px] text-white">${u.userName}</strong></span>
             <span class="opacity-70">${u.userPhone}</span>
           </div>
         `).join('');
@@ -1658,17 +1658,17 @@ function renderInstructorPanel(instructorName) {
       <div class="bg-[#0a0a0a] border-2 border-[#222] p-5 rounded-xl space-y-4">
         <div class="flex justify-between items-center border-b border-[#222] pb-3">
           <div>
-            <h4 class="font-exo font-bold text-base text-[#0effc7]">${c.n}</h4>
+            <h4 class="font-jura font-bold text-base text-[#0effc7]">${c.n}</h4>
             <div class="text-xs text-white/50">${c.t} • ${c.roomName}</div>
           </div>
           <div class="text-right">
-            <span class="font-michroma font-bold text-white">${c.users.length} alumnos</span>
+            <span class="font-jura font-bold text-white">${c.users.length} alumnos</span>
             <div class="text-[9px] text-white/40">Cupo total: ${c.cap || 20}</div>
           </div>
         </div>
 
         <div class="space-y-2 text-xs font-sans">
-          <div class="text-[10px] uppercase font-michroma text-white/40 mb-1">Listado de Reservas</div>
+          <div class="text-[10px] uppercase font-jura text-white/40 mb-1">Listado de Reservas</div>
           ${listHtml}
         </div>
       </div>
@@ -1765,7 +1765,7 @@ function renderCatalogCategoryControls() {
       const isActive = (idx === currentCatalogCategoryIndex);
       return `
         <button onclick="selectCatalogCategory(${idx})"
-                class="px-4 py-1.5 rounded-full text-xs font-michroma uppercase tracking-wider transition-all duration-300 cursor-pointer whitespace-nowrap ${isActive ? 'bg-white text-black font-bold shadow-lg shadow-white/30 scale-105' : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'}">
+                class="px-4 py-1.5 rounded-full text-xs font-jura uppercase tracking-wider transition-all duration-300 cursor-pointer whitespace-nowrap ${isActive ? 'bg-white text-black font-bold shadow-lg shadow-white/30 scale-105' : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'}">
           ${cat}
         </button>
       `;
@@ -1849,7 +1849,7 @@ function renderDisciplines() {
           <!-- Encabezado de la Disciplina: Nombre, Sala y Duración -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
             <div>
-              <h4 class="font-exo font-bold text-lg sm:text-xl text-white tracking-tight">${d.name}</h4>
+              <h4 class="font-jura font-bold text-lg sm:text-xl text-white tracking-tight">${d.name}</h4>
               <span class="text-xs font-sans text-white/60 font-semibold">${roomText}</span>
             </div>
             <div class="self-start sm:self-auto px-3.5 py-1 rounded-full bg-white/10 border border-white/10 text-xs font-sans text-white/80 font-semibold">
@@ -1862,14 +1862,14 @@ function renderDisciplines() {
             <p class="text-sm text-white/85 font-sans leading-relaxed font-normal">${d.description}</p>
             
             <div class="bg-black/35 border border-white/5 p-3.5 rounded-2xl text-xs font-sans text-white/75 leading-relaxed">
-              <span class="text-white/90 uppercase font-black tracking-wider text-[10px] font-michroma block mb-1">Recomendado para:</span>
+              <span class="text-white/90 uppercase font-black tracking-wider text-[10px] font-jura block mb-1">Recomendado para:</span>
               ${d.recommended}
             </div>
           </div>
 
           <!-- Beneficios / Cualidades -->
           <div class="space-y-1.5 pt-1">
-            <span class="text-[10px] font-michroma text-white/40 uppercase tracking-widest block">Beneficios de la disciplina:</span>
+            <span class="text-[10px] font-jura text-white/40 uppercase tracking-widest block">Beneficios de la disciplina:</span>
             <div class="flex flex-wrap gap-2">
               ${benefitsHtml}
             </div>
@@ -1890,7 +1890,7 @@ function renderDisciplines() {
             </div>
 
             <!-- Título de la Categoría -->
-            <h3 class="text-xl sm:text-2xl font-exo font-bold text-white uppercase tracking-wider mb-2">
+            <h3 class="text-xl sm:text-2xl font-jura font-bold text-white uppercase tracking-wider mb-2">
               ${cat}
             </h3>
 
