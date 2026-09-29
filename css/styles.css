@@ -26,7 +26,7 @@
 body {
     background-color: var(--bg);
     color: #ffffff;
-    font-family: 'Jura', sans-serif;
+    font-family: 'Michroma', sans-serif;
     line-height: 1.5;
     letter-spacing: -0.01em;
     min-height: 100vh;
@@ -37,16 +37,9 @@ body {
 }
 
 /* Tipografías Utilitarias */
-.font-jura { font-family: 'Jura', sans-serif; }
-.font-michroma { font-family: 'Jura', sans-serif; }
+.font-michroma { font-family: 'Michroma', sans-serif; }
 .font-exo { font-family: 'Exo 2', sans-serif; }
 .font-inter { font-family: 'Inter', sans-serif; }
-
-/* Títulos con Jura en peso 700 */
-h1, h2, h3, h4, h5, h6, .status-header, .class-name, .font-title {
-    font-family: 'Jura', sans-serif !important;
-    font-weight: 700 !important;
-}
 
 .tactic-bold { 
     font-weight: 900 !important; 
@@ -157,10 +150,9 @@ h1, h2, h3, h4, h5, h6, .status-header, .class-name, .font-title {
 
 /* Navegación por pestañas superiores (En Vivo / Día) */
 .view-tab {
-    font-family: 'Jura', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-family: 'Michroma', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid #222;
     background-color: #070707;
@@ -207,11 +199,10 @@ h1, h2, h3, h4, h5, h6, .status-header, .class-name, .font-title {
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem; 
     color: #ffffff;
-    font-family: 'Jura', sans-serif !important;
-    font-size: 1.45rem;
-    font-weight: 700 !important;
+    font-size: 1.15rem;
+    font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 0.10em; 
+    letter-spacing: 0.15em; 
     text-align: center;
 }
 
@@ -284,21 +275,21 @@ h1, h2, h3, h4, h5, h6, .status-header, .class-name, .font-title {
 
 /* Tipografía de Alto Contraste Escalar */
 .class-time-display {
-    font-family: 'Jura', sans-serif;
-    font-size: 2.35rem;
-    font-weight: 700 !important;
+    font-family: 'Michroma', sans-serif;
+    font-size: 2.25rem;
+    font-weight: 900 !important;
     letter-spacing: -0.02em;
     line-height: 1;
     color: #ffffff;
 }
 
 .class-name {
-    font-family: 'Jura', sans-serif !important;
-    font-size: 1.35rem;
-    font-weight: 700 !important;
+    font-family: 'Michroma', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800 !important;
     text-transform: uppercase;
     line-height: 1.25 !important; 
-    letter-spacing: 0.03em;
+    letter-spacing: 0.04em;
     color: #ffffff;
     word-wrap: break-word;
 }
@@ -343,9 +334,9 @@ h1, h2, h3, h4, h5, h6, .status-header, .class-name, .font-title {
 
 /* Botón de Reserva en Cápsula (Capsule CTA Pill) */
 .btn-reserve {
-    font-family: 'Jura', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-family: 'Michroma', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 900;
     letter-spacing: 0.08em;
     padding: 0.95rem 1.6rem;
     border-radius: 9999px !important;
@@ -430,8 +421,8 @@ h1, h2, h3, h4, h5, h6, .status-header, .class-name, .font-title {
 }
 
 .day-btn {
-    font-family: 'Jura', sans-serif;
-    font-size: 0.85rem;
+    font-family: 'Michroma', sans-serif;
+    font-size: 0.8rem;
     font-weight: 700;
     padding: 0.85rem 0.4rem;
     border-radius: 18px !important;
