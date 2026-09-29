@@ -16,6 +16,7 @@ const CATEGORY_IMAGES = {
   "Spinning": "assets/images/spinning.jpg",
   "Funcional": "assets/images/funcional.jpg",
   "Aeróbicos": "assets/images/aerobicos.jpg",
+  "Cardio": "assets/images/cardio.jpg",
   "Musculación": "assets/images/musculacion.jpg",
   "Otros": "assets/images/cardio.jpg"
 };
@@ -483,11 +484,22 @@ const CATEGORY_ICONS = {
       <path d="M246.84,76.94h-16.06V7.89h16.06v69.05ZM234.78,72.94h8.06V11.89h-8.06v61.05Z"/>
       <path d="M259.02,68.17h-16.18V21.05h16.18v47.12ZM246.84,64.17h8.18V25.05h-8.18v39.12Z"/>
     </g>
+  </svg>`,
+  "Cardio": `<svg class="w-full h-full object-contain shrink-0" fill="currentColor" viewBox="0 0 283.46 283.46">
+    <g>
+      <path d="M25.96,231.67l-17.66.31,48.97-49.8,38.81-48.55c7.12-9.26,18.11-14.71,29.8-14.77l18.26-.08-75.59,76.45-42.58,36.44Z"/>
+      <path d="M111.61,178.52l11.51-10.97,30.86,6.64-10.97-36.42,25.58,1.35,10.97,39.4c2.47,8.85-5.66,17.01-14.52,14.59l-53.44-14.59Z"/>
+      <path d="M65.01,114.65l.64-14.67,31.06-21.09c4.5-3.06,9.81-4.69,15.25-4.69h40.93l-17.08,17.25-23.85-.84c-5.45-.19-10.84,1.26-15.45,4.17l-31.51,19.88Z"/>
+      <path d="M237.72,134.98h-44.75l-3.95-26.65c-.84-5.67-6.77-9.05-12.08-6.89l-17.2,7.02,24.91-28.52h12.29c6.67,0,12.08,5.41,12.08,12.08v28.92h28.51l.19,14.04Z"/>
+      <path d="M211.01,70.8h-23.12l9.83-18.04h8.9c6.18,0,10.36,6.3,7.96,11.99l-3.57,6.04Z"/>
+    </g>
+    <path d="M189.38,239.43h-97.9c-7.83,0-14.52-4.79-17.06-12.2s-.17-15.29,6.03-20.08l.54-.42h102.94v4h-101.55c-5.35,4.5-5.69,10.76-4.17,15.21,1.57,4.59,5.88,9.49,13.27,9.49h96.4c5.54-7.6,51.1-80.14,81.42-128.72l3.39,2.12c-.2.32-20.27,32.48-40.33,64.38-40.83,64.93-41.76,65.49-42.51,65.94l-.48.29ZM187.46,235.98h0Z"/>
   </svg>`
 };
 
 const CATEGORY_ICONS_CONFIG = {
   "Aeróbicos": "assets/icons/aerobics.svg",
+  "Cardio": "assets/icons/cardio.svg",
   "Control": "assets/icons/control.svg",
   "Spinning": "assets/icons/spinning.svg",
   "Funcional": "assets/icons/funcional.svg",
@@ -541,6 +553,7 @@ loadDynamicCategoryIcons();
 
 function isCategoryMatched(classCategory, filter) {
   if (filter === 'ALL') return true;
+  if (filter === 'Aeróbicos' && (classCategory === 'Aeróbicos' || classCategory === 'Cardio')) return true;
   return classCategory === filter;
 }
 
@@ -1570,14 +1583,25 @@ const CATALOG_IMAGES = {
   "Spinning": "assets/images/spinning.jpg",
   "Funcional": "assets/images/funcional.jpg",
   "Pilates": "assets/images/control.jpg",
-  "Power Jump": "assets/images/aerobicos.jpg",
+  "Power Jump": "assets/images/cardio.jpg",
   "Zumba": "assets/images/aerobicos.jpg",
-  "Body Combat": "assets/images/aerobicos.jpg",
+  "Body Jam": "assets/images/aerobicos.jpg",
+  "Body Combat": "assets/images/cardio.jpg",
+  "LesMills Grit": "assets/images/cardio.jpg",
   "Stretching": "assets/images/control.jpg"
 };
 
-const CATALOG_CATEGORIES = ['Aeróbicos', 'Control', 'Spinning', 'Funcional', 'Musculación'];
+const CATALOG_CATEGORIES = ['Aeróbicos', 'Cardio', 'Control', 'Spinning', 'Funcional', 'Musculación'];
 let currentCatalogCategoryIndex = 0;
+
+const CATEGORY_PERSUASIVE_COPY = {
+  "Aeróbicos": "Entrena al ritmo de la música, tonifica tu cuerpo y recárgate de energía en grupo.",
+  "Cardio": "Eleva tu resistencia, libera adrenalina y quema calorías desafiando tus propios límites.",
+  "Control": "Alinea tu columna, fortalece tu zona media y recupera la armonía de tu cuerpo.",
+  "Spinning": "Pedalea con potencia y ritmo: máxima quema metabólica cuidando tus articulaciones.",
+  "Funcional": "Movimientos ágiles y fuerza inteligente para rendir al máximo en tu día a día.",
+  "Musculación": "Desarrolla fuerza real, protege tus articulaciones y gana vitalidad duradera."
+};
 
 window.selectCatalogCategory = function(idx) {
   currentCatalogCategoryIndex = idx;
@@ -1647,7 +1671,7 @@ function renderDisciplines() {
     const disciplines = DISCIPLINES_CATALOG.filter(d => d.category === cat);
     const iconSvg = getCatalogCategoryIconSvg(cat);
     const imgPath = CATEGORY_IMAGES[cat] || 'assets/images/musculacion.jpg';
-    const countText = `${disciplines.length} ${disciplines.length === 1 ? 'disciplina disponible' : 'disciplinas disponibles'}`;
+    const persuasiveCopy = CATEGORY_PERSUASIVE_COPY[cat] || "Entrenamientos diseñados para alcanzar tu máximo potencial.";
 
     const cardsHtml = disciplines.map(d => {
       // Generar badges de cualidades con escala de 5 puntos en tonos grises (cuadrados)
@@ -1717,13 +1741,13 @@ function renderDisciplines() {
               ${iconSvg}
             </div>
 
-            <!-- Título y Contador de Disciplinas de la Categoría -->
-            <h3 class="relative z-10 text-xl sm:text-2xl font-michroma font-bold text-white uppercase tracking-wider mb-1">
+            <!-- Título y Copy persuasivo de la Categoría -->
+            <h3 class="relative z-10 text-xl sm:text-2xl font-michroma font-bold text-white uppercase tracking-wider mb-2">
               ${cat}
             </h3>
-            <span class="relative z-10 text-[11px] font-michroma font-bold text-[#0effc7] uppercase tracking-widest">
-              ${countText}
-            </span>
+            <p class="relative z-10 text-xs sm:text-sm font-sans font-medium text-[#0effc7] max-w-sm mx-auto leading-relaxed">
+              ${persuasiveCopy}
+            </p>
           </div>
 
           <!-- TARJETAS DE CADA DISCIPLINA (SIN REPETIR EL ICONO) -->

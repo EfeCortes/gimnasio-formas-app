@@ -30,11 +30,11 @@ const CATEGORY_MAP = {
   "Body Pump": "Aeróbicos",
   "Zumba": "Aeróbicos",
   "Body Jam": "Aeróbicos",
-  "Body Attack": "Aeróbicos",
-  "LesMills Grit": "Aeróbicos",
+  "Body Attack": "Cardio",
+  "LesMills Grit": "Cardio",
   "LesMills Core": "Aeróbicos",
-  "Body Combat": "Aeróbicos",
-  "Power Jump": "Aeróbicos",
+  "Body Combat": "Cardio",
+  "Power Jump": "Cardio",
   "Horario de Sala (Abierto)": "Musculación",
   "Turno Mañana": "Musculación",
   "Turno Tarde": "Musculación",
@@ -285,12 +285,12 @@ const DISCIPLINES_CATALOG = [
   },
   {
     name: "Power Jump",
-    category: "Aeróbicos",
+    category: "Cardio",
     intensity: "Alta",
     room: "Piso 2",
     duration: "50 min",
-    description: "Programa de entrenamiento en minitrampolines con combinaciones coreografiadas de gran energía y bajísimo impacto articular.",
-    recommended: "Quienes desean quemar calorías divirtiéndose y activando su circulación.",
+    description: "Programa de cardio dinámico sobre minitrampolines individuales con combinaciones coreografiadas de gran energía, drenaje linfático y mínimo impacto articular.",
+    recommended: "Quienes desean quemar grasa divirtiéndose y activando su circulación sin sobrecargar rodillas.",
     benefits: [
       { text: "Drenaje linfático", points: 5 },
       { text: "Quema calórica masiva", points: 5 },
@@ -312,17 +312,45 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "Body Combat",
+    name: "Body Jam",
     category: "Aeróbicos",
+    intensity: "Media - Alta",
+    room: "Piso 1",
+    duration: "50 min",
+    description: "Fusión electrizante de música de vanguardia y estilos de danza urbana. Una clase festiva que tonifica y quema calorías bailando sin parar.",
+    recommended: "Amantes del baile, el ritmo y quienes buscan una sesión aeróbica divertida y desinhibida.",
+    benefits: [
+      { text: "Ritmo y coordinación", points: 5 },
+      { text: "Quema aeróbica", points: 4 },
+      { text: "Liberación de endorfinas", points: 5 }
+    ]
+  },
+  {
+    name: "Body Combat",
+    category: "Cardio",
     intensity: "Alta",
     room: "Piso 2",
     duration: "50 min",
-    description: "Entrenamiento inspirado en artes marciales mixtas como Karate, Boxeo, Taekwondo y Muay Thai. Libera tensiones y tonifica.",
-    recommended: "Quienes buscan descargar tensiones y entrenar cardio de alta intensidad.",
+    description: "Entrenamiento de cardio explosivo inspirado en artes marciales mixtas como Karate, Boxeo, Taekwondo y Muay Thai. Libera tensiones, quema calorías y tonifica.",
+    recommended: "Quienes buscan descargar tensiones y entrenar cardio de alta intensidad sin contacto.",
     benefits: [
-      { text: "Resistencia y agilidad", points: 5 },
+      { text: "Resistencia cardiovascular", points: 5 },
       { text: "Descarga de estrés", points: 5 },
       { text: "Tonificación general", points: 4 }
+    ]
+  },
+  {
+    name: "LesMills Grit",
+    category: "Cardio",
+    intensity: "Muy Alta (HIIT)",
+    room: "Piso 2",
+    duration: "30 min",
+    description: "Entrenamiento en intervalos de alta intensidad (HIIT) de 30 minutos diseñado para acelerar el metabolismo, quemar grasa post-entreno y superar límites atléticos.",
+    recommended: "Quienes buscan resultados rápidos y desafiar su resistencia cardiovascular al máximo.",
+    benefits: [
+      { text: "Quema calórica post-entreno", points: 5 },
+      { text: "Potencia cardiovascular", points: 5 },
+      { text: "Resistencia anaeróbica", points: 4 }
     ]
   },
   {
