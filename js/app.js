@@ -2,7 +2,6 @@
 const DB_DEVICES = 'formas_db_devices_sim';
 const DB_BOOKINGS = 'formas_db_bookings_sim';
 const MY_PROFILE = 'formas_my_profile_sim';
-const SUGGESTIONS = 'formas_user_suggestions_v1';
 
 // --- ESTADO GLOBAL ---
 let activeView = 'day'; // Siempre vista por día por defecto
@@ -351,6 +350,11 @@ window.simulateMockApproval = function() {
 
 // --- NAVEGACIÓN EN PESTAÑAS (BOTTOM NAV BAR) ---
 window.switchTab = function(tabName) {
+  if (tabName === 'contacto') {
+    openContactModal();
+    return;
+  }
+
   document.querySelectorAll('.tab-section').forEach(sec => sec.classList.add('hidden'));
   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
   document.querySelectorAll('.header-icon-btn').forEach(btn => btn.classList.remove('active'));
@@ -363,12 +367,6 @@ window.switchTab = function(tabName) {
   const targetNav = document.getElementById(`nav-${tabName}`);
   if (targetNav) {
     targetNav.classList.add('active');
-  }
-
-  // Si es la sección contacto, marcar el botón correspondiente de la cabecera
-  if (tabName === 'contacto') {
-    const contactBtn = document.querySelector('.header-icon-btn.wa-btn');
-    if (contactBtn) contactBtn.classList.add('active');
   }
 
   // Controlar fondo dinámico global según pestaña activa
@@ -1324,6 +1322,10 @@ window.closeModal = function(modalId) {
     const btn = document.querySelector('.header-icon-btn.user-btn');
     if (btn) btn.classList.remove('active');
   }
+  if (modalId === 'modal-contact') {
+    const btn = document.querySelector('.header-icon-btn.wa-btn');
+    if (btn) btn.classList.remove('active');
+  }
 };
 
 window.handleStartedClassClick = function(className) {
@@ -1428,12 +1430,14 @@ function renderReservations() {
   if (!container) return;
 
   const reservations = getMyReservations();
+  const countBadge = document.getElementById('profile-reserva-count');
+  if (countBadge) countBadge.innerText = reservations.length;
 
   if (reservations.length === 0) {
     container.innerHTML = `
-      <div class="text-center py-12 space-y-4">
-        <div class="text-white/30 font-michroma text-xs uppercase tracking-widest font-michroma">No tienes reservas activas</div>
-        <button onclick="switchTab('horarios')" class="bg-white text-black font-michroma font-bold text-xs px-6 py-3 rounded-lg hover:bg-white/90 font-michroma">
+      <div class="text-center py-6 space-y-3 bg-black/40 border border-white/10 rounded-2xl p-4">
+        <div class="text-white/40 font-michroma text-[10px] uppercase tracking-widest">No tienes reservas activas</div>
+        <button onclick="closeModal('modal-user-profile'); switchTab('horarios');" class="bg-white text-black font-michroma font-black text-[10px] px-5 py-2.5 rounded-full hover:bg-white/90 active:scale-95 transition-all shadow cursor-pointer uppercase">
           EXPLORAR CLASES
         </button>
       </div>
@@ -1442,19 +1446,19 @@ function renderReservations() {
   }
 
   container.innerHTML = reservations.map(r => `
-    <div class="bg-[#181818]/90 backdrop-blur-md border border-white/20 p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
-      <div class="space-y-1 font-sans">
-        <span class="text-xs font-michroma font-black text-white/90 uppercase tracking-widest block">RESERVADO</span>
-        <h4 class="text-xl font-michroma font-bold text-white uppercase">${r.className}</h4>
-        <div class="text-xs text-white/70">
-          ${r.dayName} • ${r.time} hs • ${ROOM_MAP[r.roomCode] || r.roomCode} • Instructora: ${formatInstructor(r.instructor)}
+    <div class="bg-black/60 border border-white/15 p-3.5 rounded-2xl flex justify-between items-center gap-3 backdrop-blur-md shadow-md">
+      <div class="space-y-0.5 font-sans min-w-0">
+        <div class="flex items-center gap-2">
+          <h4 class="text-xs sm:text-sm font-michroma font-black text-white uppercase truncate">${r.className}</h4>
+          <span class="text-[9px] font-michroma text-white/60 bg-white/10 px-1.5 py-0.5 rounded uppercase shrink-0">${r.time} hs</span>
+        </div>
+        <div class="text-[11px] text-white/70 truncate">
+          ${r.dayName} • ${ROOM_MAP[r.roomCode] || r.roomCode} • Prof. ${formatInstructor(r.instructor)}
         </div>
       </div>
-      <div class="flex gap-2 w-full md:w-auto">
-        <button onclick="cancelBooking('${r.classId}')" class="flex-1 md:flex-none border border-red-500/50 text-red-400 font-michroma text-[10px] px-4 py-2.5 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
-          CANCELAR
-        </button>
-      </div>
+      <button onclick="cancelBooking('${r.classId}')" class="shrink-0 border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white font-michroma text-[9px] px-3 py-1.5 rounded-full transition-all cursor-pointer uppercase font-bold">
+        Cancelar
+      </button>
     </div>
   `).join('');
 }
@@ -1681,30 +1685,6 @@ function renderInstructorPanel(instructorName) {
     `;
   }).join('');
 }
-
-// --- FORMULARIO DE SUGERENCIAS ---
-window.sendSuggestionViaWhatsApp = function(event) {
-  if (event) event.preventDefault();
-
-  const type = document.getElementById('sug-type').value;
-  const className = document.getElementById('sug-class').value.trim();
-  const time = document.getElementById('sug-time').value.trim();
-  const days = document.getElementById('sug-days').value.trim();
-  const details = document.getElementById('sug-details').value.trim();
-
-  let msg = `*SUGERENCIA PARA GIMNASIO FORMAS*\n`;
-  msg += `*Tipo:* ${type}\n`;
-  if (className) msg += `*Clase/Disciplina:* ${className}\n`;
-  if (time) msg += `*Horario Deseado:* ${time}\n`;
-  if (days) msg += `*Días:* ${days}\n`;
-  if (details) msg += `*Detalles:* ${details}\n`;
-
-  const url = `https://wa.me/59170000000?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
-
-  document.getElementById('suggestion-form').reset();
-  showToast('Abriendo WhatsApp para enviar propuesta...', 'success');
-};
 
 // --- RENDERIZADO DEL CATÁLOGO DE DISCIPLINAS ---
 const CATALOG_IMAGES = {
@@ -2160,6 +2140,13 @@ window.handleLogoClick = function() {
 };
 
 // --- ENLACES DE CABECERA Y MODALES RELACIONADOS ---
+window.openContactModal = function() {
+  const modal = document.getElementById('modal-contact');
+  if (modal) modal.classList.add('active');
+  const btn = document.querySelector('.header-icon-btn.wa-btn');
+  if (btn) btn.classList.add('active');
+};
+
 window.openWhatsAppChat = function() {
   const profile = JSON.parse(localStorage.getItem(MY_PROFILE));
   const code = profile ? profile.id : 'NUEVO';

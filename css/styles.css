@@ -599,23 +599,24 @@ body {
     justify-content: center;
 }
 
-/* Modales */
+/* Modales con Glassmorphism Líquido & Curvatura Continua */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     z-index: 200;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
+    padding: 1.25rem;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-overlay.active {
@@ -624,42 +625,51 @@ body {
 }
 
 .modal-content {
-    background: #0d0d0d;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 28px !important;
+    background: linear-gradient(160deg, rgba(22, 22, 22, 0.94) 0%, rgba(10, 10, 10, 0.98) 100%) !important;
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    border-radius: 30px !important;
     max-width: 500px;
     width: 100%;
-    padding: 2.2rem;
+    padding: 2rem;
     position: relative;
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95);
+    transform: scale(0.95) translateY(8px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.90), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .modal-overlay.active .modal-content {
-    transform: scale(1);
+    transform: scale(1) translateY(0);
 }
 
 .modal-close {
     position: absolute;
     top: 1.25rem;
     right: 1.25rem;
-    background: #1c1c1c;
-    border: 1px solid #333;
-    color: #fff;
-    width: 32px;
-    height: 32px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.2s ease;
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
 }
 
 .modal-close:hover {
-    background: #333;
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+    transform: scale(1.08);
 }
 
 /* Toasts en Píldora Completa */

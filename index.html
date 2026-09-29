@@ -193,7 +193,7 @@
 
       <div class="header-right-icons">
         <!-- Icono de Ubicación de Contacto -->
-        <button onclick="switchTab('contacto')" title="Contacto y Ubicación" class="header-icon-btn wa-btn">
+        <button onclick="openContactModal()" title="Contacto y Ubicación" class="header-icon-btn wa-btn">
           <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
         </button>
         <!-- Icono Campana (Notificaciones) -->
@@ -203,7 +203,7 @@
         <!-- Icono Usuario con Badge de Reservas -->
         <button onclick="openUserProfileModal()" title="Mi Perfil" class="header-icon-btn user-btn relative">
           <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-          <span id="reserva-badge" class="absolute -top-1 -right-1 bg-[#ffdd00] text-black text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          <span id="reserva-badge" class="absolute -top-1 -right-1 bg-white text-black text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow hidden">0</span>
         </button>
       </div>
     </div>
@@ -257,134 +257,6 @@
       </div>
 
       <!-- Area de Horarios Dinámicos -->
-      <div id="dynamic-schedule-area" class="space-y-12"></div>
-    </section>
-
-    <!-- SECCIÓN CONTACTO Y SUGERENCIAS -->
-    <section id="tab-section-contacto" class="tab-section hidden">
-      <div class="status-header">CONTACTO</div>
-
-      <div class="max-w-md mx-auto bg-[#161616] p-6 rounded-2xl border border-[#282828] space-y-6 text-center font-sans">
-        <div class="space-y-1">
-          <h2 class="text-base font-michroma text-[#ffdd00] uppercase tracking-wider">📌 GIMNASIO FORMAS</h2>
-          <p class="text-[10px] text-white/50 uppercase tracking-widest font-michroma">Centro de entrenamiento y salud</p>
-        </div>
-
-        <!-- Información Física -->
-        <div class="bg-[#0a0a0a] p-4 rounded-xl border border-[#2d2d2d] text-left space-y-3 text-xs text-white/80">
-          <div class="flex items-start gap-2.5">
-            <svg class="w-4 h-4 text-[#0effc7] fill-current shrink-0 mt-0.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            <div>
-              <strong class="text-white block mb-0.5">Dirección:</strong>
-              Av. Portales y Pantaleón Dalence N° 1433, Cochabamba, Bolivia
-            </div>
-          </div>
-          
-          <div class="flex items-start gap-2.5">
-            <svg class="w-4 h-4 text-white/60 fill-current shrink-0 mt-0.5" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            <div>
-              <strong class="text-white block mb-0.5">Teléfono Fijo:</strong>
-              4488481
-            </div>
-          </div>
-        </div>
-
-        <!-- Redes y Enlaces -->
-        <div class="space-y-3">
-          <span class="text-[10px] font-michroma text-white/40 uppercase tracking-widest block mb-1">Nuestros Canales de Contacto</span>
-          
-          <div class="grid grid-cols-1 gap-2.5">
-            <!-- WhatsApp -->
-            <a href="https://wa.me/59170000000" target="_blank" class="flex items-center justify-between bg-white/5 border border-white/20 hover:bg-white hover:text-black text-white px-4 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider">
-              <span class="flex items-center gap-2">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                WhatsApp Recepción
-              </span>
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21 12l-8.15-8.15-1.42 1.42L16.86 11H5v2z"/></svg>
-            </a>
-
-            <!-- Facebook -->
-            <a href="https://facebook.com/gimnasioformas" target="_blank" class="flex items-center justify-between bg-white/5 border border-white/20 hover:bg-white hover:text-black text-white px-4 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider">
-              <span class="flex items-center gap-2">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg>
-                Facebook Oficial
-              </span>
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21 12l-8.15-8.15-1.42 1.42L16.86 11H5v2z"/></svg>
-            </a>
-
-            <!-- Instagram -->
-            <a href="https://instagram.com/gimnasioformas" target="_blank" class="flex items-center justify-between bg-white/5 border border-white/20 hover:bg-white hover:text-black text-white px-4 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider">
-              <span class="flex items-center gap-2">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2zm-.2 2A3.6 3.6 0 004 7.6v8.8A3.6 3.6 0 007.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6A3.6 3.6 0 0016.4 4H7.6zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm5-2.25a.75.75 0 110 1.5.75.75 0 010-1.5z"/></svg>
-                Instagram
-              </span>
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21 12l-8.15-8.15-1.42 1.42L16.86 11H5v2z"/></svg>
-            </a>
-
-            <!-- TikTok -->
-            <a href="https://tiktok.com/@gimnasioformas" target="_blank" class="flex items-center justify-between bg-white/5 border border-white/20 hover:bg-white hover:text-black text-white px-4 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-wider">
-              <span class="flex items-center gap-2">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.81-.74-3.94-1.69-.22-.19-.42-.38-.62-.59v6.52c-.02 2.57-1.12 5.08-3.06 6.77-1.9 1.66-4.58 2.32-7.03 1.76-2.52-.56-4.79-2.32-5.99-4.66-1.3-2.51-1.17-5.71.36-8.08 1.42-2.22 3.98-3.69 6.64-3.79.07 3.97-.03 3.97-.03 3.97-1.39-.08-2.82.52-3.6 1.68-.82 1.21-.77 2.91.13 4.02.85 1.05 2.27 1.51 3.56 1.13 1.21-.35 2.11-1.46 2.3-2.73.08-.55.06-1.11.06-1.67V.02z"/></svg>
-                TikTok
-              </span>
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21 12l-8.15-8.15-1.42 1.42L16.86 11H5v2z"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sugerencias integradas en sección contacto -->
-      <div class="max-w-xl mx-auto bg-[#161616] p-6 sm:p-8 rounded-[28px] border border-white/15 space-y-5 mt-8 shadow-xl">
-        <div class="text-center space-y-1">
-          <h2 class="text-base font-michroma text-white font-bold uppercase tracking-wider">💡 Propón una nueva clase u horario</h2>
-          <p class="text-xs text-white/60 font-sans">
-            ¿Quieres otra disciplina o un horario que se adapte mejor a ti? Dinos tu propuesta.
-          </p>
-        </div>
-
-        <form id="suggestion-form" onsubmit="sendSuggestionViaWhatsApp(event)" class="space-y-4 font-sans text-xs">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[10px] font-bold uppercase text-white/50 mb-1.5 font-michroma">Tipo</label>
-              <select id="sug-type" class="w-full bg-[#0a0a0a] border border-white/20 rounded-xl p-3 text-white text-base focus:border-white outline-none">
-                <option value="Nuevo Horario">Nuevo Horario</option>
-                <option value="Nueva Disciplina">Nueva Disciplina</option>
-                <option value="Cambio Instructor">Cambio Instructor</option>
-                <option value="Otro">Otro Comentario</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-[10px] font-bold uppercase text-white/50 mb-1.5 font-michroma">Clase / Disciplina</label>
-              <input type="text" id="sug-class" required placeholder="Ej: SPINNING madrugador..." class="w-full bg-[#0a0a0a] border border-white/20 rounded-xl p-3 text-white text-base focus:border-white outline-none">
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[10px] font-bold uppercase text-white/50 mb-1.5 font-michroma">Horario</label>
-              <input type="text" id="sug-time" placeholder="Ej: 07:00 AM" class="w-full bg-[#0a0a0a] border border-white/20 rounded-xl p-3 text-white text-base focus:border-white outline-none">
-            </div>
-
-            <div>
-              <label class="block text-[10px] font-bold uppercase text-white/50 mb-1.5 font-michroma">Día(s)</label>
-              <input type="text" id="sug-days" placeholder="Ej: Lun y Mié" class="w-full bg-[#0a0a0a] border border-white/20 rounded-xl p-3 text-white text-base focus:border-white outline-none">
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-[10px] font-bold uppercase text-white/50 mb-1.5 font-michroma">Detalles o Sugerencia</label>
-            <textarea id="sug-details" rows="2" placeholder="Describe brevemente tu idea..." class="w-full bg-[#0a0a0a] border border-white/20 rounded-xl p-3 text-white text-base focus:border-white outline-none"></textarea>
-          </div>
-
-          <div class="pt-1.5">
-            <button type="submit" class="w-full bg-white text-black font-michroma font-bold text-[10px] py-4 px-6 rounded-full hover:bg-white/90 transition-colors uppercase tracking-widest flex items-center justify-center gap-2">
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-              Enviar Sugerencia por WhatsApp
-            </button>
-          </div>
-        </form>
-      </div>
     </section>
 
     <!-- SECCIÓN 4: ACCESO STAFF (ADMIN & INSTRUCTORES) -->
@@ -791,16 +663,103 @@
     </div>
   </div>
 
-  <!-- MODAL DE CONFIRMACIÓN DE RESERVA -->
-  <div id="modal-reserve" class="modal-overlay">
+  <!-- MODAL DE CONTACTO & UBICACIÓN -->
+  <div id="modal-contact" class="modal-overlay" onclick="if(event.target === this) closeModal('modal-contact')">
     <div class="modal-content">
-      <button onclick="closeModal('modal-reserve')" class="modal-close">&times;</button>
+      <button onclick="closeModal('modal-contact')" class="modal-close" aria-label="Cerrar modal">&times;</button>
+      
+      <div class="text-center space-y-5 font-sans">
+        <div class="space-y-1">
+          <span class="text-xs font-michroma text-white/50 uppercase tracking-widest block">UBICACIÓN & CONTACTO</span>
+          
+          <div class="w-14 h-14 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center mx-auto text-white shadow-lg my-2">
+            <svg class="w-7 h-7 text-white fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+
+          <h3 class="text-xl sm:text-2xl font-michroma text-white font-black uppercase">GIMNASIO FORMAS</h3>
+          <p class="text-xs text-white/60 font-sans">Centro de entrenamiento y salud integral</p>
+        </div>
+
+        <!-- Información Física / Ubicación -->
+        <div class="bg-black/60 border border-white/15 p-5 rounded-2xl text-left space-y-3.5 backdrop-blur-md">
+          <div class="flex items-start gap-3 text-xs text-white/90">
+            <div class="w-8 h-8 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <div>
+              <span class="text-[10px] font-michroma text-white/50 uppercase tracking-wider block">Dirección</span>
+              <span class="font-bold text-white text-sm block">Av. Portales y Pantaleón Dalence N° 1433</span>
+              <span class="text-white/60 text-xs">Cochabamba, Bolivia</span>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 text-xs text-white/90 border-t border-white/10 pt-3">
+            <div class="w-8 h-8 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <div>
+              <span class="text-[10px] font-michroma text-white/50 uppercase tracking-wider block">Teléfono Fijo</span>
+              <span class="font-michroma font-bold text-white text-sm">4488481</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Canales Digitales & Redes -->
+        <div class="space-y-2.5 text-left">
+          <span class="text-[10px] font-michroma text-white/50 uppercase tracking-widest block text-center">CANALES DE ATENCIÓN DIRECTA</span>
+          
+          <div class="grid grid-cols-1 gap-2">
+            <!-- WhatsApp Recepción -->
+            <a href="https://wa.me/59177012345" target="_blank" class="flex items-center justify-between bg-white/5 border border-white/15 hover:bg-white hover:text-black text-white px-4 py-3 rounded-2xl transition-all font-bold text-xs uppercase tracking-wider group cursor-pointer">
+              <span class="flex items-center gap-3">
+                <svg class="w-4 h-4 text-[#25D366] group-hover:text-black fill-current transition-colors" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                <span>WhatsApp Recepción</span>
+              </span>
+              <svg class="w-4 h-4 fill-current opacity-60 group-hover:opacity-100" viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21 12l-8.15-8.15-1.42 1.42L16.86 11H5v2z"/></svg>
+            </a>
+
+            <!-- Redes en fila de 3 botones elegantes -->
+            <div class="grid grid-cols-3 gap-2 pt-1">
+              <!-- Facebook -->
+              <a href="https://facebook.com/gimnasioformas" target="_blank" class="flex flex-col items-center justify-center gap-1.5 bg-white/5 border border-white/15 hover:bg-white hover:text-black text-white p-3 rounded-2xl transition-all text-center group cursor-pointer">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg>
+                <span class="text-[9px] font-michroma font-bold uppercase tracking-wider">Facebook</span>
+              </a>
+
+              <!-- Instagram -->
+              <a href="https://instagram.com/gimnasioformas" target="_blank" class="flex flex-col items-center justify-center gap-1.5 bg-white/5 border border-white/15 hover:bg-white hover:text-black text-white p-3 rounded-2xl transition-all text-center group cursor-pointer">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2zm-.2 2A3.6 3.6 0 004 7.6v8.8A3.6 3.6 0 007.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6A3.6 3.6 0 0016.4 4H7.6zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm5-2.25a.75.75 0 110 1.5.75.75 0 010-1.5z"/></svg>
+                <span class="text-[9px] font-michroma font-bold uppercase tracking-wider">Instagram</span>
+              </a>
+
+              <!-- TikTok -->
+              <a href="https://tiktok.com/@gimnasioformas" target="_blank" class="flex flex-col items-center justify-center gap-1.5 bg-white/5 border border-white/15 hover:bg-white hover:text-black text-white p-3 rounded-2xl transition-all text-center group cursor-pointer">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.81-.74-3.94-1.69-.22-.19-.42-.38-.62-.59v6.52c-.02 2.57-1.12 5.08-3.06 6.77-1.9 1.66-4.58 2.32-7.03 1.76-2.52-.56-4.79-2.32-5.99-4.66-1.3-2.51-1.17-5.71.36-8.08 1.42-2.22 3.98-3.69 6.64-3.79.07 3.97-.03 3.97-.03 3.97-1.39-.08-2.82.52-3.6 1.68-.82 1.21-.77 2.91.13 4.02.85 1.05 2.27 1.51 3.56 1.13 1.21-.35 2.11-1.46 2.3-2.73.08-.55.06-1.11.06-1.67V.02z"/></svg>
+                <span class="text-[9px] font-michroma font-bold uppercase tracking-wider">TikTok</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button onclick="closeModal('modal-contact')" class="w-full bg-[#222] hover:bg-[#333] text-white font-michroma text-xs py-3.5 rounded-full transition-all cursor-pointer uppercase">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONFIRMACIÓN DE RESERVA -->
+  <div id="modal-reserve" class="modal-overlay" onclick="if(event.target === this) closeModal('modal-reserve')">
+    <div class="modal-content">
+      <button onclick="closeModal('modal-reserve')" class="modal-close" aria-label="Cerrar modal">&times;</button>
       
       <div class="text-center space-y-4 font-sans">
         <span class="text-xs font-michroma text-white/50 uppercase tracking-widest block">Confirmar Reserva</span>
-        <h3 id="modal-class-title" class="text-2xl font-michroma text-white">BODY PUMP</h3>
+        <h3 id="modal-class-title" class="text-2xl font-michroma text-white font-black uppercase">BODY PUMP</h3>
         
-        <div id="modal-class-details" class="bg-[#141414] border border-white/15 p-5 rounded-2xl text-left text-xs space-y-2 text-white/80">
+        <div id="modal-class-details" class="bg-black/60 border border-white/15 p-5 rounded-2xl text-left text-xs space-y-2 text-white/90 backdrop-blur-md">
           <!-- Render dinámico -->
         </div>
 
@@ -809,10 +768,10 @@
         </p>
 
         <div class="flex gap-3 pt-2">
-          <button onclick="closeModal('modal-reserve')" class="flex-1 bg-[#222] text-white font-michroma text-xs py-3.5 px-6 rounded-full hover:bg-[#333] transition-all">
+          <button onclick="closeModal('modal-reserve')" class="flex-1 bg-[#222] text-white font-michroma text-xs py-3.5 px-6 rounded-full hover:bg-[#333] transition-all cursor-pointer">
             Cancelar
           </button>
-          <button id="btn-confirm-booking" class="flex-1 bg-white text-black font-michroma font-bold text-xs py-3.5 px-6 rounded-full hover:bg-white/90 transition-all font-michroma">
+          <button id="btn-confirm-booking" class="flex-1 bg-white text-black font-michroma font-black text-xs py-3.5 px-6 rounded-full hover:bg-white/90 active:scale-95 transition-all shadow-lg cursor-pointer uppercase">
             CONFIRMAR CUPO
           </button>
         </div>
@@ -821,52 +780,63 @@
   </div>
 
   <!-- MODAL PERFIL DE USUARIO -->
-  <div id="modal-user-profile" class="modal-overlay">
+  <div id="modal-user-profile" class="modal-overlay" onclick="if(event.target === this) closeModal('modal-user-profile')">
     <div class="modal-content">
-      <button onclick="closeModal('modal-user-profile')" class="modal-close">&times;</button>
+      <button onclick="closeModal('modal-user-profile')" class="modal-close" aria-label="Cerrar modal">&times;</button>
       
-      <div class="text-center space-y-4 font-sans">
-        <span class="text-xs font-michroma text-white/50 uppercase tracking-widest block">Mi Perfil</span>
-        
-        <div class="w-16 h-16 bg-white/10 border border-white/20 rounded-full flex items-center justify-center mx-auto text-white">
-          <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-        </div>
+      <div class="text-center space-y-5 font-sans">
+        <div class="space-y-1">
+          <span class="text-xs font-michroma text-white/50 uppercase tracking-widest block">MI PERFIL</span>
+          
+          <div class="w-16 h-16 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center mx-auto text-white shadow-lg my-2">
+            <svg class="w-8 h-8 fill-current text-white" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
 
-        <h3 id="profile-modal-name" class="text-xl font-michroma text-white font-bold">Nombre de Usuario</h3>
+          <h3 id="profile-modal-name" class="text-xl sm:text-2xl font-michroma text-white font-black uppercase">Nombre de Usuario</h3>
+        </div>
         
-        <div class="bg-[#141414] border border-white/15 p-5 rounded-2xl text-left text-xs space-y-3 text-white/80">
-          <div class="flex justify-between border-b border-white/10 pb-2">
+        <!-- Tarjeta de Datos de Usuario -->
+        <div class="bg-black/60 border border-white/15 p-5 rounded-2xl text-left text-xs space-y-3 font-sans backdrop-blur-md">
+          <div class="flex justify-between items-center border-b border-white/10 pb-2.5">
             <span class="text-white/40">Rol / Tipo:</span>
-            <span class="font-bold text-white uppercase tracking-wider" id="profile-modal-role">Socio / Cliente</span>
+            <span class="font-michroma font-bold text-white text-[11px] uppercase tracking-wider" id="profile-modal-role">Socio / Cliente</span>
           </div>
-          <div class="flex justify-between border-b border-white/10 pb-2">
+          <div class="flex justify-between items-center border-b border-white/10 pb-2.5">
             <span class="text-white/40">Código Dispositivo:</span>
-            <span class="font-mono font-bold text-white" id="profile-modal-code">FORMAS-XXXX</span>
+            <span class="font-mono font-bold text-white text-xs bg-white/10 px-2 py-0.5 rounded-lg border border-white/15" id="profile-modal-code">FORMAS-XXXX</span>
           </div>
-          <div class="flex justify-between border-b border-white/10 pb-2">
+          <div class="flex justify-between items-center border-b border-white/10 pb-2.5">
             <span class="text-white/40">Estado Cuenta:</span>
-            <span class="font-bold text-white" id="profile-modal-status">Activo</span>
+            <span class="font-michroma font-bold text-white text-[11px] uppercase flex items-center gap-1.5" id="profile-modal-status">
+              <span class="w-2 h-2 rounded-full bg-white inline-block"></span>
+              Activo
+            </span>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between items-center">
             <span class="text-white/40">Teléfono:</span>
-            <span class="font-bold text-white" id="profile-modal-phone">77000000</span>
+            <span class="font-sans font-bold text-white text-xs" id="profile-modal-phone">77000000</span>
           </div>
         </div>
 
         <!-- Mis Reservas Integrado en Perfil de Usuario -->
-        <div class="pt-4 border-t border-white/10 text-left">
-          <span class="text-[10px] font-michroma text-white/50 uppercase tracking-widest block mb-3 text-center">Mis Reservas Activas</span>
-          <div id="reservas-list-container" class="space-y-3 max-h-[220px] overflow-y-auto pr-1 no-scrollbar">
+        <div class="pt-2 text-left">
+          <div class="flex justify-between items-center mb-3">
+            <span class="text-[10px] font-michroma text-white/60 uppercase tracking-widest">Mis Reservas Activas</span>
+            <span class="text-[9px] font-michroma text-white/40 uppercase bg-white/10 px-2 py-0.5 rounded-full" id="profile-reserva-count">0</span>
+          </div>
+          <div id="reservas-list-container" class="space-y-2.5 max-h-[220px] overflow-y-auto pr-1 no-scrollbar">
             <!-- Renderizado por JS -->
           </div>
         </div>
 
-        <div class="space-y-3 pt-2">
-          <button onclick="copyDeviceCode()" class="w-full border border-white/20 text-white hover:bg-white hover:text-black font-michroma font-bold text-[10px] py-3 rounded-full transition-all">
-            Copiar Código de Dispositivo
+        <!-- Acciones del Perfil -->
+        <div class="space-y-2.5 pt-2">
+          <button onclick="copyDeviceCode()" class="w-full border border-white/20 hover:border-white/50 text-white hover:bg-white hover:text-black font-michroma font-bold text-[10px] py-3 rounded-full transition-all flex items-center justify-center gap-2 cursor-pointer uppercase">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            <span>Copiar Código de Dispositivo</span>
           </button>
           
-          <button onclick="exitProfileSession()" class="w-full bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500 hover:text-white font-michroma font-bold text-[10px] py-3 rounded-full transition-all">
+          <button onclick="exitProfileSession()" class="w-full bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500 hover:text-white font-michroma font-bold text-[10px] py-3 rounded-full transition-all cursor-pointer uppercase">
             CERRAR SESIÓN / CAMBIAR DE CUENTA
           </button>
         </div>
@@ -875,32 +845,51 @@
   </div>
 
   <!-- MODAL AVISOS / NOTIFICACIONES -->
-  <div id="modal-notifications" class="modal-overlay">
+  <div id="modal-notifications" class="modal-overlay" onclick="if(event.target === this) closeModal('modal-notifications')">
     <div class="modal-content">
-      <button onclick="closeModal('modal-notifications')" class="modal-close">&times;</button>
+      <button onclick="closeModal('modal-notifications')" class="modal-close" aria-label="Cerrar modal">&times;</button>
       
-      <div class="space-y-4 font-sans">
-        <div class="text-center">
-          <span class="text-xs font-michroma text-white/50 uppercase tracking-widest block">Tablero de Avisos</span>
-          <h3 class="text-lg font-michroma text-white mt-1 font-bold">NOVEDADES EN FORMAS</h3>
+      <div class="text-center space-y-5 font-sans">
+        <div class="space-y-1">
+          <span class="text-xs font-michroma text-white/50 uppercase tracking-widest block">TABLERO DE AVISOS</span>
+          
+          <div class="w-14 h-14 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center mx-auto text-white shadow-lg my-2">
+            <svg class="w-7 h-7 text-white fill-current" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 4.86 6 7.42 6 10.5v5l-2 2v1h16v-1l-2-2z"/></svg>
+          </div>
+
+          <h3 class="text-xl sm:text-2xl font-michroma text-white font-black uppercase">NOVEDADES EN FORMAS</h3>
         </div>
         
-        <div class="space-y-3 max-h-[300px] overflow-y-auto pr-1">
-          <div class="bg-[#141414] border border-white/10 p-3 rounded-lg space-y-1">
-            <div class="flex justify-between text-xs font-bold text-white">
-              <span>¡NUEVA CLASE DE YOGA!</span>
-              <span class="text-white/30 text-[9px]">Ayer</span>
+        <div class="space-y-3 max-h-[340px] overflow-y-auto pr-1 no-scrollbar text-left">
+          <div class="bg-black/60 border border-white/15 p-4 rounded-2xl space-y-1.5 backdrop-blur-md shadow-md">
+            <div class="flex justify-between items-center text-xs font-bold text-white">
+              <span class="font-michroma tracking-wide">¡NUEVA CLASE DE YOGA!</span>
+              <span class="text-[9px] font-michroma text-white/40 uppercase bg-white/10 px-2 py-0.5 rounded-full">Ayer</span>
             </div>
-            <p class="text-[11px] text-white/70">Se habilitó el horario de Yoga los sábados a las 09:00 AM en Sala 2. ¡Reserva con anticipación!</p>
+            <p class="text-xs text-white/80 leading-relaxed font-sans">Se habilitó el horario de Yoga los sábados a las 09:00 AM en Sala 2. ¡Reserva con anticipación!</p>
           </div>
           
-          <div class="bg-[#141414] border border-white/10 p-3 rounded-lg space-y-1">
-            <div class="flex justify-between text-xs font-bold text-white">
-              <span>SIMULADOR DE FECHA ACTIVO</span>
-              <span class="text-white/30 text-[9px]">Demo</span>
+          <div class="bg-black/60 border border-white/15 p-4 rounded-2xl space-y-1.5 backdrop-blur-md shadow-md">
+            <div class="flex justify-between items-center text-xs font-bold text-white">
+              <span class="font-michroma tracking-wide">SIMULADOR DE FECHA ACTIVO</span>
+              <span class="text-[9px] font-michroma text-white/40 uppercase bg-white/10 px-2 py-0.5 rounded-full">Demo</span>
             </div>
-            <p class="text-[11px] text-white/70">Estás navegando en modo simulación (Lunes 3 de Agosto). Todas las reservas y horarios corresponden a ese día.</p>
+            <p class="text-xs text-white/80 leading-relaxed font-sans">Estás navegando en modo simulación (Lunes 3 de Agosto). Todas las reservas y horarios corresponden a ese día.</p>
           </div>
+
+          <div class="bg-black/60 border border-white/15 p-4 rounded-2xl space-y-1.5 backdrop-blur-md shadow-md">
+            <div class="flex justify-between items-center text-xs font-bold text-white">
+              <span class="font-michroma tracking-wide">RECORDATORIO DE ACCESO</span>
+              <span class="text-[9px] font-michroma text-white/40 uppercase bg-white/10 px-2 py-0.5 rounded-full">Importante</span>
+            </div>
+            <p class="text-xs text-white/80 leading-relaxed font-sans">Recuerda registrar tu huella en recepción al ingresar. Tu código de socio en la app te identifica como miembro activo.</p>
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button onclick="closeModal('modal-notifications')" class="w-full bg-white text-black font-michroma font-black text-xs py-3.5 rounded-full hover:bg-white/90 active:scale-95 transition-all shadow-lg cursor-pointer uppercase">
+            ENTENDIDO
+          </button>
         </div>
       </div>
     </div>
@@ -910,6 +899,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=18.4"></script>
-  <script src="js/app.js?v=18.7"></script>
+  <script src="js/app.js?v=18.8"></script>
 </body>
 </html>
