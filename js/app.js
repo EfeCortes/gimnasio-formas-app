@@ -384,6 +384,7 @@ window.switchTab = function(tabName) {
 
   if (tabName === 'horarios') renderSchedule();
   if (tabName === 'gimnasio') renderDisciplines();
+  if (tabName === 'ofertas') renderOfertas();
   if (tabName === 'staff') renderStaffPortal();
 };
 
@@ -1980,6 +1981,108 @@ function renderDisciplines() {
       });
     }
   }, 100);
+}
+
+// --- SECCIÓN OFERTAS: NAVEGACIÓN EN SWIPE (PLANES & PACKS) ---
+let currentOfertaIndex = 0;
+const OFERTA_IMAGES = ['assets/images/musculacion.jpg', 'assets/images/funcional.jpg'];
+
+window.scrollOfertasPrev = function() {
+  selectOfertaGroup(Math.max(0, currentOfertaIndex - 1));
+};
+
+window.scrollOfertasNext = function() {
+  selectOfertaGroup(Math.min(1, currentOfertaIndex + 1));
+};
+
+window.selectOfertaGroup = function(idx) {
+  if (idx < 0 || idx > 1) return;
+  currentOfertaIndex = idx;
+  renderOfertasStoriesIndicator();
+  changeGlobalBackground(OFERTA_IMAGES[idx]);
+
+  const grid = document.getElementById('ofertas-grid');
+  if (grid && grid.children[idx]) {
+    const slide = grid.children[idx];
+    const targetLeft = slide.offsetLeft - (grid.offsetWidth - slide.offsetWidth) / 2;
+    grid.scrollTo({
+      left: Math.max(0, targetLeft),
+      behavior: 'smooth'
+    });
+  }
+
+  const storiesIndicator = document.getElementById('ofertas-stories-indicator');
+  if (storiesIndicator) {
+    const rect = storiesIndicator.getBoundingClientRect();
+    if (rect.top < 60) {
+      window.scrollTo({
+        top: Math.max(0, window.pageYOffset + rect.top - 80),
+        behavior: 'smooth'
+      });
+    }
+  }
+};
+
+function renderOfertasStoriesIndicator() {
+  const container = document.getElementById('ofertas-stories-indicator');
+  if (!container) return;
+
+  const labels = ['PLANES & SUSCRIPCIÓN', 'PACKS DE INGRESOS'];
+  container.innerHTML = labels.map((label, idx) => {
+    const isCurrent = (idx === currentOfertaIndex);
+    const isPast = (idx < currentOfertaIndex);
+
+    let barClass = 'bg-white/20 h-1 sm:h-1.5';
+    if (isCurrent) {
+      barClass = 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.75)] h-1 sm:h-1.5';
+    } else if (isPast) {
+      barClass = 'bg-white/60 h-1 sm:h-1.5';
+    }
+
+    return `
+      <button type="button"
+              onclick="selectOfertaGroup(${idx})"
+              class="flex-1 py-2 flex flex-col justify-center cursor-pointer group focus:outline-none transition-transform active:scale-95"
+              title="${label} (${idx + 1} de 2)"
+              aria-label="Ver ${label}">
+        <span class="w-full ${barClass} rounded-full transition-all duration-300 block group-hover:bg-white/90"></span>
+      </button>
+    `;
+  }).join('');
+}
+
+function initOfertasSwipeObserver() {
+  const grid = document.getElementById('ofertas-grid');
+  if (!grid || grid.dataset.observerInitialized) return;
+  grid.dataset.observerInitialized = 'true';
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = parseInt(entry.target.getAttribute('data-oferta-index'), 10);
+        if (!isNaN(idx) && idx !== currentOfertaIndex) {
+          currentOfertaIndex = idx;
+          renderOfertasStoriesIndicator();
+          changeGlobalBackground(OFERTA_IMAGES[idx]);
+        }
+      }
+    });
+  }, {
+    root: grid,
+    threshold: 0.55
+  });
+
+  Array.from(grid.children).forEach(slide => {
+    observer.observe(slide);
+  });
+}
+
+function renderOfertas() {
+  renderOfertasStoriesIndicator();
+  setTimeout(() => {
+    initOfertasSwipeObserver();
+    changeGlobalBackground(OFERTA_IMAGES[currentOfertaIndex]);
+  }, 50);
 }
 
 // --- TOAST NOTIFICATIONS ---
