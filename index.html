@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=18.3">
+  <link rel="stylesheet" href="css/styles.css?v=18.4">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -508,128 +508,139 @@
       </div>
     </section>
 
-    <!-- SECCIÓN 6: OFERTAS (PACKS & PLANES) -->
+    <!-- SECCIÓN 6: OFERTAS (PLANES & PACKS) -->
     <section id="tab-section-ofertas" class="tab-section hidden">
-      <div class="status-header">OFERTAS DE PACKS</div>
+      <div class="status-header">PLANES & OFERTAS</div>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto px-2">
+      <div class="flex flex-col gap-8 max-w-4xl mx-auto px-1 sm:px-2">
         
-        <!-- CARD 1: SI ENTRENAS DE FORMA INTERMITENTE -->
-        <div class="bg-[#121212]/60 border border-white/10 rounded-[28px] p-6 sm:p-8 flex flex-col justify-between space-y-6 backdrop-blur-md shadow-xl">
-          <div class="space-y-4">
-            <div class="text-center md:text-left">
-              <span class="text-[10px] font-michroma text-white/50 uppercase tracking-widest block mb-1">Para entrenar a tu ritmo</span>
-              <h2 class="text-lg md:text-xl font-michroma text-white font-black leading-tight">Si entrenas de forma intermitente</h2>
+        <!-- CARD 1: SI ESTÁS COMPROMETIDO CON TU ENTRENAMIENTO (ARRIBA) -->
+        <div class="oferta-glass-panel w-full p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-2xl relative">
+          <div class="space-y-5">
+            <div class="text-left">
+              <span class="text-xs font-michroma text-white/80 uppercase tracking-widest block mb-1.5 font-bold">Para máximo rendimiento</span>
+              <h2 class="text-xl sm:text-2xl font-michroma text-white font-black leading-tight">Si estás comprometido con tu entrenamiento</h2>
             </div>
             
-            <!-- LISTA DE PRECIOS -->
-            <div class="bg-black/40 border border-white/10 rounded-2xl p-5 space-y-3 font-sans">
-              <div class="flex justify-between items-center text-xs border-b border-white/5 pb-2 text-white/40 font-michroma uppercase text-[9px] tracking-wider">
-                <span>Packs de Ingresos</span>
-                <span>Precio (Bs)</span>
-              </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="font-bold text-white flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                  1 Ingreso
-                </span>
-                <span class="font-michroma font-black text-white text-base">50 Bs</span>
-              </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="font-bold text-white flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                  5 Ingresos
-                </span>
-                <span class="font-michroma font-black text-white text-base">135 Bs</span>
-              </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="font-bold text-white flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                  10 Ingresos
-                </span>
-                <span class="font-michroma font-black text-white text-base">215 Bs</span>
-              </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="font-bold text-white flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                  15 Ingresos
-                </span>
-                <span class="font-michroma font-black text-white text-base">275 Bs</span>
-              </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="font-bold text-white flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                  25 Ingresos
-                </span>
-                <span class="font-michroma font-black text-white text-base">325 Bs</span>
-              </div>
-            </div>
-            
-            <p class="text-xs text-white/70 font-sans leading-relaxed">
-              Ingresa una vez al día* al gimnasio, accede a todas las salas y disciplinas durante 30 días calendario, o hasta que se te acaben los ingresos.
-            </p>
-          </div>
-          
-          <div class="pt-4 border-t border-white/5 text-[10px] text-white/40 font-sans leading-relaxed">
-            *El periodo de entrenamiento diario es de 3 horas a partir de que pones tu huella. Todos estos Packs acumulan Fit-puntos.
-          </div>
-        </div>
-        
-        <!-- CARD 2: SI ESTÁS COMPROMETIDO CON TU ENTRENAMIENTO -->
-        <div class="bg-[#121212]/60 border border-white/10 rounded-[28px] p-6 sm:p-8 flex flex-col justify-between space-y-6 backdrop-blur-md shadow-xl">
-          <div class="space-y-4">
-            <div class="text-center md:text-left">
-              <span class="text-[10px] font-michroma text-white/50 uppercase tracking-widest block mb-1">Para máximo rendimiento</span>
-              <h2 class="text-lg md:text-xl font-michroma text-white font-black leading-tight">Si estás comprometido con tu entrenamiento</h2>
-            </div>
-            
-            <!-- SUSCRIPCIÓN MENSUAL -->
-            <div class="bg-white/5 border border-white/20 rounded-2xl p-5 flex justify-between items-center gap-3">
+            <!-- SUSCRIPCIÓN MENSUAL DESTACADA -->
+            <div class="bg-gradient-to-r from-white/15 to-white/5 border border-white/30 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row justify-between sm:items-center gap-4 shadow-xl">
               <div class="space-y-1 font-sans">
-                <span class="text-[9px] font-michroma text-white/60 uppercase tracking-widest font-michroma block">Suscripción Mensual</span>
-                <p class="text-xs text-white/80 leading-snug">Por 3 meses o más, cobro mensual.</p>
+                <div class="flex items-center gap-2.5">
+                  <span class="text-xs font-michroma text-white uppercase tracking-wider font-bold">Suscripción Mensual</span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-white text-black text-[10px] font-michroma font-black uppercase tracking-wider">Recomendado</span>
+                </div>
+                <p class="text-sm text-white/90 leading-relaxed font-normal">Por 3 meses o más con débito o cobro mensual programado.</p>
               </div>
-              <div class="text-right">
-                <span class="text-xl font-michroma font-black text-white block">300 Bs<span class="text-[11px] font-sans text-white/60">/mes</span></span>
+              <div class="sm:text-right shrink-0">
+                <span class="text-2xl sm:text-3xl font-michroma font-black text-white tracking-tight">300 Bs<span class="text-xs font-sans text-white/80 font-bold ml-1">/mes</span></span>
               </div>
             </div>
             
             <!-- PLANES POR PERIODOS -->
-            <div class="bg-black/40 border border-white/10 rounded-2xl p-5 space-y-3 font-sans">
-              <div class="flex justify-between items-center text-xs border-b border-white/5 pb-2 text-white/40 font-michroma uppercase text-[9px] tracking-wider">
+            <div class="bg-black/60 border border-white/15 rounded-2xl p-5 sm:p-6 space-y-4 font-sans backdrop-blur-md">
+              <div class="flex justify-between items-center pb-2.5 border-b border-white/15 text-xs font-michroma uppercase tracking-wider text-white/90 font-bold">
                 <span>Planes por Periodos</span>
                 <span>Precio Total</span>
               </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="font-bold text-white flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                  3 Meses (Trimestral)
-                </span>
-                <span class="font-michroma font-black text-white text-base">850 Bs</span>
-              </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="font-bold text-white flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                  6 Meses (Semestral)
-                </span>
-                <span class="font-michroma font-black text-white text-base">1600 Bs</span>
-              </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="font-bold text-white flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                  12 Meses (Anual)
-                </span>
-                <span class="font-michroma font-black text-white text-base">3000 Bs</span>
+              
+              <div class="space-y-2.5">
+                <div class="flex justify-between items-center text-sm sm:text-base py-1">
+                  <span class="font-bold text-white flex items-center gap-2.5">
+                    <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    3 Meses (Trimestral)
+                  </span>
+                  <span class="font-michroma font-black text-white text-base sm:text-lg">850 Bs</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-base py-1 border-t border-white/10">
+                  <span class="font-bold text-white flex items-center gap-2.5">
+                    <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    6 Meses (Semestral)
+                  </span>
+                  <span class="font-michroma font-black text-white text-base sm:text-lg">1600 Bs</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-base py-1 border-t border-white/10">
+                  <span class="font-bold text-white flex items-center gap-2.5">
+                    <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    12 Meses (Anual)
+                  </span>
+                  <span class="font-michroma font-black text-white text-base sm:text-lg">3000 Bs</span>
+                </div>
               </div>
             </div>
             
-            <p class="text-xs text-white/70 font-sans leading-relaxed">
-              Ingresa de forma ilimitada cada día, accede a todas las salas y disciplinas; en el periodo de tu suscripción tus ingresos no se acaban.
+            <p class="text-sm text-white/90 font-sans leading-relaxed">
+              Ingresa de forma ilimitada cada día, accede a todas las salas y disciplinas; durante el periodo de tu suscripción tus ingresos no tienen límite.
             </p>
           </div>
           
-          <div class="pt-4 border-t border-white/5 text-[10px] text-white/40 font-sans leading-relaxed">
-            Tanto la suscripción como los planes mostrados acumulan Fit-puntos.
+          <div class="pt-4 border-t border-white/15 text-xs text-white/75 font-sans leading-relaxed flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-white shrink-0"></span>
+            <span>Tanto la suscripción como los planes por periodos acumulan <strong>Fit-puntos</strong> canjeables.</span>
+          </div>
+        </div>
+
+        <!-- CARD 2: SI ENTRENAS DE FORMA INTERMITENTE (ABAJO) -->
+        <div class="oferta-glass-panel w-full p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-2xl relative">
+          <div class="space-y-5">
+            <div class="text-left">
+              <span class="text-xs font-michroma text-white/80 uppercase tracking-widest block mb-1.5 font-bold">Para entrenar a tu ritmo</span>
+              <h2 class="text-xl sm:text-2xl font-michroma text-white font-black leading-tight">Si entrenas de forma intermitente</h2>
+            </div>
+            
+            <!-- LISTA DE PACKS DE INGRESOS -->
+            <div class="bg-black/60 border border-white/15 rounded-2xl p-5 sm:p-6 space-y-4 font-sans backdrop-blur-md">
+              <div class="flex justify-between items-center pb-2.5 border-b border-white/15 text-xs font-michroma uppercase tracking-wider text-white/90 font-bold">
+                <span>Packs de Ingresos</span>
+                <span>Precio Total</span>
+              </div>
+              
+              <div class="space-y-2.5">
+                <div class="flex justify-between items-center text-sm sm:text-base py-1">
+                  <span class="font-bold text-white flex items-center gap-2.5">
+                    <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    1 Ingreso
+                  </span>
+                  <span class="font-michroma font-black text-white text-base sm:text-lg">50 Bs</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-base py-1 border-t border-white/10">
+                  <span class="font-bold text-white flex items-center gap-2.5">
+                    <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    5 Ingresos
+                  </span>
+                  <span class="font-michroma font-black text-white text-base sm:text-lg">135 Bs</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-base py-1 border-t border-white/10">
+                  <span class="font-bold text-white flex items-center gap-2.5">
+                    <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    10 Ingresos
+                  </span>
+                  <span class="font-michroma font-black text-white text-base sm:text-lg">215 Bs</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-base py-1 border-t border-white/10">
+                  <span class="font-bold text-white flex items-center gap-2.5">
+                    <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    15 Ingresos
+                  </span>
+                  <span class="font-michroma font-black text-white text-base sm:text-lg">275 Bs</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-base py-1 border-t border-white/10">
+                  <span class="font-bold text-white flex items-center gap-2.5">
+                    <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    25 Ingresos
+                  </span>
+                  <span class="font-michroma font-black text-white text-base sm:text-lg">325 Bs</span>
+                </div>
+              </div>
+            </div>
+            
+            <p class="text-sm text-white/90 font-sans leading-relaxed">
+              Ingresa una vez al día* al gimnasio con acceso total a todas las salas y disciplinas durante 30 días calendario, o hasta consumir tus ingresos disponibles.
+            </p>
+          </div>
+          
+          <div class="pt-4 border-t border-white/15 text-xs text-white/75 font-sans leading-relaxed flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-white shrink-0"></span>
+            <span>*El periodo de entrenamiento diario es de 3 horas continuas desde el registro de tu huella. Todos los packs acumulan <strong>Fit-puntos</strong>.</span>
           </div>
         </div>
         
@@ -781,6 +792,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=18.4"></script>
-  <script src="js/app.js?v=18.4"></script>
+  <script src="js/app.js?v=18.5"></script>
 </body>
 </html>

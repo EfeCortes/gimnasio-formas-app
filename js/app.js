@@ -372,9 +372,12 @@ window.switchTab = function(tabName) {
   }
 
   // Controlar fondo dinámico global según pestaña activa
-  if (tabName === 'horarios' || tabName === 'gimnasio') {
+  if (tabName === 'horarios' || tabName === 'gimnasio' || tabName === 'ofertas') {
     const bgContainer = document.getElementById('global-bg-container');
     if (bgContainer) bgContainer.style.opacity = '1';
+    if (tabName === 'ofertas') {
+      changeGlobalBackground('assets/images/musculacion.jpg');
+    }
   } else {
     hideGlobalBackground();
   }

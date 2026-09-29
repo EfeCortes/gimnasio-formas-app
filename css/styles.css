@@ -877,8 +877,9 @@ input, select, textarea {
   position: relative;
 }
 
-/* Panel de Vidrio Monolítico Unificado del Catálogo */
-.catalog-glass-panel {
+/* Paneles de Vidrio Monolíticos (Catálogo y Ofertas) */
+.catalog-glass-panel,
+.oferta-glass-panel {
   background: linear-gradient(155deg, rgba(255, 255, 255, 0.09) 0%, rgba(12, 12, 12, 0.52) 100%) !important;
   backdrop-filter: blur(32px) saturate(190%);
   -webkit-backdrop-filter: blur(32px) saturate(190%);
@@ -889,7 +890,8 @@ input, select, textarea {
 }
 
 @media (max-width: 768px) {
-  .catalog-glass-panel {
+  .catalog-glass-panel,
+  .oferta-glass-panel {
     border-radius: 28px !important;
   }
 }
