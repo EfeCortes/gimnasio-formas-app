@@ -239,6 +239,43 @@ body {
     box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7), inset 0 1px 2px 0 rgba(255, 255, 255, 0.5), 0 0 32px rgba(255, 255, 255, 0.12) !important;
 }
 
+/* Tarjeta de Horario Pasado: Vidrio Opaco Oscuro (Firme presencia, sólido y legible, no transparente) */
+.class-card.class-card-past {
+    background: linear-gradient(150deg, rgba(22, 22, 22, 0.94) 0%, rgba(10, 10, 10, 0.97) 100%) !important;
+    backdrop-filter: blur(28px) saturate(100%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.70), inset 0 1px 1px 0 rgba(255, 255, 255, 0.10) !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+.class-card.class-card-past:hover {
+    transform: none !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.70), inset 0 1px 1px 0 rgba(255, 255, 255, 0.10) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.class-card.class-card-past .class-time-display {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.class-card.class-card-past .class-name {
+    color: rgba(255, 255, 255, 0.80) !important;
+}
+
+.class-card.class-card-past .instructor-name {
+    color: rgba(255, 255, 255, 0.50) !important;
+}
+
+.class-card.class-card-past .btn-reserve {
+    background: rgba(255, 255, 255, 0.07) !important;
+    color: rgba(255, 255, 255, 0.40) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+    cursor: default !important;
+}
+
 /* Widget Spotlight Live Activity de Apertura */
 .spotlight-hero-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(14, 14, 14, 0.52) 100%) !important;

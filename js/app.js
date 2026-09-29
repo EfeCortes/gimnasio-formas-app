@@ -1175,7 +1175,7 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
     `;
   } else if (isExpired) {
     topBadgeHtml = `
-      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/5 text-white/40 text-[9px] font-michroma uppercase tracking-wider">
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/10 text-white/50 text-[9px] font-michroma uppercase tracking-wider border border-white/10">
         FINALIZADA
       </span>
     `;
@@ -1191,6 +1191,8 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
   let btnHtml = '';
   if (cat === 'Musculación') {
     btnHtml = '';
+  } else if (isExpired) {
+    btnHtml = `<button class="btn-reserve btn-started-inactive cursor-default select-none" disabled>FINALIZADA</button>`;
   } else if (hasStarted) {
     if (isBooked) {
       btnHtml = `<button onclick="openUserProfileModal()" class="btn-reserve reserved">✓ EN CURSO</button>`;
@@ -1220,10 +1222,10 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
   const displayTime = item.range || `${item.t} hs`;
   const imgPath = CATEGORY_IMAGES[cat] || CATEGORY_IMAGES["Otros"];
 
-  // Clase CSS de vigencia por expiración
+  // Clase CSS de vigencia por expiración (Vidrio opaco elegante, firme presencia y contraste)
   let expiredCardClass = '';
   if (isExpired) {
-    expiredCardClass = 'opacity-35 border-white/5 bg-[#101010]/40 grayscale-[70%] pointer-events-none';
+    expiredCardClass = 'class-card-past';
   }
 
   if (cat === 'Musculación') {
@@ -1770,7 +1772,31 @@ window.selectCatalogCategory = function(idx) {
 
 function renderCatalogCategoryControls() {
   const chipsContainer = document.getElementById('catalog-category-chips');
-  const counterEl = document.getElementById('catalog-page-counter');
+  const storiesContainer = document.getElementById('catalog-stories-indicator');
+
+  if (storiesContainer) {
+    storiesContainer.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => {
+      const isCurrent = (idx === currentCatalogCategoryIndex);
+      const isPast = (idx < currentCatalogCategoryIndex);
+
+      let barClass = 'bg-white/20 h-1 sm:h-1.5';
+      if (isCurrent) {
+        barClass = 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.75)] h-1 sm:h-1.5';
+      } else if (isPast) {
+        barClass = 'bg-white/60 h-1 sm:h-1.5';
+      }
+
+      return `
+        <button type="button"
+                onclick="selectCatalogCategory(${idx})"
+                class="flex-1 py-1.5 flex flex-col justify-center cursor-pointer group focus:outline-none transition-transform active:scale-95"
+                title="${cat} (${idx + 1} de ${CATALOG_CATEGORIES.length})"
+                aria-label="Ver categoría ${cat}">
+          <span class="w-full ${barClass} rounded-full transition-all duration-300 block group-hover:bg-white/90"></span>
+        </button>
+      `;
+    }).join('');
+  }
 
   if (chipsContainer) {
     chipsContainer.innerHTML = CATALOG_CATEGORIES.map((cat, idx) => {
@@ -1782,10 +1808,6 @@ function renderCatalogCategoryControls() {
         </button>
       `;
     }).join('');
-  }
-
-  if (counterEl) {
-    counterEl.innerText = `(${currentCatalogCategoryIndex + 1} / ${CATALOG_CATEGORIES.length})`;
   }
 }
 

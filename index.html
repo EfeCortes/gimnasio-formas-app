@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=17.9">
+  <link rel="stylesheet" href="css/styles.css?v=18.1">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -480,18 +480,15 @@
 
       <!-- Catálogo de Disciplinas: Swipe por Categorías & Scroll por Disciplinas -->
       <div class="space-y-4 max-w-4xl mx-auto relative px-1 sm:px-2">
-        <!-- Barra de Categorías Chips & Píldora de Deslizar -->
-        <div class="flex flex-col items-center gap-3 mb-2 z-10 relative">
+        <!-- Barra de Categorías & Indicador de Historias (Stories Progress Indicator) -->
+        <div class="flex flex-col items-center gap-2.5 mb-2 z-10 relative w-full">
+          <!-- Líneas de Historias (Stories Indicator: Muestra en cuál estás y cuántas faltan) -->
+          <div id="catalog-stories-indicator" class="w-full max-w-xs sm:max-w-md flex items-center justify-between gap-1.5 sm:gap-2 px-2 py-1 select-none">
+            <!-- Renderizado dinámico de barras de historias por JS -->
+          </div>
+
           <!-- Chips de navegación rápida de categoría -->
           <div id="catalog-category-chips" class="flex gap-2 overflow-x-auto no-scrollbar py-1 px-2 max-w-full justify-center"></div>
-          
-          <!-- Píldora animada de ayuda: Desliza para explorar -->
-          <div id="catalog-swipe-hint" class="flex items-center gap-2 text-white/50 text-[10px] font-michroma uppercase tracking-widest animate-pulse">
-            <span>◂</span>
-            <span>Desliza para explorar</span>
-            <span id="catalog-page-counter" class="text-white/80 font-bold">(1 / 6)</span>
-            <span>▸</span>
-          </div>
         </div>
 
         <!-- Contenedor con flechas laterales de navegación -->
@@ -786,7 +783,7 @@
 
 
   <!-- Scripts -->
-  <script src="js/data.js?v=18.0"></script>
-  <script src="js/app.js?v=18.0"></script>
+  <script src="js/data.js?v=18.1"></script>
+  <script src="js/app.js?v=18.1"></script>
 </body>
 </html>
