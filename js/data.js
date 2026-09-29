@@ -19,6 +19,31 @@ const DAY_NAMES = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNE
 const DAY_NAMES_SHORT = ["DOM", "LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB"];
 
 const CATEGORY_MAP = {
+  "PILATES": "Control",
+  "STRETCHING": "Control",
+  "BALANCE": "Control",
+  "YOGA": "Control",
+  "SPINNING": "Spinning",
+  "SPIN/CROSS": "Spinning",
+  "SPIN/CORE": "Spinning",
+  "FUNCIONAL": "Funcional",
+  "BODY PUMP": "Aeróbicos",
+  "ZUMBA": "Aeróbicos",
+  "BODY JAM": "Aeróbicos",
+  "BODY ATTACK": "Cardio",
+  "LESMILLS GRIT": "Cardio",
+  "LESMILLS CORE": "Aeróbicos",
+  "BODY COMBAT": "Cardio",
+  "POWER JUMP": "Cardio",
+  "HORARIO DE SALA (ABIERTO)": "Musculación",
+  "TURNO MAÑANA": "Musculación",
+  "TURNO TARDE": "Musculación",
+  "TURNO NOCHE": "Musculación",
+  "TURNO SÁBADO": "Musculación",
+  "SALA ABIERTA (ENTRENAMIENTO LIBRE)": "Musculación",
+  "GUÍA DE ENTRENAMIENTO": "Musculación",
+  "MUSCULACIÓN": "Musculación",
+
   "Pilates": "Control",
   "Stretching": "Control",
   "Balance": "Control",
@@ -35,6 +60,7 @@ const CATEGORY_MAP = {
   "LesMills Core": "Aeróbicos",
   "Body Combat": "Cardio",
   "Power Jump": "Cardio",
+  "Musculación": "Musculación",
   "Horario de Sala (Abierto)": "Musculación",
   "Turno Mañana": "Musculación",
   "Turno Tarde": "Musculación",
@@ -48,164 +74,164 @@ const CATEGORY_MAP = {
 const SCHEDULE_DATA = {
   1: { // Lunes
     "p1": [
-      { id: "lun_p1_0830", t: "08:30", n: "Pilates", i: "TEO", cap: 18 },
-      { id: "lun_p1_0930", t: "09:30", n: "Body Pump", i: "TEO", cap: 22 },
-      { id: "lun_p1_1030", t: "10:30", n: "Zumba", i: "DAVID", cap: 25 },
-      { id: "lun_p1_1800", t: "18:00", n: "Body Pump", i: "CINTHYA", cap: 22 },
-      { id: "lun_p1_1900", t: "19:00", n: "Body Pump", i: "JESSY", cap: 22 },
-      { id: "lun_p1_2000", t: "20:00", n: "Body Pump", i: "SANDRA", cap: 22 }
+      { id: "lun_p1_0830", t: "08:30", n: "PILATES", i: "TEO", cap: 18 },
+      { id: "lun_p1_0930", t: "09:30", n: "BODY PUMP", i: "TEO", cap: 22 },
+      { id: "lun_p1_1030", t: "10:30", n: "ZUMBA", i: "DAVID", cap: 25 },
+      { id: "lun_p1_1800", t: "18:00", n: "BODY PUMP", i: "CINTHYA", cap: 22 },
+      { id: "lun_p1_1900", t: "19:00", n: "BODY PUMP", i: "JESSY", cap: 22 },
+      { id: "lun_p1_2000", t: "20:00", n: "BODY PUMP", i: "SANDRA", cap: 22 }
     ],
     "p2": [
-      { id: "lun_p2_0930", t: "09:30", n: "Stretching", i: "BEATRIZ", cap: 20 },
-      { id: "lun_p2_1700", t: "17:00", n: "Power Jump", i: "TEO", cap: 18 },
-      { id: "lun_p2_1800", t: "18:00", n: "Pilates", i: "ALE", cap: 18 },
-      { id: "lun_p2_1900", t: "19:00", n: "Power Jump", i: "SANDRA", cap: 18 },
-      { id: "lun_p2_2000", t: "20:00", n: "LesMills Core", i: "CINTHYA", cap: 20 }
+      { id: "lun_p2_0930", t: "09:30", n: "STRETCHING", i: "BEATRIZ", cap: 20 },
+      { id: "lun_p2_1700", t: "17:00", n: "POWER JUMP", i: "TEO", cap: 18 },
+      { id: "lun_p2_1800", t: "18:00", n: "PILATES", i: "ALE", cap: 18 },
+      { id: "lun_p2_1900", t: "19:00", n: "POWER JUMP", i: "SANDRA", cap: 18 },
+      { id: "lun_p2_2000", t: "20:00", n: "LESMILLS CORE", i: "CINTHYA", cap: 20 }
     ],
     "sp": [
-      { id: "lun_sp_0600", t: "06:00", n: "Spinning", i: "ANA", cap: 25 },
-      { id: "lun_sp_0830", t: "08:30", n: "Spinning", i: "MA. ELENA", cap: 25 },
-      { id: "lun_sp_1800", t: "18:00", n: "Spinning", i: "REBECA", cap: 25 },
-      { id: "lun_sp_1900", t: "19:00", n: "Spinning", i: "JORGE S.", cap: 25 }
+      { id: "lun_sp_0600", t: "06:00", n: "SPINNING", i: "ANA", cap: 25 },
+      { id: "lun_sp_0830", t: "08:30", n: "SPINNING", i: "MA. ELENA", cap: 25 },
+      { id: "lun_sp_1800", t: "18:00", n: "SPINNING", i: "REBECA", cap: 25 },
+      { id: "lun_sp_1900", t: "19:00", n: "SPINNING", i: "JORGE S.", cap: 25 }
     ],
     "ug": [
-      { id: "lun_ug_0730", t: "07:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "lun_ug_0830", t: "08:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "lun_ug_0930", t: "09:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "lun_ug_1900", t: "19:00", n: "Funcional", i: "CINTHYA", cap: 15 }
+      { id: "lun_ug_0730", t: "07:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "lun_ug_0830", t: "08:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "lun_ug_0930", t: "09:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "lun_ug_1900", t: "19:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 }
     ]
   },
   2: { // Martes
     "p1": [
-      { id: "mar_p1_0830", t: "08:30", n: "Pilates", i: "ELIANA", cap: 18 },
-      { id: "mar_p1_0930", t: "09:30", n: "LesMills Core", i: "CINTHYA", cap: 20 },
-      { id: "mar_p1_1030", t: "10:30", n: "Zumba", i: "DAVID", cap: 25 },
-      { id: "mar_p1_1800", t: "18:00", n: "Pilates", i: "ALE", cap: 18 },
-      { id: "mar_p1_1900", t: "19:00", n: "Body Pump", i: "SANDRA", cap: 22 },
-      { id: "mar_p1_2000", t: "20:00", n: "Zumba", i: "BRED", cap: 25 }
+      { id: "mar_p1_0830", t: "08:30", n: "PILATES", i: "ELIANA", cap: 18 },
+      { id: "mar_p1_0930", t: "09:30", n: "LESMILLS CORE", i: "CINTHYA", cap: 20 },
+      { id: "mar_p1_1030", t: "10:30", n: "ZUMBA", i: "DAVID", cap: 25 },
+      { id: "mar_p1_1800", t: "18:00", n: "PILATES", i: "ALE", cap: 18 },
+      { id: "mar_p1_1900", t: "19:00", n: "BODY PUMP", i: "SANDRA", cap: 22 },
+      { id: "mar_p1_2000", t: "20:00", n: "ZUMBA", i: "BRED", cap: 25 }
     ],
     "p2": [
-      { id: "mar_p2_0930", t: "09:30", n: "Power Jump", i: "RICKY", cap: 18 },
-      { id: "mar_p2_1700", t: "17:00", n: "Power Jump", i: "RICKY", cap: 18 },
-      { id: "mar_p2_1800", t: "18:00", n: "LesMills Core", i: "SANDRA", cap: 20 },
-      { id: "mar_p2_1900", t: "19:00", n: "Power Jump", i: "RICKY", cap: 18 },
-      { id: "mar_p2_2000", t: "20:00", n: "Body Attack", i: "JESSY", cap: 22 }
+      { id: "mar_p2_0930", t: "09:30", n: "POWER JUMP", i: "RICKY", cap: 18 },
+      { id: "mar_p2_1700", t: "17:00", n: "POWER JUMP", i: "RICKY", cap: 18 },
+      { id: "mar_p2_1800", t: "18:00", n: "LESMILLS CORE", i: "SANDRA", cap: 20 },
+      { id: "mar_p2_1900", t: "19:00", n: "POWER JUMP", i: "RICKY", cap: 18 },
+      { id: "mar_p2_2000", t: "20:00", n: "BODY ATTACK", i: "JESSY", cap: 22 }
     ],
     "sp": [
-      { id: "mar_sp_0830", t: "08:30", n: "Spinning", i: "MA. ELENA", cap: 25 },
-      { id: "mar_sp_1800", t: "18:00", n: "Spinning", i: "JORGE S.", cap: 25 },
-      { id: "mar_sp_1900", t: "19:00", n: "Spinning", i: "JORGE S.", cap: 25 }
+      { id: "mar_sp_0830", t: "08:30", n: "SPINNING", i: "MA. ELENA", cap: 25 },
+      { id: "mar_sp_1800", t: "18:00", n: "SPINNING", i: "JORGE S.", cap: 25 },
+      { id: "mar_sp_1900", t: "19:00", n: "SPINNING", i: "JORGE S.", cap: 25 }
     ],
     "ug": [
-      { id: "mar_ug_0600", t: "06:00", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "mar_ug_0730", t: "07:30", n: "Funcional", i: "ARACELY", cap: 15 },
-      { id: "mar_ug_0830", t: "08:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "mar_ug_1800", t: "18:00", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "mar_ug_1900", t: "19:00", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "mar_ug_2000", t: "20:00", n: "Funcional", i: "CINTHYA", cap: 15 }
+      { id: "mar_ug_0600", t: "06:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "mar_ug_0730", t: "07:30", n: "FUNCIONAL", i: "ARACELY", cap: 15 },
+      { id: "mar_ug_0830", t: "08:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "mar_ug_1800", t: "18:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "mar_ug_1900", t: "19:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "mar_ug_2000", t: "20:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 }
     ]
   },
   3: { // Miércoles
     "p1": [
-      { id: "mie_p1_0830", t: "08:30", n: "Pilates", i: "ELIANA", cap: 18 },
-      { id: "mie_p1_0930", t: "09:30", n: "Stretching", i: "BEATRIZ", cap: 20 },
-      { id: "mie_p1_1030", t: "10:30", n: "Zumba", i: "DAVID", cap: 25 },
-      { id: "mie_p1_1800", t: "18:00", n: "Body Pump", i: "CINTHYA", cap: 22 },
-      { id: "mie_p1_1900", t: "19:00", n: "Zumba", i: "BRED", cap: 25 },
-      { id: "mie_p1_2000", t: "20:00", n: "Body Pump", i: "SANDRA", cap: 22 }
+      { id: "mie_p1_0830", t: "08:30", n: "PILATES", i: "ELIANA", cap: 18 },
+      { id: "mie_p1_0930", t: "09:30", n: "STRETCHING", i: "BEATRIZ", cap: 20 },
+      { id: "mie_p1_1030", t: "10:30", n: "ZUMBA", i: "DAVID", cap: 25 },
+      { id: "mie_p1_1800", t: "18:00", n: "BODY PUMP", i: "CINTHYA", cap: 22 },
+      { id: "mie_p1_1900", t: "19:00", n: "ZUMBA", i: "BRED", cap: 25 },
+      { id: "mie_p1_2000", t: "20:00", n: "BODY PUMP", i: "SANDRA", cap: 22 }
     ],
     "p2": [
-      { id: "mie_p2_0930", t: "09:30", n: "Power Jump", i: "RICKY", cap: 18 },
-      { id: "mie_p2_1700", t: "17:00", n: "Power Jump", i: "RICKY", cap: 18 },
-      { id: "mie_p2_1800", t: "18:00", n: "Pilates", i: "ALE", cap: 18 },
-      { id: "mie_p2_1900", t: "19:00", n: "Body Combat", i: "JESSY", cap: 22 },
-      { id: "mie_p2_2000", t: "20:00", n: "LesMills Core", i: "CINTHYA", cap: 20 }
+      { id: "mie_p2_0930", t: "09:30", n: "POWER JUMP", i: "RICKY", cap: 18 },
+      { id: "mie_p2_1700", t: "17:00", n: "POWER JUMP", i: "RICKY", cap: 18 },
+      { id: "mie_p2_1800", t: "18:00", n: "PILATES", i: "ALE", cap: 18 },
+      { id: "mie_p2_1900", t: "19:00", n: "BODY COMBAT", i: "JESSY", cap: 22 },
+      { id: "mie_p2_2000", t: "20:00", n: "LESMILLS CORE", i: "CINTHYA", cap: 20 }
     ],
     "sp": [
-      { id: "mie_sp_0600", t: "06:00", n: "Spinning", i: "ANA", cap: 25 },
-      { id: "mie_sp_0830", t: "08:30", n: "Spinning", i: "MA. ELENA", cap: 25 },
-      { id: "mie_sp_1800", t: "18:00", n: "Spinning", i: "REBECA", cap: 25 },
-      { id: "mie_sp_1900", t: "19:00", n: "Spinning", i: "JORGE S.", cap: 25 }
+      { id: "mie_sp_0600", t: "06:00", n: "SPINNING", i: "ANA", cap: 25 },
+      { id: "mie_sp_0830", t: "08:30", n: "SPINNING", i: "MA. ELENA", cap: 25 },
+      { id: "mie_sp_1800", t: "18:00", n: "SPINNING", i: "REBECA", cap: 25 },
+      { id: "mie_sp_1900", t: "19:00", n: "SPINNING", i: "JORGE S.", cap: 25 }
     ],
     "ug": [
-      { id: "mie_ug_0730", t: "07:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "mie_ug_0830", t: "08:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "mie_ug_0930", t: "09:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "mie_ug_1900", t: "19:00", n: "Funcional", i: "CINTHYA", cap: 15 }
+      { id: "mie_ug_0730", t: "07:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "mie_ug_0830", t: "08:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "mie_ug_0930", t: "09:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "mie_ug_1900", t: "19:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 }
     ]
   },
   4: { // Jueves
     "p1": [
-      { id: "jue_p1_0830", t: "08:30", n: "Pilates", i: "ELIANA", cap: 18 },
-      { id: "jue_p1_0930", t: "09:30", n: "Body Pump", i: "CINTHYA", cap: 22 },
-      { id: "jue_p1_1030", t: "10:30", n: "Zumba", i: "DAVID", cap: 25 },
-      { id: "jue_p1_1800", t: "18:00", n: "Pilates", i: "ALE", cap: 18 },
-      { id: "jue_p1_1900", t: "19:00", n: "Body Pump", i: "SANDRA", cap: 22 },
-      { id: "jue_p1_2000", t: "20:00", n: "Zumba", i: "BRED", cap: 25 }
+      { id: "jue_p1_0830", t: "08:30", n: "PILATES", i: "ELIANA", cap: 18 },
+      { id: "jue_p1_0930", t: "09:30", n: "BODY PUMP", i: "CINTHYA", cap: 22 },
+      { id: "jue_p1_1030", t: "10:30", n: "ZUMBA", i: "DAVID", cap: 25 },
+      { id: "jue_p1_1800", t: "18:00", n: "PILATES", i: "ALE", cap: 18 },
+      { id: "jue_p1_1900", t: "19:00", n: "BODY PUMP", i: "SANDRA", cap: 22 },
+      { id: "jue_p1_2000", t: "20:00", n: "ZUMBA", i: "BRED", cap: 25 }
     ],
     "p2": [
-      { id: "jue_p2_0930", t: "09:30", n: "Power Jump", i: "RICKY", cap: 18 },
-      { id: "jue_p2_1700", t: "17:00", n: "Power Jump", i: "RICKY", cap: 18 },
-      { id: "jue_p2_1800", t: "18:00", n: "LesMills Core", i: "SANDRA", cap: 20 },
-      { id: "jue_p2_1900", t: "19:00", n: "Power Jump", i: "RICKY", cap: 18 },
-      { id: "jue_p2_2000", t: "20:00", n: "LesMills Grit", i: "JESSY", cap: 15 }
+      { id: "jue_p2_0930", t: "09:30", n: "POWER JUMP", i: "RICKY", cap: 18 },
+      { id: "jue_p2_1700", t: "17:00", n: "POWER JUMP", i: "RICKY", cap: 18 },
+      { id: "jue_p2_1800", t: "18:00", n: "LESMILLS CORE", i: "SANDRA", cap: 20 },
+      { id: "jue_p2_1900", t: "19:00", n: "POWER JUMP", i: "RICKY", cap: 18 },
+      { id: "jue_p2_2000", t: "20:00", n: "LESMILLS GRIT", i: "JESSY", cap: 15 }
     ],
     "sp": [
-      { id: "jue_sp_0830", t: "08:30", n: "Spinning", i: "MA. ELENA", cap: 25 },
-      { id: "jue_sp_1800", t: "18:00", n: "Spinning", i: "JORGE S.", cap: 25 },
-      { id: "jue_sp_1900", t: "19:00", n: "Spinning", i: "JORGE S.", cap: 25 }
+      { id: "jue_sp_0830", t: "08:30", n: "SPINNING", i: "MA. ELENA", cap: 25 },
+      { id: "jue_sp_1800", t: "18:00", n: "SPINNING", i: "JORGE S.", cap: 25 },
+      { id: "jue_sp_1900", t: "19:00", n: "SPINNING", i: "JORGE S.", cap: 25 }
     ],
     "ug": [
-      { id: "jue_ug_0600", t: "06:00", n: "Funcional", i: "MARCELA", cap: 15 },
-      { id: "jue_ug_0730", t: "07:30", n: "Funcional", i: "ARACELY", cap: 15 },
-      { id: "jue_ug_0830", t: "08:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "jue_ug_1800", t: "18:00", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "jue_ug_1900", t: "19:00", n: "Funcional", i: "ARACELY", cap: 15 },
-      { id: "jue_ug_2000", t: "20:00", n: "Funcional", i: "ARACELY", cap: 15 }
+      { id: "jue_ug_0600", t: "06:00", n: "FUNCIONAL", i: "MARCELA", cap: 15 },
+      { id: "jue_ug_0730", t: "07:30", n: "FUNCIONAL", i: "ARACELY", cap: 15 },
+      { id: "jue_ug_0830", t: "08:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "jue_ug_1800", t: "18:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "jue_ug_1900", t: "19:00", n: "FUNCIONAL", i: "ARACELY", cap: 15 },
+      { id: "jue_ug_2000", t: "20:00", n: "FUNCIONAL", i: "ARACELY", cap: 15 }
     ]
   },
   5: { // Viernes
     "p1": [
-      { id: "vie_p1_0830", t: "08:30", n: "Pilates", i: "ELIANA", cap: 18 },
-      { id: "vie_p1_0930", t: "09:30", n: "Stretching", i: "BEATRIZ", cap: 20 },
-      { id: "vie_p1_1030", t: "10:30", n: "Zumba", i: "DAVID", cap: 25 },
-      { id: "vie_p1_1800", t: "18:00", n: "Body Pump", i: "RICKY", cap: 22 },
-      { id: "vie_p1_1900", t: "19:00", n: "Body Jam", i: "JESSY", cap: 25 },
-      { id: "vie_p1_2000", t: "20:00", n: "Body Pump", i: "SANDRA", cap: 22 }
+      { id: "vie_p1_0830", t: "08:30", n: "PILATES", i: "ELIANA", cap: 18 },
+      { id: "vie_p1_0930", t: "09:30", n: "STRETCHING", i: "BEATRIZ", cap: 20 },
+      { id: "vie_p1_1030", t: "10:30", n: "ZUMBA", i: "DAVID", cap: 25 },
+      { id: "vie_p1_1800", t: "18:00", n: "BODY PUMP", i: "RICKY", cap: 22 },
+      { id: "vie_p1_1900", t: "19:00", n: "BODY JAM", i: "JESSY", cap: 25 },
+      { id: "vie_p1_2000", t: "20:00", n: "BODY PUMP", i: "SANDRA", cap: 22 }
     ],
     "p2": [
-      { id: "vie_p2_0930", t: "09:30", n: "Power Jump", i: "RICKY", cap: 18 },
-      { id: "vie_p2_1700", t: "17:00", n: "Power Jump", i: "RICKY", cap: 18 },
-      { id: "vie_p2_1800", t: "18:00", n: "Pilates", i: "ALE", cap: 18 },
-      { id: "vie_p2_1900", t: "19:00", n: "Body Combat", i: "SANDRA", cap: 22 }
+      { id: "vie_p2_0930", t: "09:30", n: "POWER JUMP", i: "RICKY", cap: 18 },
+      { id: "vie_p2_1700", t: "17:00", n: "POWER JUMP", i: "RICKY", cap: 18 },
+      { id: "vie_p2_1800", t: "18:00", n: "PILATES", i: "ALE", cap: 18 },
+      { id: "vie_p2_1900", t: "19:00", n: "BODY COMBAT", i: "SANDRA", cap: 22 }
     ],
     "sp": [
-      { id: "vie_sp_0600", t: "06:00", n: "Spinning", i: "ANA", cap: 25 },
-      { id: "vie_sp_0830", t: "08:30", n: "Spinning", i: "MA. ELENA", cap: 25 },
-      { id: "vie_sp_1800", t: "18:00", n: "Spinning", i: "REBECA", cap: 25 },
-      { id: "vie_sp_1900", t: "19:00", n: "Spinning", i: "JORGE S.", cap: 25 }
+      { id: "vie_sp_0600", t: "06:00", n: "SPINNING", i: "ANA", cap: 25 },
+      { id: "vie_sp_0830", t: "08:30", n: "SPINNING", i: "MA. ELENA", cap: 25 },
+      { id: "vie_sp_1800", t: "18:00", n: "SPINNING", i: "REBECA", cap: 25 },
+      { id: "vie_sp_1900", t: "19:00", n: "SPINNING", i: "JORGE S.", cap: 25 }
     ],
     "ug": [
-      { id: "vie_ug_0730", t: "07:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "vie_ug_0830", t: "08:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "vie_ug_0930", t: "09:30", n: "Funcional", i: "CINTHYA", cap: 15 },
-      { id: "vie_ug_1900", t: "19:00", n: "Funcional", i: "ARACELY", cap: 15 }
+      { id: "vie_ug_0730", t: "07:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "vie_ug_0830", t: "08:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "vie_ug_0930", t: "09:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "vie_ug_1900", t: "19:00", n: "FUNCIONAL", i: "ARACELY", cap: 15 }
     ]
   },
   6: { // Sábado
     "p1": [
-      { id: "sab_p1_0900", t: "09:00", n: "Body Pump", i: "RICKY", cap: 22 },
-      { id: "sab_p1_1000", t: "10:00", n: "Zumba", i: "DAVID", cap: 25 }
+      { id: "sab_p1_0900", t: "09:00", n: "BODY PUMP", i: "RICKY", cap: 22 },
+      { id: "sab_p1_1000", t: "10:00", n: "ZUMBA", i: "DAVID", cap: 25 }
     ],
     "p2": [
-      { id: "sab_p2_1100", t: "11:00", n: "Power Jump", i: "RICKY", cap: 18 }
+      { id: "sab_p2_1100", t: "11:00", n: "POWER JUMP", i: "RICKY", cap: 18 }
     ],
     "sp": [
-      { id: "sab_sp_1000", t: "10:00", n: "Spin/Core", i: "JORGE S.", cap: 25 }
+      { id: "sab_sp_1000", t: "10:00", n: "SPIN/CORE", i: "JORGE S.", cap: 25 }
     ],
     "ug": [
-      { id: "sab_ug_0830", t: "08:30", n: "Funcional", i: "ARACELY", cap: 15 },
-      { id: "sab_ug_0930", t: "09:30", n: "Funcional", i: "CINTHYA", cap: 15 }
+      { id: "sab_ug_0830", t: "08:30", n: "FUNCIONAL", i: "ARACELY", cap: 15 },
+      { id: "sab_ug_0930", t: "09:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 }
     ]
   },
   0: {} // Domingo
@@ -214,7 +240,7 @@ const SCHEDULE_DATA = {
 // Catálogo de Disciplinas con detalles y beneficios
 const DISCIPLINES_CATALOG = [
   {
-    name: "Musculación",
+    name: "MUSCULACIÓN",
     category: "Musculación",
     intensity: "Variable",
     room: "Planta Baja",
@@ -228,7 +254,7 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "Body Pump",
+    name: "BODY PUMP",
     category: "Aeróbicos",
     intensity: "Alta",
     room: "Piso 1",
@@ -242,7 +268,7 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "Spinning",
+    name: "SPINNING",
     category: "Spinning",
     intensity: "Alta",
     room: "Sala Spinning",
@@ -256,7 +282,7 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "Funcional",
+    name: "FUNCIONAL",
     category: "Funcional",
     intensity: "Media - Alta",
     room: "Subsuelo",
@@ -270,7 +296,7 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "Pilates",
+    name: "PILATES",
     category: "Control",
     intensity: "Moderada",
     room: "Piso 1 y 2",
@@ -284,7 +310,7 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "Power Jump",
+    name: "POWER JUMP",
     category: "Cardio",
     intensity: "Alta",
     room: "Piso 2",
@@ -298,7 +324,7 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "Zumba",
+    name: "ZUMBA",
     category: "Aeróbicos",
     intensity: "Media",
     room: "Piso 1",
@@ -312,7 +338,7 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "Body Jam",
+    name: "BODY JAM",
     category: "Aeróbicos",
     intensity: "Media - Alta",
     room: "Piso 1",
@@ -326,7 +352,7 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "Body Combat",
+    name: "BODY COMBAT",
     category: "Cardio",
     intensity: "Alta",
     room: "Piso 2",
@@ -340,7 +366,7 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "LesMills Grit",
+    name: "LESMILLS GRIT",
     category: "Cardio",
     intensity: "Muy Alta (HIIT)",
     room: "Piso 2",
@@ -354,7 +380,7 @@ const DISCIPLINES_CATALOG = [
     ]
   },
   {
-    name: "Stretching",
+    name: "STRETCHING",
     category: "Control",
     intensity: "Baja",
     room: "Piso 2",
@@ -371,7 +397,7 @@ const DISCIPLINES_CATALOG = [
 
 // Información General del Gimnasio
 const GYM_INFO = {
-  name: "Gimnasio Formas",
+  name: "GIMNASIO FORMAS",
   subtitle: "Centro de Entrenamiento Táctico y Fitness",
   whatsapp: "+59170000000",
   address: "Av. Portales y Pantaleón Dalence N° 1433, Cochabamba, Bolivia",
@@ -386,22 +412,22 @@ const GYM_INFO = {
 [1, 2, 3, 4, 5].forEach(dayNum => {
   if (SCHEDULE_DATA[dayNum]) {
     SCHEDULE_DATA[dayNum]["musc"] = [
-      { id: `musc_open_${dayNum}`, t: "06:00", range: "06:00 - 22:00", n: "Sala Abierta (Entrenamiento Libre)", i: "Sin Instructor Obligatorio", cap: 99, isMuscOpenHours: true },
-      { id: `musc_inst1_${dayNum}`, t: "06:00", range: "06:00 - 12:00", n: "Guía de Entrenamiento", i: "MARCELA VELASCO", cap: 99, isMuscShift: true },
-      { id: `musc_inst2_${dayNum}`, t: "06:00", range: "06:00 - 13:00", n: "Guía de Entrenamiento", i: "DANIEL CORTEZ", cap: 99, isMuscShift: true },
-      { id: `musc_inst3_${dayNum}`, t: "13:00", range: "13:00 - 22:00", n: "Guía de Entrenamiento", i: "ARMANDO ROJAS", cap: 99, isMuscShift: true },
-      { id: `musc_inst4_${dayNum}`, t: "16:00", range: "16:00 - 22:00", n: "Guía de Entrenamiento", i: "ERNESTO HIDALGO", cap: 99, isMuscShift: true }
+      { id: `musc_open_${dayNum}`, t: "06:00", range: "06:00 - 22:00", n: "SALA ABIERTA (ENTRENAMIENTO LIBRE)", i: "Sin Instructor Obligatorio", cap: 99, isMuscOpenHours: true },
+      { id: `musc_inst1_${dayNum}`, t: "06:00", range: "06:00 - 12:00", n: "GUÍA DE ENTRENAMIENTO", i: "MARCELA VELASCO", cap: 99, isMuscShift: true },
+      { id: `musc_inst2_${dayNum}`, t: "06:00", range: "06:00 - 13:00", n: "GUÍA DE ENTRENAMIENTO", i: "DANIEL CORTEZ", cap: 99, isMuscShift: true },
+      { id: `musc_inst3_${dayNum}`, t: "13:00", range: "13:00 - 22:00", n: "GUÍA DE ENTRENAMIENTO", i: "ARMANDO ROJAS", cap: 99, isMuscShift: true },
+      { id: `musc_inst4_${dayNum}`, t: "16:00", range: "16:00 - 22:00", n: "GUÍA DE ENTRENAMIENTO", i: "ERNESTO HIDALGO", cap: 99, isMuscShift: true }
     ];
   }
 });
 if (SCHEDULE_DATA[6]) {
   SCHEDULE_DATA[6]["musc"] = [
-    { id: "musc_sab_open", t: "08:00", range: "08:00 - 13:00", n: "Sala Abierta (Entrenamiento Libre)", i: "Sin Instructor", cap: 99, isMuscOpenHours: true }
+    { id: "musc_sab_open", t: "08:00", range: "08:00 - 13:00", n: "SALA ABIERTA (ENTRENAMIENTO LIBRE)", i: "Sin Instructor", cap: 99, isMuscOpenHours: true }
   ];
 }
 if (SCHEDULE_DATA[0]) {
   SCHEDULE_DATA[0]["musc"] = [
-    { id: "musc_dom_open", t: "08:00", range: "08:00 - 13:00", n: "Sala Abierta (Entrenamiento Libre)", i: "Sin Instructor", cap: 99, isMuscOpenHours: true }
+    { id: "musc_dom_open", t: "08:00", range: "08:00 - 13:00", n: "SALA ABIERTA (ENTRENAMIENTO LIBRE)", i: "Sin Instructor", cap: 99, isMuscOpenHours: true }
   ];
 }
 

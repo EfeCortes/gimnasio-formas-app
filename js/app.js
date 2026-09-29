@@ -92,7 +92,7 @@ function initSimulatedCloudDatabase() {
   if (!localStorage.getItem(DB_BOOKINGS)) {
     // Reservas de demo iniciales
     const initialBookings = [
-      { id: "lun_p1_0930_FORMAS-4281", classId: "lun_p1_0930", className: "Body Pump", time: "09:30", roomCode: "p1", instructor: "TEO", dayName: "LUNES", date: getTodayDateString(), deviceId: "FORMAS-4281", userName: "Sofía Martínez", userPhone: "78091823" }
+      { id: "lun_p1_0930_FORMAS-4281", classId: "lun_p1_0930", className: "BODY PUMP", time: "09:30", roomCode: "p1", instructor: "TEO", dayName: "LUNES", date: getTodayDateString(), deviceId: "FORMAS-4281", userName: "Sofía Martínez", userPhone: "78091823" }
     ];
     localStorage.setItem(DB_BOOKINGS, JSON.stringify(initialBookings));
   }
@@ -1280,6 +1280,7 @@ function renderCardHtml(item, statusType, forceWhiteBorder = false) {
 
 // --- PANTALLAS DE RESERVA Y PROCESOS ---
 window.openReserveModal = function(classId, className, time, roomCode, instructor) {
+  className = (className || '').toUpperCase();
   currentBookingData = { classId, className, time, roomCode, instructor };
   
   const titleEl = document.getElementById('modal-class-title');
@@ -1439,7 +1440,7 @@ function renderReservations() {
     <div class="bg-[#181818]/90 backdrop-blur-md border border-white/20 p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
       <div class="space-y-1 font-sans">
         <span class="text-xs font-michroma font-black text-white/90 uppercase tracking-widest block">RESERVADO</span>
-        <h4 class="text-xl font-michroma font-bold text-white">${r.className}</h4>
+        <h4 class="text-xl font-michroma font-bold text-white uppercase">${r.className}</h4>
         <div class="text-xs text-white/70">
           ${r.dayName} • ${r.time} hs • ${ROOM_MAP[r.roomCode] || r.roomCode} • Instructora: ${formatInstructor(r.instructor)}
         </div>
@@ -1585,7 +1586,7 @@ function renderAdminPanel() {
     statsContainer.innerHTML = classesArray.map(c => `
       <div class="bg-[#141414] border border-[#222] p-3 rounded-lg flex justify-between items-center text-xs">
         <div>
-          <div class="font-bold text-white font-michroma text-[10px]">${c.n}</div>
+          <div class="font-bold text-white font-michroma text-[10px] uppercase">${c.n}</div>
           <div class="text-white/50">${c.t} • ${c.roomName} • ${formatInstructor(c.i)}</div>
         </div>
         <div class="text-right">
@@ -1658,7 +1659,7 @@ function renderInstructorPanel(instructorName) {
       <div class="bg-[#0a0a0a] border-2 border-[#222] p-5 rounded-xl space-y-4">
         <div class="flex justify-between items-center border-b border-[#222] pb-3">
           <div>
-            <h4 class="font-michroma text-base text-[#0effc7]">${c.n}</h4>
+            <h4 class="font-michroma text-base text-[#0effc7] uppercase">${c.n}</h4>
             <div class="text-xs text-white/50">${c.t} • ${c.roomName}</div>
           </div>
           <div class="text-right">
@@ -1702,6 +1703,17 @@ window.sendSuggestionViaWhatsApp = function(event) {
 
 // --- RENDERIZADO DEL CATÁLOGO DE DISCIPLINAS ---
 const CATALOG_IMAGES = {
+  "MUSCULACIÓN": "assets/images/musculacion.jpg",
+  "BODY PUMP": "assets/images/aerobicos.jpg",
+  "SPINNING": "assets/images/spinning.jpg",
+  "FUNCIONAL": "assets/images/funcional.jpg",
+  "PILATES": "assets/images/control.jpg",
+  "POWER JUMP": "assets/images/cardio.jpg",
+  "ZUMBA": "assets/images/aerobicos.jpg",
+  "BODY JAM": "assets/images/aerobicos.jpg",
+  "BODY COMBAT": "assets/images/cardio.jpg",
+  "LESMILLS GRIT": "assets/images/cardio.jpg",
+  "STRETCHING": "assets/images/control.jpg",
   "Musculación": "assets/images/musculacion.jpg",
   "Body Pump": "assets/images/aerobicos.jpg",
   "Spinning": "assets/images/spinning.jpg",
@@ -1849,7 +1861,7 @@ function renderDisciplines() {
           <!-- Encabezado de la Disciplina: Nombre, Sala y Duración -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
             <div>
-              <h4 class="font-michroma text-lg sm:text-xl text-white font-black tracking-tight">${d.name}</h4>
+              <h4 class="font-michroma text-lg sm:text-xl text-white font-black tracking-tight uppercase">${d.name}</h4>
               <span class="text-xs font-sans text-white/60 font-semibold">${roomText}</span>
             </div>
             <div class="self-start sm:self-auto px-3.5 py-1 rounded-full bg-white/10 border border-white/10 text-xs font-sans text-white/80 font-semibold">
