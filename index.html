@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=19.2">
+  <link rel="stylesheet" href="css/styles.css?v=19.3">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -215,36 +215,32 @@
 
     <!-- SECCIÓN 1: HORARIOS (CRONOGRAMA & EN VIVO) -->
     <section id="tab-section-horarios" class="tab-section">
-      <!-- Cabecera Cronológica de Navegación por Día (Opción A) -->
-      <div class="max-w-md mx-auto mb-3 px-2 select-none">
-        <div class="flex items-center justify-between gap-3">
-          <!-- Botón Día Anterior -->
-          <button onclick="prevScheduleDay()" aria-label="Día anterior" title="Día anterior" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/5 hover:bg-white hover:text-black border border-white/20 flex items-center justify-center text-white transition-all active:scale-90 cursor-pointer shrink-0">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 fill-none stroke-current stroke-[2.2]" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-          </button>
-          
-          <!-- Título Central del Día (Al hacer tap despliega selector de días directo) -->
-          <div class="flex-1 text-center cursor-pointer group py-1" onclick="toggleQuickDaySelector()">
-            <span class="text-[9px] sm:text-[10px] font-michroma text-white/50 uppercase tracking-widest block mb-0.5">CRONOGRAMA DE CLASES</span>
-            <div class="flex items-center justify-center gap-1.5 sm:gap-2">
-              <h1 id="schedule-day-title" class="text-xl sm:text-2xl font-michroma font-black text-white tracking-wider uppercase group-hover:text-white/80 transition-colors">
-                HOY • MIÉRCOLES
-              </h1>
-              <svg id="day-chevron-icon" class="w-3.5 h-3.5 text-white/50 group-hover:text-white transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-            </div>
-          </div>
-          
-          <!-- Botón Día Siguiente -->
-          <button onclick="nextScheduleDay()" aria-label="Día siguiente" title="Día siguiente" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/5 hover:bg-white hover:text-black border border-white/20 flex items-center justify-center text-white transition-all active:scale-90 cursor-pointer shrink-0">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 fill-none stroke-current stroke-[2.2]" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-          </button>
+      <!-- Cabecera de Horarios con Líneas de Historias Semanales (Opción B) -->
+      <div class="max-w-md mx-auto mb-3 sm:mb-4 px-2 select-none">
+        
+        <!-- Líneas de Historias Semanales (Stories Progress Indicator: 6 días) -->
+        <div id="schedule-stories-indicator" class="w-full flex items-center justify-between gap-1.5 sm:gap-2 px-1 py-1 mb-2 select-none">
+          <!-- Renderizado dinámico de las 6 barras de historias semanales por JS -->
         </div>
 
-        <!-- Cajón Desplegable Rápido de Días (Se despliega al tocar el título para salto directo) -->
-        <div id="quick-day-drawer" class="hidden pt-2.5 transition-all duration-300">
-          <div class="flex items-center justify-between gap-1 p-1 bg-white/5 rounded-2xl border border-white/15 backdrop-blur-xl" id="schedule-days-pill-strip">
-            <!-- Render dinámico de las 6 píldoras de días -->
+        <!-- Título Contextual del Día Activo con Navegación Táctil -->
+        <div class="flex items-center justify-between gap-2 px-1">
+          <!-- Botón Día Anterior -->
+          <button onclick="prevScheduleDay()" aria-label="Día anterior" title="Día anterior" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/5 hover:bg-white hover:text-black border border-white/15 flex items-center justify-center text-white/70 hover:text-white transition-all active:scale-90 cursor-pointer shrink-0">
+            <svg class="w-4 h-4 fill-none stroke-current stroke-[2.2]" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          
+          <div class="text-center flex-1">
+            <span class="text-[9px] sm:text-[10px] font-michroma text-white/50 uppercase tracking-widest block mb-0.5">CRONOGRAMA DE CLASES</span>
+            <h1 id="schedule-day-title" class="text-xl sm:text-2xl font-michroma font-black text-white tracking-wider uppercase">
+              HOY • MIÉRCOLES
+            </h1>
           </div>
+
+          <!-- Botón Día Siguiente -->
+          <button onclick="nextScheduleDay()" aria-label="Día siguiente" title="Día siguiente" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/5 hover:bg-white hover:text-black border border-white/15 flex items-center justify-center text-white/70 hover:text-white transition-all active:scale-90 cursor-pointer shrink-0">
+            <svg class="w-4 h-4 fill-none stroke-current stroke-[2.2]" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
         </div>
       </div>
 
@@ -909,6 +905,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=18.4"></script>
-  <script src="js/app.js?v=19.2"></script>
+  <script src="js/app.js?v=19.3"></script>
 </body>
 </html>

@@ -678,7 +678,7 @@ window.renderCategorySelectors = function() {
   }
 };
 
-// --- SELECTOR DE DÍAS Y NAVEGACIÓN CRONOLÓGICA (OPCIÓN A) ---
+// --- SELECTOR DE DÍAS Y NAVEGACIÓN CRONOLÓGICA (OPCIÓN B: LÍNEAS DE HISTORIAS) ---
 function updateScheduleDayTitle() {
   const titleEl = document.getElementById('schedule-day-title');
   if (!titleEl) return;
@@ -701,23 +701,9 @@ window.nextScheduleDay = function() {
   changeDay(next);
 };
 
-window.toggleQuickDaySelector = function() {
-  const drawer = document.getElementById('quick-day-drawer');
-  const chevron = document.getElementById('day-chevron-icon');
-  if (!drawer) return;
-  const isHidden = drawer.classList.contains('hidden');
-  if (isHidden) {
-    drawer.classList.remove('hidden');
-    if (chevron) chevron.classList.add('rotate-180');
-  } else {
-    drawer.classList.add('hidden');
-    if (chevron) chevron.classList.remove('rotate-180');
-  }
-};
-
-// --- SELECTOR DE DÍAS EN CAJÓN RÁPIDO (WEEK STRIP) ---
-window.renderDayPills = function() {
-  const container = document.getElementById('schedule-days-pill-strip');
+// --- LÍNEAS DE HISTORIAS SEMANALES (OPCIÓN B) ---
+window.renderScheduleStoriesIndicator = function() {
+  const container = document.getElementById('schedule-stories-indicator');
   if (!container) return;
 
   const now = getSimulatedDate();
@@ -735,50 +721,50 @@ window.renderDayPills = function() {
   container.innerHTML = days.map(d => {
     const isSelected = (d.idx === selectedDayView);
     const isToday = (d.idx === todayDayIndex);
+    const isPast = (d.idx < selectedDayView);
 
-    let btnClass = '';
-    let dotHtml = '';
+    let barClass = 'bg-white/20 h-1 sm:h-1.5';
+    let labelColor = 'text-white/40 group-hover:text-white/70 font-semibold';
+    let todayDot = '';
 
     if (isSelected) {
-      btnClass = 'bg-white text-black shadow-md shadow-white/20 font-black scale-[1.02]';
-      if (isToday) {
-        dotHtml = '<span class="w-1.5 h-1.5 rounded-full bg-black shrink-0 ml-1"></span>';
-      }
-    } else if (isToday) {
-      btnClass = 'bg-white/10 text-white border border-white/25 font-bold hover:bg-white/20';
-      dotHtml = '<span class="w-1.5 h-1.5 rounded-full bg-white shrink-0 ml-1 animate-pulse"></span>';
-    } else {
-      btnClass = 'text-white/60 hover:text-white hover:bg-white/5 font-semibold';
+      barClass = 'bg-white shadow-[0_0_12px_rgba(255,255,255,0.85)] h-1 sm:h-1.5';
+      labelColor = 'text-white font-black scale-105';
+    } else if (isPast) {
+      barClass = 'bg-white/50 h-1 sm:h-1.5';
+      labelColor = 'text-white/60 group-hover:text-white/90 font-semibold';
+    }
+
+    if (isToday) {
+      todayDot = `<span class="w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white shadow-[0_0_6px_#fff]' : 'bg-white/70'} shrink-0 ml-1 animate-pulse"></span>`;
     }
 
     return `
       <button type="button"
               onclick="changeDay(${d.idx})"
+              class="flex-1 py-1.5 flex flex-col items-center gap-1.5 cursor-pointer group focus:outline-none transition-transform active:scale-95"
               title="${d.name}${isToday ? ' (Hoy)' : ''}"
-              aria-label="${d.name}"
-              aria-pressed="${isSelected ? 'true' : 'false'}"
-              class="flex-1 py-1.5 sm:py-2 px-0.5 sm:px-1 rounded-lg sm:rounded-xl text-center text-[10px] sm:text-xs font-michroma transition-all duration-200 cursor-pointer select-none active:scale-95 flex items-center justify-center ${btnClass}">
-        <span>${d.short}</span>
-        ${dotHtml}
+              aria-label="Ver clases del ${d.name}"
+              aria-pressed="${isSelected ? 'true' : 'false'}">
+        <span class="w-full ${barClass} rounded-full transition-all duration-300 block group-hover:bg-white/90"></span>
+        <div class="flex items-center justify-center text-[9px] sm:text-[10px] font-michroma tracking-wider transition-all duration-200 ${labelColor}">
+          <span>${d.short}</span>
+          ${todayDot}
+        </div>
       </button>
     `;
   }).join('');
 };
 
-// --- FILTROS DE HORARIO (OPCIÓN A) ---
+window.renderDayPills = window.renderScheduleStoriesIndicator;
+
+// --- FILTROS DE HORARIO (OPCIÓN B) ---
 window.changeDay = function(dayIndex) {
   selectedDayView = parseInt(dayIndex, 10);
   const now = getSimulatedDate();
   const isTargetToday = (selectedDayView === now.getDay());
   if (!isTargetToday) {
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }
-  // Cerrar el cajón de salto rápido al seleccionar un día
-  const drawer = document.getElementById('quick-day-drawer');
-  const chevron = document.getElementById('day-chevron-icon');
-  if (drawer && !drawer.classList.contains('hidden')) {
-    drawer.classList.add('hidden');
-    if (chevron) chevron.classList.remove('rotate-180');
   }
   renderSchedule();
 };
@@ -847,11 +833,11 @@ function renderSchedule() {
 
   if (!scheduleArea) return;
 
-  // Actualizar la cabecera cronológica del día (Opción A)
+  // Actualizar la cabecera contextual del día activo (Opción B)
   updateScheduleDayTitle();
 
-  // Sincronizar la fila de días en píldoras (Cajón rápido)
-  renderDayPills();
+  // Sincronizar las líneas de historias semanales (Opción B)
+  renderScheduleStoriesIndicator();
 
   // Actualizar los selectores de categorías comparativos
   renderCategorySelectors();
