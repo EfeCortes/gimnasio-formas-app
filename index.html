@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=19.4">
+  <link rel="stylesheet" href="css/styles.css?v=19.5">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -225,7 +225,6 @@
           
           <!-- Título Central del Día (Al hacer tap despliega selector de días directo) -->
           <div class="flex-1 text-center cursor-pointer group py-1" onclick="toggleQuickDaySelector()">
-            <span class="text-[9px] sm:text-[10px] font-michroma text-white/50 uppercase tracking-widest block mb-0.5">CRONOGRAMA DE CLASES</span>
             <div class="flex items-center justify-center gap-1.5 sm:gap-2">
               <h1 id="schedule-day-title" class="text-xl sm:text-2xl font-michroma font-black text-white tracking-wider uppercase group-hover:text-white/80 transition-colors">
                 HOY • MIÉRCOLES
@@ -258,8 +257,8 @@
             </div>
           </div>
 
-          <!-- Etiqueta de la disciplina activa -->
-          <div class="pt-2 text-[10px] sm:text-xs font-michroma font-bold text-white uppercase tracking-widest text-center transition-all duration-200" id="active-category-title-display">
+          <!-- Etiqueta de la disciplina activa (Mismo tamaño y jerarquía que el día) -->
+          <div class="pt-2.5 sm:pt-3 text-xl sm:text-2xl font-michroma font-black text-white uppercase tracking-wider text-center transition-all duration-200" id="active-category-title-display">
             Aeróbicos
           </div>
         </div>
@@ -909,6 +908,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=18.4"></script>
-  <script src="js/app.js?v=19.4"></script>
+  <script src="js/app.js?v=19.5"></script>
 </body>
 </html>

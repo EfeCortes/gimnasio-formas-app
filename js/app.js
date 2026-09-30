@@ -674,7 +674,7 @@ window.renderCategorySelectors = function() {
   if (titleDisplay) {
     const activeItem = SCHEDULE_TOGGLE_ITEMS[activeIdx];
     const catLabel = activeItem ? activeItem.label : 'Todas las disciplinas';
-    titleDisplay.innerHTML = `<span class="text-white font-bold tracking-wider">${catLabel}</span>`;
+    titleDisplay.innerHTML = `<span class="uppercase">${catLabel}</span>`;
   }
 };
 
