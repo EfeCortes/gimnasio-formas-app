@@ -832,13 +832,32 @@ input, select, textarea {
     box-shadow: 0 0 14px rgba(255, 255, 255, 0.15);
 }
 
-/* Cápsula Unificada de Disciplinas - Horarios */
+/* Cápsula Unificada de Disciplinas con Difuminado Inferior (Open Glass Bleed) */
 .schedule-category-console, #schedule-category-console {
-    background: linear-gradient(155deg, rgba(255, 255, 255, 0.09) 0%, rgba(14, 14, 14, 0.50) 100%) !important;
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.10) 0%, 
+        rgba(20, 20, 20, 0.65) 60%, 
+        rgba(10, 10, 10, 0.25) 85%,
+        rgba(0, 0, 0, 0) 100%
+    ) !important;
     backdrop-filter: blur(32px) saturate(190%);
     -webkit-backdrop-filter: blur(32px) saturate(190%);
-    border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), inset 0 1px 1.5px rgba(255, 255, 255, 0.30);
+    
+    /* Bordes superior y laterales nítidos; borde inferior abierto sin línea dura */
+    border-top: 1.5px solid rgba(255, 255, 255, 0.24) !important;
+    border-left: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+    border-right: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+    border-bottom: none !important;
+    border-top-left-radius: 26px;
+    border-top-right-radius: 26px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    /* Difuminado suave progresivo hacia abajo (Gradient Mask) */
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);
+
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1.5px 1.5px rgba(255, 255, 255, 0.30);
 }
 
 .category-toggle-btn {
