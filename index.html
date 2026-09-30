@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=19.0">
+  <link rel="stylesheet" href="css/styles.css?v=19.1">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -223,18 +223,18 @@
       </div>
 
       <!-- Contenedor Fijo Sticky: Consola Unificada (Días + Disciplinas en un solo cuerpo) -->
-      <div id="schedule-sticky-controls" class="sticky top-[58px] z-40 bg-[#000000]/75 backdrop-blur-2xl py-2.5 -mx-4 px-4 sm:mx-0 sm:px-0 mb-6 border-b border-white/10 rounded-2xl transition-all duration-200">
+      <div id="schedule-sticky-controls" class="sticky top-[58px] z-40 py-2 sm:py-3 -mx-4 px-4 sm:mx-0 sm:px-0 mb-6 transition-all duration-200">
         <div class="w-full max-w-xl mx-auto px-1 sm:px-0">
           <!-- CONSOLA DE UN SOLO CUERPO -->
           <div class="schedule-unified-console p-2 sm:p-2.5 rounded-[22px] sm:rounded-[26px] space-y-2 sm:space-y-2.5">
             
             <!-- NIVEL 1: Fila de Días de la Semana (Week Strip en Píldoras) -->
-            <div class="w-full flex items-center justify-between gap-1 sm:gap-1.5 p-1 bg-black/40 rounded-[16px] sm:rounded-xl border border-white/10" id="schedule-days-pill-strip">
+            <div class="w-full flex items-center justify-between gap-1 sm:gap-1.5 p-1 bg-white/5 rounded-[16px] sm:rounded-xl border border-white/10" id="schedule-days-pill-strip">
               <!-- Renderizado dinámico de píldoras por JS -->
             </div>
 
             <!-- NIVEL 2: Riel Segmentado de Disciplinas con Iconos -->
-            <div class="w-full bg-black/40 p-1 sm:p-1.5 rounded-[16px] sm:rounded-xl border border-white/10 relative overflow-hidden" id="schedule-category-toggle-track">
+            <div class="w-full bg-white/5 p-1 sm:p-1.5 rounded-[16px] sm:rounded-xl border border-white/10 relative overflow-hidden" id="schedule-category-toggle-track">
               <div class="relative w-full h-11 sm:h-14 flex items-center select-none" id="schedule-category-chips-list">
                 <!-- Renderizado dinámico: Indicador deslizante blanco + segmentos -->
               </div>
@@ -893,6 +893,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=18.4"></script>
-  <script src="js/app.js?v=19.0"></script>
+  <script src="js/app.js?v=19.1"></script>
 </body>
 </html>

@@ -834,11 +834,11 @@ input, select, textarea {
 
 /* Consola Unificada de Control (Días + Disciplinas en un solo cuerpo) */
 .schedule-unified-console {
-    background: linear-gradient(160deg, rgba(24, 24, 24, 0.75) 0%, rgba(8, 8, 8, 0.90) 100%) !important;
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.09) 0%, rgba(14, 14, 14, 0.50) 100%) !important;
     backdrop-filter: blur(32px) saturate(190%);
     -webkit-backdrop-filter: blur(32px) saturate(190%);
-    border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), inset 0 1px 1.5px rgba(255, 255, 255, 0.25);
+    border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), inset 0 1px 1.5px rgba(255, 255, 255, 0.32);
 }
 
 /* Barra Toggle Segmentada - Horarios */
@@ -852,11 +852,6 @@ input, select, textarea {
 }
 .category-toggle-btn:active .category-toggle-icon-wrap svg {
     transform: scale(0.9);
-}
-
-#schedule-sticky-controls {
-    -webkit-backdrop-filter: blur(24px);
-    backdrop-filter: blur(24px);
 }
 
 /* Pulso y realce de la siguiente clase activa */

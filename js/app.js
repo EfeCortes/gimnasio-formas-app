@@ -939,7 +939,7 @@ function renderSchedule() {
         const nextDayIdx = selectedDayView < 6 ? selectedDayView + 1 : 1;
         const nextDayName = (nextDayIdx === 1 ? 'Lunes' : (nextDayIdx === 2 ? 'Martes' : (nextDayIdx === 3 ? 'Miércoles' : (nextDayIdx === 4 ? 'Jueves' : (nextDayIdx === 5 ? 'Viernes' : 'Sábado')))));
         allFinishedBannerHtml = `
-          <div class="max-w-xl mx-auto mb-2 bg-[#161616] border border-white/15 p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-lg">
+          <div class="max-w-xl mx-auto mb-2 bg-white/5 border border-white/15 p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-lg backdrop-blur-xl">
             <div class="flex items-center gap-2.5">
               <span class="w-2.5 h-2.5 rounded-full bg-white shrink-0 animate-pulse"></span>
               <span class="text-xs font-sans text-white/80">
@@ -961,11 +961,11 @@ function renderSchedule() {
       if (selectedDayView === 0) muscHours = GYM_INFO.musculacionHours.sundays;
       muscHeaderHtml = `
         <div class="space-y-4 max-w-xl mx-auto mb-6">
-          <div class="bg-[#0a0a0a] border border-white/15 p-4 rounded-2xl text-center">
+          <div class="bg-white/5 border border-white/15 p-4 rounded-2xl text-center backdrop-blur-xl">
             <span class="text-[10px] font-michroma text-white/60 uppercase tracking-widest block mb-1">Horario de Atención de la Sala</span>
             <div class="text-base md:text-lg font-michroma text-white font-bold">${muscHours}</div>
           </div>
-          <div class="bg-[#0b0b0b]/60 border border-white/10 p-5 rounded-2xl text-center">
+          <div class="bg-white/5 border border-white/10 p-5 rounded-2xl text-center backdrop-blur-xl">
             <span class="text-[10px] font-michroma text-white font-bold uppercase tracking-widest block mb-1">Guía de Entrenamiento</span>
             <p class="text-xs text-white/80 font-sans leading-relaxed">
               La sala de Musculación está disponible para libre entrenamiento durante todo el día. Revisa los turnos de los instructores en cada tarjeta a continuación para contar con asistencia presencial y guía de rutina.
