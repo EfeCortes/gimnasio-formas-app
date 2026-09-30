@@ -559,12 +559,12 @@ function isCategoryMatched(classCategory, filter) {
 }
 
 const SCHEDULE_TOGGLE_ITEMS = [
-  { id: 'ALL', label: 'Todas las disciplinas', iconType: 'grid' },
-  { id: 'Aeróbicos', label: 'Aeróbicos', iconType: 'cat' },
-  { id: 'Control', label: 'Control', iconType: 'cat' },
-  { id: 'Spinning', label: 'Spinning', iconType: 'cat' },
-  { id: 'Funcional', label: 'Funcional', iconType: 'cat' },
-  { id: 'Musculación', label: 'Musculación', iconType: 'cat' }
+  { id: 'ALL', label: 'Todas las disciplinas', shortLabel: 'Todas', iconType: 'grid' },
+  { id: 'Aeróbicos', label: 'Aeróbicos', shortLabel: 'Aeróbicos', iconType: 'cat' },
+  { id: 'Control', label: 'Control', shortLabel: 'Control', iconType: 'cat' },
+  { id: 'Spinning', label: 'Spinning', shortLabel: 'Spinning', iconType: 'cat' },
+  { id: 'Funcional', label: 'Funcional', shortLabel: 'Funcional', iconType: 'cat' },
+  { id: 'Musculación', label: 'Musculación', shortLabel: 'Musculación', iconType: 'cat' }
 ];
 
 let toggleTouchStartX = 0;
@@ -608,64 +608,48 @@ window.renderCategorySelectors = function() {
   let activeIdx = SCHEDULE_TOGGLE_ITEMS.findIndex(item => item.id === categoryFilter);
   if (activeIdx < 0) activeIdx = 0;
 
-  const existingThumb = document.getElementById('category-toggle-thumb');
-  const existingButtons = container.querySelectorAll('.category-toggle-btn');
+  // Icono táctico de cuadrícula para "Todas las disciplinas"
+  const allGridIcon = `
+    <svg class="w-full h-full object-contain shrink-0" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+      <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+    </svg>
+  `;
 
-  if (existingThumb && existingButtons.length === total) {
-    // Animación fluida con física elástica de resorte (spring micro-gestures)
-    existingThumb.style.transition = 'transform 0.44s cubic-bezier(0.34, 1.56, 0.64, 1)';
-    existingThumb.style.transform = `translateX(${activeIdx * 100}%)`;
+  const existingButtons = container.querySelectorAll('.category-morph-btn');
 
+  if (existingButtons.length === total) {
+    // Si ya existen los botones en el DOM, actualizamos clases y estado con animación fluida
     existingButtons.forEach((btn, idx) => {
       const isActive = (idx === activeIdx);
       btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      const iconWrap = btn.querySelector('.category-toggle-icon-wrap');
-      if (iconWrap) {
-        if (isActive) {
-          iconWrap.classList.remove('text-white/60', 'group-hover:text-white');
-          iconWrap.classList.add('text-black', 'scale-110');
-        } else {
-          iconWrap.classList.remove('text-black', 'scale-110');
-          iconWrap.classList.add('text-white/60', 'group-hover:text-white');
-        }
-      }
+      btn.classList.toggle('active', isActive);
     });
   } else {
-    // Icono táctico de cuadrícula para "Todas las disciplinas"
-    const allGridIcon = `
-      <svg class="w-7 h-7 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="currentColor">
-        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-      </svg>
-    `;
-
+    // Construcción inicial de los 6 botones interactivos morph
     let buttonsHtml = SCHEDULE_TOGGLE_ITEMS.map((item, idx) => {
       const isActive = (idx === activeIdx);
       const icon = item.iconType === 'grid' ? allGridIcon : (CATEGORY_ICONS[item.id] || '');
+      const shortTitle = item.shortLabel || item.label;
       return `
         <button onclick="onCategoryChipChange('${item.id}')"
                 aria-pressed="${isActive}"
                 title="${item.label}"
                 aria-label="${item.label}"
-                class="category-toggle-btn relative z-10 flex-1 h-full flex items-center justify-center cursor-pointer select-none group focus:outline-none transition-transform duration-200 active:scale-90">
-          <div class="category-toggle-icon-wrap w-10 h-10 sm:w-13 sm:h-13 flex items-center justify-center transition-all duration-300 ${isActive ? 'text-black scale-110' : 'text-white/60 group-hover:text-white group-hover:scale-105'}">
+                class="category-morph-btn ${isActive ? 'active' : ''}">
+          <div class="category-morph-icon">
             ${icon}
           </div>
+          <span class="category-morph-text">
+            ${shortTitle}
+          </span>
         </button>
       `;
     }).join('');
 
-    container.innerHTML = `
-      <!-- Thumb deslizante animado en blanco de alto contraste con spring physics -->
-      <div id="category-toggle-thumb"
-           class="absolute top-0 bottom-0 rounded-xl bg-white shadow-[0_4px_24px_rgba(255,255,255,0.40)] z-0 pointer-events-none"
-           style="width: calc(100% / ${total}); transform: translateX(${activeIdx * 100}%); transition: transform 0.44s cubic-bezier(0.34, 1.56, 0.64, 1);">
-      </div>
-      <!-- Segmentos interactivos del Toggle -->
-      ${buttonsHtml}
-    `;
+    container.innerHTML = buttonsHtml;
   }
 
   // Inicializar swipe táctil una sola vez

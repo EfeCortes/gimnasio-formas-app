@@ -832,44 +832,137 @@ input, select, textarea {
     box-shadow: 0 0 14px rgba(255, 255, 255, 0.15);
 }
 
-/* Cápsula Unificada de Disciplinas con Difuminado Inferior (Open Glass Bleed) */
+/* Cápsula Segmentada Dinámica de Disciplinas (Smart Morph Console) */
 .schedule-category-console, #schedule-category-console {
-    background: linear-gradient(180deg, 
-        rgba(255, 255, 255, 0.10) 0%, 
-        rgba(20, 20, 20, 0.65) 60%, 
-        rgba(10, 10, 10, 0.25) 85%,
-        rgba(0, 0, 0, 0) 100%
-    ) !important;
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.08) 0%, rgba(12, 12, 12, 0.65) 100%) !important;
     backdrop-filter: blur(32px) saturate(190%);
     -webkit-backdrop-filter: blur(32px) saturate(190%);
-    
-    /* Bordes superior y laterales nítidos; borde inferior abierto sin línea dura */
-    border-top: 1.5px solid rgba(255, 255, 255, 0.24) !important;
-    border-left: 1.5px solid rgba(255, 255, 255, 0.18) !important;
-    border-right: 1.5px solid rgba(255, 255, 255, 0.18) !important;
-    border-bottom: none !important;
-    border-top-left-radius: 26px;
-    border-top-right-radius: 26px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-
-    /* Difuminado suave progresivo hacia abajo (Gradient Mask) */
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);
-    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);
-
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1.5px 1.5px rgba(255, 255, 255, 0.30);
+    border: 1.5px solid rgba(255, 255, 255, 0.20) !important;
+    border-radius: 22px !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55), inset 0 1px 1.5px rgba(255, 255, 255, 0.28);
+}
+@media (min-width: 640px) {
+    .schedule-category-console, #schedule-category-console {
+        border-radius: 26px !important;
+    }
 }
 
-.category-toggle-btn {
-    -webkit-tap-highlight-color: transparent;
+/* Botón con Morfing Expansivo Dinámico */
+.category-morph-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    border-radius: 15px;
+    cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: flex-grow 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                flex-basis 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                width 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease,
+                color 0.25s ease;
+    border: 1px solid transparent;
 }
-.category-toggle-icon-wrap svg {
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+@media (min-width: 640px) {
+    .category-morph-btn {
+        height: 44px;
+        border-radius: 18px;
+    }
 }
-.category-toggle-btn:active .category-toggle-icon-wrap svg {
-    transform: scale(0.9);
+.category-morph-btn:not(.active) {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 36px;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.50);
+}
+@media (min-width: 640px) {
+    .category-morph-btn:not(.active) {
+        width: 44px;
+    }
+}
+.category-morph-btn:not(.active):hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+.category-morph-btn.active {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    background-color: #ffffff;
+    color: #000000;
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.30);
+    padding-left: 8px;
+    padding-right: 8px;
+    gap: 6px;
+}
+@media (min-width: 640px) {
+    .category-morph-btn.active {
+        padding-left: 12px;
+        padding-right: 12px;
+        gap: 8px;
+    }
+}
+.category-morph-btn:active {
+    transform: scale(0.94);
+}
+.category-morph-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease;
+}
+@media (min-width: 640px) {
+    .category-morph-icon {
+        width: 22px;
+        height: 22px;
+    }
+}
+.category-morph-icon svg {
+    width: 100%;
+    height: 100%;
+}
+.category-morph-btn.active .category-morph-icon {
+    color: #000000;
+}
+.category-morph-btn:not(.active) .category-morph-icon {
+    color: inherit;
+}
+.category-morph-text {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: max-width 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    color: #000000;
+    pointer-events: none;
+    font-family: 'Michroma', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    line-height: 1;
+}
+@media (min-width: 640px) {
+    .category-morph-text {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+    }
+}
+.category-morph-btn.active .category-morph-text {
+    max-width: 150px;
+    opacity: 1;
 }
 
 /* Pulso y realce de la siguiente clase activa */
