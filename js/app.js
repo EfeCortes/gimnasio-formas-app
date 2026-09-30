@@ -571,7 +571,7 @@ let toggleTouchStartX = 0;
 let toggleTouchStartY = 0;
 
 function initCategoryToggleSwipe() {
-  const track = document.getElementById('schedule-category-toggle-track');
+  const track = document.getElementById('schedule-category-console') || document.getElementById('schedule-category-toggle-track');
   if (!track || track.dataset.swipeInitialized) return;
   track.dataset.swipeInitialized = 'true';
 

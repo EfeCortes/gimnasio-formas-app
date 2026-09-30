@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=19.5">
+  <link rel="stylesheet" href="css/styles.css?v=19.6">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -250,16 +250,19 @@
       <!-- Contenedor Fijo Sticky: Selector de Disciplinas -->
       <div id="schedule-sticky-controls" class="sticky top-[58px] z-40 py-2 sm:py-2.5 -mx-4 px-4 sm:mx-0 sm:px-0 mb-6 transition-all duration-200">
         <div class="w-full max-w-lg mx-auto px-1 sm:px-0">
-          <!-- Riel Segmentado de Disciplinas con Iconos Vectoriales -->
-          <div class="w-full p-1 sm:p-1.5 rounded-[22px] sm:rounded-[26px] relative overflow-hidden" id="schedule-category-toggle-track">
-            <div class="relative w-full h-11 sm:h-14 flex items-center select-none" id="schedule-category-chips-list">
-              <!-- Renderizado dinámico: Indicador deslizante blanco + segmentos -->
+          <!-- CÁPSULA UNIFICADA DE DISCIPLINAS (Riel + Nombre integrado) -->
+          <div id="schedule-category-console" class="schedule-category-console p-2 sm:p-2.5 rounded-[24px] sm:rounded-[28px] space-y-2 sm:space-y-2.5">
+            <!-- Riel Segmentado de Disciplinas con Iconos Vectoriales -->
+            <div class="w-full bg-white/5 p-1 sm:p-1.5 rounded-[18px] sm:rounded-[20px] border border-white/10 relative overflow-hidden" id="schedule-category-toggle-track">
+              <div class="relative w-full h-11 sm:h-14 flex items-center select-none" id="schedule-category-chips-list">
+                <!-- Renderizado dinámico: Indicador deslizante blanco + segmentos -->
+              </div>
             </div>
-          </div>
 
-          <!-- Etiqueta de la disciplina activa (Mismo tamaño y jerarquía que el día) -->
-          <div class="pt-2.5 sm:pt-3 text-xl sm:text-2xl font-michroma font-black text-white uppercase tracking-wider text-center transition-all duration-200" id="active-category-title-display">
-            Aeróbicos
+            <!-- Etiqueta de la disciplina activa integrada en la cápsula -->
+            <div class="pt-0.5 pb-1 text-xl sm:text-2xl font-michroma font-black text-white uppercase tracking-wider text-center transition-all duration-200 leading-tight" id="active-category-title-display">
+              Aeróbicos
+            </div>
           </div>
         </div>
       </div>
@@ -908,6 +911,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=18.4"></script>
-  <script src="js/app.js?v=19.5"></script>
+  <script src="js/app.js?v=19.6"></script>
 </body>
 </html>
