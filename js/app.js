@@ -672,17 +672,50 @@ window.renderCategorySelectors = function() {
   initCategoryToggleSwipe();
 
   if (titleDisplay) {
-    const dayNames = { 1: 'Lunes', 2: 'Martes', 3: 'Miércoles', 4: 'Jueves', 5: 'Viernes', 6: 'Sábado' };
-    const now = getSimulatedDate();
-    const isToday = (selectedDayView === now.getDay());
-    const dayLabel = isToday ? `HOY (${dayNames[selectedDayView] || 'Día'})` : (dayNames[selectedDayView] || 'Día');
     const activeItem = SCHEDULE_TOGGLE_ITEMS[activeIdx];
     const catLabel = activeItem ? activeItem.label : 'Todas las disciplinas';
-    titleDisplay.innerHTML = `<span class="text-white font-bold">${dayLabel}</span> <span class="text-white/30">•</span> <span class="text-white/80">${catLabel}</span>`;
+    titleDisplay.innerHTML = `<span class="text-white font-bold tracking-wider">${catLabel}</span>`;
   }
 };
 
-// --- SELECTOR DE DÍAS EN CONSOLA UNIFICADA (WEEK STRIP) ---
+// --- SELECTOR DE DÍAS Y NAVEGACIÓN CRONOLÓGICA (OPCIÓN A) ---
+function updateScheduleDayTitle() {
+  const titleEl = document.getElementById('schedule-day-title');
+  if (!titleEl) return;
+  const now = getSimulatedDate();
+  const todayDayIndex = now.getDay();
+  const isToday = (selectedDayView === todayDayIndex);
+  const dayName = DAY_NAMES[selectedDayView] || 'LUNES';
+  titleEl.innerText = isToday ? `HOY • ${dayName}` : dayName;
+}
+
+window.prevScheduleDay = function() {
+  let prev = selectedDayView - 1;
+  if (prev < 1) prev = 6;
+  changeDay(prev);
+};
+
+window.nextScheduleDay = function() {
+  let next = selectedDayView + 1;
+  if (next > 6) next = 1;
+  changeDay(next);
+};
+
+window.toggleQuickDaySelector = function() {
+  const drawer = document.getElementById('quick-day-drawer');
+  const chevron = document.getElementById('day-chevron-icon');
+  if (!drawer) return;
+  const isHidden = drawer.classList.contains('hidden');
+  if (isHidden) {
+    drawer.classList.remove('hidden');
+    if (chevron) chevron.classList.add('rotate-180');
+  } else {
+    drawer.classList.add('hidden');
+    if (chevron) chevron.classList.remove('rotate-180');
+  }
+};
+
+// --- SELECTOR DE DÍAS EN CAJÓN RÁPIDO (WEEK STRIP) ---
 window.renderDayPills = function() {
   const container = document.getElementById('schedule-days-pill-strip');
   if (!container) return;
@@ -739,6 +772,13 @@ window.changeDay = function(dayIndex) {
   const isTargetToday = (selectedDayView === now.getDay());
   if (!isTargetToday) {
     window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  // Cerrar el cajón de salto rápido al seleccionar un día
+  const drawer = document.getElementById('quick-day-drawer');
+  const chevron = document.getElementById('day-chevron-icon');
+  if (drawer && !drawer.classList.contains('hidden')) {
+    drawer.classList.add('hidden');
+    if (chevron) chevron.classList.remove('rotate-180');
   }
   renderSchedule();
 };
@@ -807,7 +847,10 @@ function renderSchedule() {
 
   if (!scheduleArea) return;
 
-  // Sincronizar la fila de días en píldoras (Consola unificada)
+  // Actualizar la cabecera cronológica del día (Opción A)
+  updateScheduleDayTitle();
+
+  // Sincronizar la fila de días en píldoras (Cajón rápido)
   renderDayPills();
 
   // Actualizar los selectores de categorías comparativos
