@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,300;0,700;1,300&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=18.5">
+  <link rel="stylesheet" href="css/styles.css?v=19.0">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -222,36 +222,29 @@
         </h1>
       </div>
 
-      <!-- Contenedor Fijo Sticky: Selector de Día y Toggle de Disciplinas (Límite de Hora) -->
-      <div id="schedule-sticky-controls" class="sticky top-[58px] z-40 bg-[#000000]/80 backdrop-blur-2xl py-3 -mx-4 px-4 sm:mx-0 sm:px-0 mb-6 border-b border-white/10 rounded-2xl transition-all duration-200">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-2 sm:px-0 w-full mb-3">
-          <div class="col-span-1 md:col-span-2 lg:col-start-2 lg:col-span-1 flex justify-center">
-            <div class="day-selector-card-box relative w-full flex items-center justify-center border-2 border-white/30 rounded-2xl bg-white/5 hover:border-white/70 transition-all duration-200">
-              <select id="day-title-select" onchange="changeDay(this.value)" class="w-full bg-transparent border-none text-white font-michroma font-bold focus:outline-none uppercase cursor-pointer py-3.5 pl-6 pr-12 appearance-none text-sm text-center tracking-wider">
-                <option value="1" class="bg-[#121212] text-white">Lunes</option>
-                <option value="2" class="bg-[#121212] text-white">Martes</option>
-                <option value="3" class="bg-[#121212] text-white">Miércoles</option>
-                <option value="4" class="bg-[#121212] text-white">Jueves</option>
-                <option value="5" class="bg-[#121212] text-white">Viernes</option>
-                <option value="6" class="bg-[#121212] text-white">Sábado</option>
-              </select>
-              <!-- Flecha de dropdown personalizada -->
-              <span class="absolute right-6 pointer-events-none text-white/50 text-xs">▼</span>
+      <!-- Contenedor Fijo Sticky: Consola Unificada (Días + Disciplinas en un solo cuerpo) -->
+      <div id="schedule-sticky-controls" class="sticky top-[58px] z-40 bg-[#000000]/75 backdrop-blur-2xl py-2.5 -mx-4 px-4 sm:mx-0 sm:px-0 mb-6 border-b border-white/10 rounded-2xl transition-all duration-200">
+        <div class="w-full max-w-xl mx-auto px-1 sm:px-0">
+          <!-- CONSOLA DE UN SOLO CUERPO -->
+          <div class="schedule-unified-console p-2 sm:p-2.5 rounded-[22px] sm:rounded-[26px] space-y-2 sm:space-y-2.5">
+            
+            <!-- NIVEL 1: Fila de Días de la Semana (Week Strip en Píldoras) -->
+            <div class="w-full flex items-center justify-between gap-1 sm:gap-1.5 p-1 bg-black/40 rounded-[16px] sm:rounded-xl border border-white/10" id="schedule-days-pill-strip">
+              <!-- Renderizado dinámico de píldoras por JS -->
             </div>
-          </div>
-        </div>
 
-        <!-- Selector de disciplinas: Barra Toggle Deslizable (Segmented Control) -->
-        <div class="w-full max-w-lg mx-auto px-2 sm:px-0 flex flex-col items-center gap-2">
-          <!-- Contenedor Track del Toggle Segmentado Frosted Glass -->
-          <div class="w-full bg-[#0a0a0a]/55 backdrop-blur-2xl p-1.5 sm:p-2 rounded-2xl border border-white/20 shadow-[inset_0_1px_2px_rgba(255,255,255,0.15),0_12px_32px_rgba(0,0,0,0.6)] relative overflow-hidden" id="schedule-category-toggle-track">
-            <div class="relative w-full h-14 sm:h-18 flex items-center select-none" id="schedule-category-chips-list">
-              <!-- Renderizado dinámico: Indicador deslizante neón + segmentos -->
+            <!-- NIVEL 2: Riel Segmentado de Disciplinas con Iconos -->
+            <div class="w-full bg-black/40 p-1 sm:p-1.5 rounded-[16px] sm:rounded-xl border border-white/10 relative overflow-hidden" id="schedule-category-toggle-track">
+              <div class="relative w-full h-11 sm:h-14 flex items-center select-none" id="schedule-category-chips-list">
+                <!-- Renderizado dinámico: Indicador deslizante blanco + segmentos -->
+              </div>
             </div>
+
           </div>
-          <!-- Nombre de la disciplina activa flotante -->
-          <div class="text-[11px] sm:text-xs font-michroma font-bold text-white uppercase tracking-widest text-center transition-all duration-200" id="active-category-title-display">
-            Aeróbicos
+
+          <!-- Etiqueta de Contexto Activo (Día seleccionado + Disciplina activa) -->
+          <div class="pt-2 text-[10px] sm:text-[11px] font-michroma font-bold text-white/70 uppercase tracking-widest text-center transition-all duration-200" id="active-category-title-display">
+            Miércoles • Aeróbicos
           </div>
         </div>
       </div>
@@ -900,6 +893,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=18.4"></script>
-  <script src="js/app.js?v=18.9"></script>
+  <script src="js/app.js?v=19.0"></script>
 </body>
 </html>

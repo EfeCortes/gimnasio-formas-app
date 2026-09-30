@@ -672,9 +672,64 @@ window.renderCategorySelectors = function() {
   initCategoryToggleSwipe();
 
   if (titleDisplay) {
+    const dayNames = { 1: 'Lunes', 2: 'Martes', 3: 'Miércoles', 4: 'Jueves', 5: 'Viernes', 6: 'Sábado' };
+    const now = getSimulatedDate();
+    const isToday = (selectedDayView === now.getDay());
+    const dayLabel = isToday ? `HOY (${dayNames[selectedDayView] || 'Día'})` : (dayNames[selectedDayView] || 'Día');
     const activeItem = SCHEDULE_TOGGLE_ITEMS[activeIdx];
-    titleDisplay.innerText = activeItem ? activeItem.label : 'Todas las disciplinas';
+    const catLabel = activeItem ? activeItem.label : 'Todas las disciplinas';
+    titleDisplay.innerHTML = `<span class="text-white font-bold">${dayLabel}</span> <span class="text-white/30">•</span> <span class="text-white/80">${catLabel}</span>`;
   }
+};
+
+// --- SELECTOR DE DÍAS EN CONSOLA UNIFICADA (WEEK STRIP) ---
+window.renderDayPills = function() {
+  const container = document.getElementById('schedule-days-pill-strip');
+  if (!container) return;
+
+  const now = getSimulatedDate();
+  const todayDayIndex = now.getDay();
+
+  const days = [
+    { idx: 1, short: 'LUN', name: 'Lunes' },
+    { idx: 2, short: 'MAR', name: 'Martes' },
+    { idx: 3, short: 'MIÉ', name: 'Miércoles' },
+    { idx: 4, short: 'JUE', name: 'Jueves' },
+    { idx: 5, short: 'VIE', name: 'Viernes' },
+    { idx: 6, short: 'SÁB', name: 'Sábado' }
+  ];
+
+  container.innerHTML = days.map(d => {
+    const isSelected = (d.idx === selectedDayView);
+    const isToday = (d.idx === todayDayIndex);
+
+    let btnClass = '';
+    let dotHtml = '';
+
+    if (isSelected) {
+      btnClass = 'bg-white text-black shadow-md shadow-white/20 font-black scale-[1.02]';
+      if (isToday) {
+        dotHtml = '<span class="w-1.5 h-1.5 rounded-full bg-black shrink-0 ml-1"></span>';
+      }
+    } else if (isToday) {
+      btnClass = 'bg-white/10 text-white border border-white/25 font-bold hover:bg-white/20';
+      dotHtml = '<span class="w-1.5 h-1.5 rounded-full bg-white shrink-0 ml-1 animate-pulse"></span>';
+    } else {
+      btnClass = 'text-white/60 hover:text-white hover:bg-white/5 font-semibold';
+    }
+
+    return `
+      <button type="button"
+              onclick="changeDay(${d.idx})"
+              title="${d.name}${isToday ? ' (Hoy)' : ''}"
+              aria-label="${d.name}"
+              aria-pressed="${isSelected ? 'true' : 'false'}"
+              class="flex-1 py-1.5 sm:py-2 px-0.5 sm:px-1 rounded-lg sm:rounded-xl text-center text-[10px] sm:text-xs font-michroma transition-all duration-200 cursor-pointer select-none active:scale-95 flex items-center justify-center ${btnClass}">
+        <span>${d.short}</span>
+        ${dotHtml}
+      </button>
+    `;
+  }).join('');
 };
 
 // --- FILTROS DE HORARIO (OPCIÓN A) ---
@@ -752,28 +807,8 @@ function renderSchedule() {
 
   if (!scheduleArea) return;
 
-  // Sincronizar el selector de días interactivo del título
-  const selectDayEl = document.getElementById('day-title-select');
-  if (selectDayEl) {
-    const todayDayIndex = getSimulatedDate().getDay();
-    const dayNames = {
-      1: 'Lunes',
-      2: 'Martes',
-      3: 'Miércoles',
-      4: 'Jueves',
-      5: 'Viernes',
-      6: 'Sábado'
-    };
-    
-    let optionsHtml = '';
-    for (let i = 1; i <= 6; i++) {
-      const isToday = (i === todayDayIndex);
-      const label = isToday ? `HOY (${dayNames[i]})` : dayNames[i];
-      optionsHtml += `<option value="${i}" class="bg-[#121212] text-white">${label}</option>`;
-    }
-    selectDayEl.innerHTML = optionsHtml;
-    selectDayEl.value = String(selectedDayView);
-  }
+  // Sincronizar la fila de días en píldoras (Consola unificada)
+  renderDayPills();
 
   // Actualizar los selectores de categorías comparativos
   renderCategorySelectors();
