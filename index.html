@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=19.9">
+  <link rel="stylesheet" href="css/styles.css?v=20.0">
 </head>
 <body class="selection:bg-white selection:text-black">
 
@@ -247,21 +247,20 @@
         </div>
       </div>
 
-      <!-- Contenedor Fijo Sticky: Selector de Disciplinas (Propuesta 3: Textura y Acento Neón FOR+) -->
-      <div id="schedule-sticky-controls" class="sticky top-[58px] z-40 py-2 sm:py-2.5 -mx-4 px-4 sm:mx-0 sm:px-0 mb-3 sm:mb-4 transition-all duration-200">
-        <div class="w-full max-w-lg mx-auto px-1 sm:px-0">
-          <!-- CÁPSULA UNIFICADA DE DISCIPLINAS (Riel Segmentado + Nombre con Acento Neón FOR+ y Cascada Difuminada) -->
-          <div id="schedule-category-console" class="schedule-category-console p-2.5 sm:p-3 pb-5 sm:pb-6 space-y-2 sm:space-y-2.5">
-            <!-- Riel Segmentado de Disciplinas con Iconos Grandes -->
-            <div class="w-full bg-white/5 p-1 sm:p-1.5 rounded-[18px] sm:rounded-[20px] border border-white/10 relative overflow-hidden" id="schedule-category-toggle-track">
+      <!-- Contenedor Fijo Sticky: Barra de Disciplinas Full-Width Sin Bordes Notorios -->
+      <div id="schedule-sticky-controls" class="sticky top-[58px] z-40 -mx-6 md:-mx-8 mb-4 transition-all duration-200">
+        <div id="schedule-category-console" class="schedule-category-console w-full py-2.5 px-4 sm:px-6">
+          <div class="w-full max-w-lg mx-auto space-y-2">
+            <!-- Riel de Disciplinas con Iconos Grandes (Sin cajas ni bordes notorios) -->
+            <div class="relative w-full select-none" id="schedule-category-toggle-track">
               <div class="relative w-full h-11 sm:h-14 flex items-center select-none" id="schedule-category-chips-list">
                 <!-- Renderizado dinámico: Indicador deslizante blanco + segmentos -->
               </div>
             </div>
 
-            <!-- Etiqueta de la disciplina activa integrada en la cápsula con acento neón FOR+ -->
-            <div class="pt-0.5 text-center transition-all duration-200 leading-tight flex items-center justify-center min-h-[32px]" id="active-category-title-display">
-              <!-- Renderizado dinámico: .schedule-discipline-title -->
+            <!-- Etiqueta de la disciplina activa integrada en la barra -->
+            <div class="text-center transition-all duration-200 leading-tight flex items-center justify-center min-h-[28px]" id="active-category-title-display">
+              <!-- Renderizado dinámico: .schedule-discipline-title monocromático -->
             </div>
           </div>
         </div>
@@ -911,6 +910,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=18.4"></script>
-  <script src="js/app.js?v=19.9"></script>
+  <script src="js/app.js?v=20.0"></script>
 </body>
 </html>

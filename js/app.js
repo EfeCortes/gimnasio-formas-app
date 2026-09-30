@@ -676,9 +676,7 @@ window.renderCategorySelectors = function() {
     const catLabel = activeItem ? activeItem.label : 'Todas las disciplinas';
     titleDisplay.innerHTML = `
       <span class="schedule-discipline-title">
-        <span class="w-1.5 h-1.5 rounded-full bg-[#0effc7] shadow-[0_0_8px_#0effc7] shrink-0"></span>
         <span class="schedule-discipline-text">${catLabel}</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-[#0effc7] shadow-[0_0_8px_#0effc7] shrink-0"></span>
       </span>
     `;
   }
