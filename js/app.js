@@ -194,7 +194,10 @@ window.handleStaffAuth = function(event) {
   const user = document.getElementById('auth-username').value.trim();
   const pass = document.getElementById('auth-password').value.trim();
 
-  if (user.toLowerCase() === 'teo' && pass === 'Prometeo2003') {
+  if (user.toLowerCase() === 'alberto' && pass === 'Test100*') {
+    enterStaffMode('ALBERTO');
+    showToast('Ingreso autorizado: Instructor ALBERTO', 'success');
+  } else if (user.toLowerCase() === 'teo' && pass === 'Prometeo2003') {
     enterStaffMode('TEO');
     showToast('Ingreso autorizado: Instructor TEO', 'success');
   } else if (user.toLowerCase() === 'recepcion' && pass === '123') {
@@ -1576,19 +1579,26 @@ function renderStaffPortal() {
 }
 
 window.handleStaffLogin = function() {
-  const passcode = document.getElementById('staff-passcode').value.trim().toUpperCase();
+  const passcode = document.getElementById('staff-passcode').value.trim();
+  const passcodeUpper = passcode.toUpperCase();
   
   if (!passcode) return;
 
-  if (passcode === 'RECEPCION-STAFF') {
+  if (passcodeUpper === 'RECEPCION-STAFF' || passcode === '123') {
     sessionStorage.setItem('formas_staff_logged', 'RECEPCION');
     showToast('Ingreso autorizado: Panel Recepción', 'success');
-  } else if (passcode.endsWith('-STAFF')) {
-    const instructorName = passcode.replace('-STAFF', '');
+  } else if (passcode === 'Test100*' || passcodeUpper === 'ALBERTO-STAFF') {
+    sessionStorage.setItem('formas_staff_logged', 'ALBERTO');
+    showToast('Ingreso autorizado: Instructor ALBERTO', 'success');
+  } else if (passcode === 'Prometeo2003' || passcodeUpper === 'TEO-STAFF') {
+    sessionStorage.setItem('formas_staff_logged', 'TEO');
+    showToast('Ingreso autorizado: Instructor TEO', 'success');
+  } else if (passcodeUpper.endsWith('-STAFF')) {
+    const instructorName = passcodeUpper.replace('-STAFF', '');
     sessionStorage.setItem('formas_staff_logged', instructorName);
     showToast(`Ingreso autorizado: Instructor/a ${instructorName}`, 'success');
   } else {
-    showToast('Clave incorrecta. Intente con RICKY-staff o RECEPCION-staff', 'error');
+    showToast('Clave incorrecta. Intente con Test100*, ALBERTO-staff o RECEPCION-staff', 'error');
     return;
   }
 

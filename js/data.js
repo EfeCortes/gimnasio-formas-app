@@ -102,7 +102,7 @@ const SCHEDULE_DATA = {
       { id: "lun_ug_0730", t: "07:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
       { id: "lun_ug_0830", t: "08:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
       { id: "lun_ug_0930", t: "09:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
-      { id: "lun_ug_1900", t: "19:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 }
+      { id: "lun_ug_1900", t: "19:00", n: "FUNCIONAL", i: "ALBERTO", cap: 15 }
     ]
   },
   2: { // Martes
@@ -131,7 +131,7 @@ const SCHEDULE_DATA = {
       { id: "mar_ug_0730", t: "07:30", n: "FUNCIONAL", i: "ARACELY", cap: 15 },
       { id: "mar_ug_0830", t: "08:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
       { id: "mar_ug_1800", t: "18:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
-      { id: "mar_ug_1900", t: "19:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
+      { id: "mar_ug_1900", t: "19:00", n: "FUNCIONAL", i: "ALBERTO", cap: 15 },
       { id: "mar_ug_2000", t: "20:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 }
     ]
   },
@@ -161,7 +161,7 @@ const SCHEDULE_DATA = {
       { id: "mie_ug_0730", t: "07:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
       { id: "mie_ug_0830", t: "08:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
       { id: "mie_ug_0930", t: "09:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
-      { id: "mie_ug_1900", t: "19:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 }
+      { id: "mie_ug_1900", t: "19:00", n: "FUNCIONAL", i: "ALBERTO", cap: 15 }
     ]
   },
   4: { // Jueves
@@ -190,7 +190,7 @@ const SCHEDULE_DATA = {
       { id: "jue_ug_0730", t: "07:30", n: "FUNCIONAL", i: "ARACELY", cap: 15 },
       { id: "jue_ug_0830", t: "08:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
       { id: "jue_ug_1800", t: "18:00", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
-      { id: "jue_ug_1900", t: "19:00", n: "FUNCIONAL", i: "ARACELY", cap: 15 },
+      { id: "jue_ug_1900", t: "19:00", n: "FUNCIONAL", i: "ALBERTO", cap: 15 },
       { id: "jue_ug_2000", t: "20:00", n: "FUNCIONAL", i: "ARACELY", cap: 15 }
     ]
   },
@@ -219,7 +219,7 @@ const SCHEDULE_DATA = {
       { id: "vie_ug_0730", t: "07:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
       { id: "vie_ug_0830", t: "08:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
       { id: "vie_ug_0930", t: "09:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 },
-      { id: "vie_ug_1900", t: "19:00", n: "FUNCIONAL", i: "ARACELY", cap: 15 }
+      { id: "vie_ug_1900", t: "19:00", n: "FUNCIONAL", i: "ALBERTO", cap: 15 }
     ]
   },
   6: { // Sábado
@@ -235,7 +235,7 @@ const SCHEDULE_DATA = {
     ],
     "ug": [
       { id: "sab_ug_0830", t: "08:30", n: "FUNCIONAL", i: "ARACELY", cap: 15 },
-      { id: "sab_ug_0930", t: "09:30", n: "FUNCIONAL", i: "CINTHYA", cap: 15 }
+      { id: "sab_ug_0930", t: "09:30", n: "FUNCIONAL", i: "ALBERTO", cap: 15 }
     ]
   },
   0: {} // Domingo
@@ -434,7 +434,8 @@ const GYM_INFO = {
       { id: `musc_inst1_${dayNum}`, t: "06:00", range: "06:00 - 12:00", n: "GUÍA DE ENTRENAMIENTO", i: "MARCELA VELASCO", cap: 99, isMuscShift: true },
       { id: `musc_inst2_${dayNum}`, t: "06:00", range: "06:00 - 13:00", n: "GUÍA DE ENTRENAMIENTO", i: "DANIEL CORTEZ", cap: 99, isMuscShift: true },
       { id: `musc_inst3_${dayNum}`, t: "13:00", range: "13:00 - 22:00", n: "GUÍA DE ENTRENAMIENTO", i: "ARMANDO ROJAS", cap: 99, isMuscShift: true },
-      { id: `musc_inst4_${dayNum}`, t: "16:00", range: "16:00 - 22:00", n: "GUÍA DE ENTRENAMIENTO", i: "ERNESTO HIDALGO", cap: 99, isMuscShift: true }
+      { id: `musc_inst4_${dayNum}`, t: "16:00", range: "16:00 - 22:00", n: "GUÍA DE ENTRENAMIENTO", i: "ERNESTO HIDALGO", cap: 99, isMuscShift: true },
+      { id: `musc_inst5_${dayNum}`, t: "18:00", range: "18:00 - 22:00", n: "GUÍA DE ENTRENAMIENTO", i: "ALBERTO", cap: 99, isMuscShift: true }
     ];
   }
 });
