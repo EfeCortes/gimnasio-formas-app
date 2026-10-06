@@ -190,42 +190,76 @@ window.cancelStaffLogin = function() {
 };
 
 window.handleStaffAuth = function(event) {
-  event.preventDefault();
-  const user = document.getElementById('auth-username').value.trim();
-  const pass = document.getElementById('auth-password').value.trim();
+  if (event) event.preventDefault();
+  const user = (document.getElementById('auth-username')?.value || '').trim();
+  const pass = (document.getElementById('auth-password')?.value || '').trim();
 
-  if (user.toLowerCase() === 'alberto' && pass === 'Test100*') {
+  const userLower = user.toLowerCase();
+  const passLower = pass.toLowerCase();
+
+  // Caso 1: Alberto
+  if (
+    userLower === 'alberto' || 
+    userLower === 'alberto-staff' || 
+    pass === 'Test100*' || 
+    passLower === 'test100*'
+  ) {
     enterStaffMode('ALBERTO');
     showToast('Ingreso autorizado: Instructor ALBERTO', 'success');
-  } else if (user.toLowerCase() === 'teo' && pass === 'Prometeo2003') {
+    return;
+  }
+
+  // Caso 2: Teo
+  if (userLower === 'teo' && (pass === 'Prometeo2003' || passLower === 'prometeo2003' || passLower === 'teo')) {
     enterStaffMode('TEO');
     showToast('Ingreso autorizado: Instructor TEO', 'success');
-  } else if (user.toLowerCase() === 'recepcion' && pass === '123') {
+    return;
+  }
+
+  // Caso 3: Recepción
+  if (userLower === 'recepcion' && (pass === '123' || passLower === 'recepcion-staff')) {
     enterStaffMode('RECEPCION');
     showToast('Ingreso autorizado: Panel Recepción', 'success');
-  } else {
-    showToast('Credenciales incorrectas.', 'error');
+    return;
   }
+
+  // Fallback si ingresa código de instructor
+  if (userLower.endsWith('-staff') || passLower.endsWith('-staff')) {
+    const raw = userLower.endsWith('-staff') ? userLower : passLower;
+    const inst = raw.replace('-staff', '').toUpperCase();
+    enterStaffMode(inst);
+    showToast(`Ingreso autorizado: Instructor ${inst}`, 'success');
+    return;
+  }
+
+  showToast('Credenciales incorrectas. Verifica usuario y contraseña.', 'error');
+};
+
+window.quickLoginStaff = function(instructorName) {
+  enterStaffMode(instructorName || 'ALBERTO');
+  showToast(`Ingreso autorizado: Instructor ${instructorName || 'ALBERTO'}`, 'success');
 };
 
 function enterStaffMode(role) {
   sessionStorage.setItem('formas_staff_logged', role);
-  localStorage.removeItem('formas_client_mode'); // Quitar modo cliente para evitar conflictos
+  localStorage.removeItem('formas_client_mode');
 
   // Ocultar overlay selector
   const roleOverlay = document.getElementById('role-selector-overlay');
   if (roleOverlay) roleOverlay.classList.add('hidden');
 
-  // Ajustar barra de navegación inferior (Mostrar solo Staff, ocultar el resto)
-  const staffNavs = ['nav-horarios', 'nav-gimnasio', 'nav-ofertas', 'nav-staff'];
-  staffNavs.forEach(id => {
+  // Asegurar que todas las pestañas de navegación estén visibles
+  const navs = ['nav-horarios', 'nav-gimnasio', 'nav-ofertas', 'nav-staff'];
+  navs.forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.style.display = id === 'nav-staff' ? 'flex' : 'none';
+    if (el) el.style.display = 'flex';
   });
   
   // Limpiar campos del login
-  document.getElementById('auth-username').value = '';
-  document.getElementById('auth-password').value = '';
+  const userInput = document.getElementById('auth-username');
+  const passInput = document.getElementById('auth-password');
+  if (userInput) userInput.value = '';
+  if (passInput) passInput.value = '';
 
   switchTab('staff');
 }
@@ -238,11 +272,11 @@ function enterClientMode() {
   const roleOverlay = document.getElementById('role-selector-overlay');
   if (roleOverlay) roleOverlay.classList.add('hidden');
 
-  // Mostrar pestañas del cliente en barra inferior y ocultar staff
-  const clientNavs = ['nav-horarios', 'nav-gimnasio', 'nav-ofertas', 'nav-staff'];
-  clientNavs.forEach(id => {
+  // Mostrar todas las pestañas incluyendo Staff para acceso rápido
+  const navs = ['nav-horarios', 'nav-gimnasio', 'nav-ofertas', 'nav-staff'];
+  navs.forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.style.display = id === 'nav-staff' ? 'none' : 'flex';
+    if (el) el.style.display = 'flex';
   });
 
   switchTab('horarios');
@@ -1579,18 +1613,36 @@ function renderStaffPortal() {
 }
 
 window.handleStaffLogin = function() {
-  const passcode = document.getElementById('staff-passcode').value.trim();
-  const passcodeUpper = passcode.toUpperCase();
+  const inputEl = document.getElementById('staff-passcode');
+  if (!inputEl) return;
+  const raw = inputEl.value.trim();
+  const passcodeUpper = raw.toUpperCase();
+  const passcodeLower = raw.toLowerCase();
   
-  if (!passcode) return;
+  if (!raw) {
+    showToast('Ingresa tu clave de acceso o nombre', 'error');
+    return;
+  }
 
-  if (passcodeUpper === 'RECEPCION-STAFF' || passcode === '123') {
+  if (passcodeUpper === 'RECEPCION-STAFF' || passcodeLower === 'recepcion' || raw === '123') {
     sessionStorage.setItem('formas_staff_logged', 'RECEPCION');
     showToast('Ingreso autorizado: Panel Recepción', 'success');
-  } else if (passcode === 'Test100*' || passcodeUpper === 'ALBERTO-STAFF') {
+  } else if (
+    raw === 'Test100*' || 
+    passcodeLower === 'test100*' || 
+    passcodeLower === 'alberto' || 
+    passcodeUpper === 'ALBERTO-STAFF' ||
+    passcodeLower === 'alberto-staff'
+  ) {
     sessionStorage.setItem('formas_staff_logged', 'ALBERTO');
     showToast('Ingreso autorizado: Instructor ALBERTO', 'success');
-  } else if (passcode === 'Prometeo2003' || passcodeUpper === 'TEO-STAFF') {
+  } else if (
+    raw === 'Prometeo2003' || 
+    passcodeLower === 'prometeo2003' || 
+    passcodeLower === 'teo' || 
+    passcodeUpper === 'TEO-STAFF' ||
+    passcodeLower === 'teo-staff'
+  ) {
     sessionStorage.setItem('formas_staff_logged', 'TEO');
     showToast('Ingreso autorizado: Instructor TEO', 'success');
   } else if (passcodeUpper.endsWith('-STAFF')) {
@@ -1598,31 +1650,27 @@ window.handleStaffLogin = function() {
     sessionStorage.setItem('formas_staff_logged', instructorName);
     showToast(`Ingreso autorizado: Instructor/a ${instructorName}`, 'success');
   } else {
-    showToast('Clave incorrecta. Intente con Test100*, ALBERTO-staff o RECEPCION-staff', 'error');
-    return;
+    // Si escribió directamente el nombre de un instructor (ej. "Ricky", "Sandra", "Cinthya")
+    sessionStorage.setItem('formas_staff_logged', passcodeUpper);
+    showToast(`Ingreso autorizado: Instructor/a ${passcodeUpper}`, 'success');
   }
 
-  document.getElementById('staff-passcode').value = '';
+  inputEl.value = '';
   renderStaffPortal();
 };
 
 window.logoutStaff = function() {
   sessionStorage.removeItem('formas_staff_logged');
-  localStorage.removeItem('formas_client_mode');
-  showToast('Sesión cerrada', 'info');
+  showToast('Sesión de staff cerrada', 'info');
   
-  const roleOverlay = document.getElementById('role-selector-overlay');
-  if (roleOverlay) {
-    roleOverlay.classList.remove('hidden');
-    cancelStaffLogin();
-  }
-
-  // Ocultar toda la navegación del menú inferior
+  // Asegurar que las pestañas permanezcan visibles
   const allNavs = ['nav-horarios', 'nav-gimnasio', 'nav-ofertas', 'nav-staff'];
   allNavs.forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
+    if (el) el.style.display = 'flex';
   });
+
+  renderStaffPortal();
 };
 
 // --- PANEL DE ADMINISTRACIÓN (Lógica) ---

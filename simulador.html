@@ -92,6 +92,19 @@
           </button>
         </div>
 
+        <!-- Selector Rápido de Rol (Instructor Alberto / Socio) -->
+        <div class="flex items-center bg-white/5 border border-white/10 rounded-xl p-0.5 text-xs">
+          <button onclick="setSimulatorRole('alberto')" id="btn-role-alberto" title="Iniciar sesión automáticamente como Instructor Alberto" class="px-3 py-1.5 rounded-lg font-medium transition-all bg-white/10 hover:bg-white hover:text-black text-white font-semibold flex items-center gap-1.5">
+            <span>⚡ Modo Alberto</span>
+          </button>
+          <button onclick="setSimulatorRole('client')" id="btn-role-client" title="Cambiar a vista normal de Socio" class="px-3 py-1.5 rounded-lg font-medium transition-all text-white/70 hover:text-white">
+            <span>👤 Modo Socio</span>
+          </button>
+          <button onclick="setSimulatorRole('reset')" id="btn-role-reset" title="Ver pantalla de login inicial" class="px-2.5 py-1.5 rounded-lg font-medium transition-all text-white/50 hover:text-white">
+            <span>↺ Login</span>
+          </button>
+        </div>
+
         <!-- Zoom / Auto-fit -->
         <div class="hidden md:flex items-center bg-white/5 border border-white/10 rounded-xl p-1 text-xs gap-1">
           <button onclick="setScale('auto')" id="btn-scale-auto" title="Ajuste automático a la pantalla" class="px-2.5 py-1 rounded-lg transition-all bg-white/20 text-white font-medium">
@@ -225,6 +238,30 @@
     function reloadApp() {
       const frame = document.getElementById('app-frame');
       if (frame) {
+        frame.src = 'index.html?t=' + Date.now();
+      }
+    }
+
+    // Cambiar de rol en 1 clic dentro del simulador
+    function setSimulatorRole(role) {
+      const frame = document.getElementById('app-frame');
+      if (!frame) return;
+      try {
+        const win = frame.contentWindow;
+        if (role === 'alberto') {
+          win.sessionStorage.setItem('formas_staff_logged', 'ALBERTO');
+          win.localStorage.removeItem('formas_client_mode');
+          win.location.reload();
+        } else if (role === 'client') {
+          win.sessionStorage.removeItem('formas_staff_logged');
+          win.localStorage.setItem('formas_client_mode', 'true');
+          win.location.reload();
+        } else if (role === 'reset') {
+          win.sessionStorage.removeItem('formas_staff_logged');
+          win.localStorage.removeItem('formas_client_mode');
+          win.location.reload();
+        }
+      } catch(e) {
         frame.src = 'index.html?t=' + Date.now();
       }
     }
