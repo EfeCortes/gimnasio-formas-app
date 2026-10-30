@@ -14,70 +14,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Exo+2:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Estilos Tácticos OLED -->
-  <link rel="stylesheet" href="css/styles.css?v=23.0">
+  <link rel="stylesheet" href="css/styles.css?v=20.0">
 </head>
 <body class="selection:bg-white selection:text-black">
 
-  <!-- Desktop Ambient Spotlight Glow (Efecto de estudio para pantallas de escritorio) -->
-  <div class="desktop-stage-glow"></div>
-
-  <!-- CONTENEDOR MAESTRO DE ESCRITORIO (OPCIÓN A) -->
-  <div id="desktop-phone-stage" class="desktop-phone-stage">
-
-    <!-- BARRA SUPERIOR DE CONTROL EN ESCRITORIO (Solo visible en pantallas >= 768px) -->
-    <header id="desktop-stage-header" class="desktop-stage-header hidden md:flex">
-      <div class="flex items-center gap-3">
-        <span class="text-[11px] font-michroma font-bold text-white/50 tracking-wider uppercase">FOR+</span>
-        <span class="text-white/20">|</span>
-        <span id="desktop-badge-text" class="text-[11px] text-white/80 font-sans flex items-center gap-1.5 font-medium">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          Smartphone Container
-        </span>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <a href="simulador.html" title="Abrir simulador con selección de otros modelos de smartphone" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-white/70 hover:text-white border border-white/10 text-[10px] font-michroma transition-all active:scale-95 flex items-center gap-1">
-          <span>Otros Modelos</span>
-          <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-        </a>
-
-        <button onclick="toggleDesktopViewMode()" id="btn-toggle-view" title="Alternar entre contenedor smartphone y pantalla completa" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white hover:text-black text-white border border-white/15 text-[10px] font-michroma transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
-          <span id="btn-toggle-text">Vista Expandida</span>
-        </button>
-      </div>
-    </header>
-
-    <!-- CHASIS DE SMARTPHONE DE TITANIO -->
-    <div id="phone-chassis" class="phone-chassis">
-      <!-- Botones Físicos Laterales de Hardware -->
-      <div class="phone-btn phone-btn-action"></div>
-      <div class="phone-btn phone-btn-vol-up"></div>
-      <div class="phone-btn phone-btn-vol-down"></div>
-      <div class="phone-btn phone-btn-power"></div>
-
-      <!-- PANTALLA OLED DEL SMARTPHONE -->
-      <div id="phone-screen" class="phone-screen">
-
-        <!-- BARRA DE ESTADO iOS (Reloj en vivo, Dynamic Island, Batería) -->
-        <div class="phone-status-bar">
-          <div id="device-status-clock" class="w-12 text-center font-medium">09:41</div>
-          
-          <div class="phone-dynamic-island">
-            <div class="phone-lens"></div>
-            <div class="phone-sensor"></div>
-          </div>
-
-          <div class="phone-status-icons">
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.2.2-.2.51 0 .71.1.1.23.15.35.15.13 0 .26-.05.35-.15l1.83-1.83C8.44 19.34 10.14 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-1.38 0-2.63-.47-3.64-1.26l4.9-4.9V7h-2v3.15l-3.53 3.53C7.26 12.83 7 11.95 7 11c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5z"/></svg>
-            <div class="phone-battery">
-              <div class="phone-battery-level"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Fondo Dinámico Global (detrás de todo) -->
-        <div id="global-bg-container" class="fixed inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-500 opacity-0">
+  <!-- Fondo Dinámico Global (detrás de todo) -->
+  <div id="global-bg-container" class="fixed inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-500 opacity-0">
     <div id="global-bg-1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 scale-105" style="filter: brightness(0.80) contrast(1.10) saturate(1.20); -webkit-filter: brightness(0.80) contrast(1.10) saturate(1.20);"></div>
     <div id="global-bg-2" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 scale-105" style="filter: brightness(0.80) contrast(1.10) saturate(1.20); -webkit-filter: brightness(0.80) contrast(1.10) saturate(1.20);"></div>
     <!-- Viñeta radial suave para profundidad y legibilidad -->
@@ -230,11 +172,8 @@
     </div>
   </div>
 
-  <!-- CONTENEDOR DE SCROLL DE LA APLICACIÓN -->
-  <div id="app-scroll-container" class="app-scroll-container">
-
-    <!-- Header Sticky con Logo y Fecha -->
-    <header class="app-header-sticky">
+  <!-- Header Sticky con Logo y Fecha -->
+  <header class="app-header-sticky">
     <div class="header-main">
       <div class="header-logo-container" onclick="handleLogoClick()">
         <!-- Logo SVG (brand.svg) -->
@@ -666,7 +605,6 @@
     </section>
 
   </main>
-  </div> <!-- Fin #app-scroll-container -->
 
 
   <!-- BARRA DE NAVEGACIÓN INFERIOR (BOTTOM NAV BAR) -->
@@ -691,14 +629,6 @@
       <span>Staff</span>
     </button>
   </nav>
-
-  <!-- Indicador Home Bar de iOS (Solo Desktop) -->
-  <div class="phone-home-indicator">
-    <div class="phone-home-bar"></div>
-  </div>
-
-  <!-- Reflejo Especular de Cristal (Solo Desktop) -->
-  <div class="phone-specular-glare"></div>
 
   <!-- MODAL DE CONFIRMACIÓN DE SUSCRIPCIÓN / COMPRA DE OFERTA -->
   <div id="modal-confirm-offer" class="modal-overlay" onclick="if(event.target === this) closeModal('modal-confirm-offer')">
@@ -988,12 +918,16 @@
     </div>
   </div>
 
-      </div> <!-- Fin #phone-screen -->
-    </div> <!-- Fin #phone-chassis -->
-  </div> <!-- Fin #desktop-phone-stage -->
+
+
+  <!-- Botón Flotante para cambiar a Modo Simulador (Sólo visible en pantallas de escritorio) -->
+  <a href="simulador.html" title="Ver App dentro de un simulador de smartphone" class="hidden md:flex fixed bottom-6 right-6 z-50 bg-[#16161a]/90 hover:bg-white hover:text-black border border-white/20 text-white px-4 py-2.5 rounded-full shadow-2xl backdrop-blur-xl text-xs font-michroma items-center gap-2 transition-all hover:scale-105 active:scale-95 group">
+    <span class="text-base group-hover:scale-110 transition-transform">📱</span>
+    <span>Simulador Móvil</span>
+  </a>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=23.0"></script>
-  <script src="js/app.js?v=23.0"></script>
+  <script src="js/data.js?v=22.0"></script>
+  <script src="js/app.js?v=22.0"></script>
 </body>
 </html>
