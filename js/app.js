@@ -49,9 +49,56 @@ window.hideGlobalBackground = function() {
   }
 };
 
+// --- CONTROL DEL CONTENEDOR SMARTPHONE EN ESCRITORIO (OPCIÓN A) ---
+window.toggleDesktopViewMode = function() {
+  const isExpanded = document.body.classList.toggle('desktop-expanded');
+  const btnText = document.getElementById('btn-toggle-text');
+  const badgeText = document.getElementById('desktop-badge-text');
+  
+  if (isExpanded) {
+    if (btnText) btnText.innerText = 'Vista Smartphone';
+    if (badgeText) badgeText.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span> Vista Expandida Web';
+    localStorage.setItem('formas_desktop_view', 'expanded');
+    showToast('Modo de pantalla expandida activado', 'info');
+  } else {
+    if (btnText) btnText.innerText = 'Vista Expandida';
+    if (badgeText) badgeText.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Smartphone Container';
+    localStorage.setItem('formas_desktop_view', 'phone');
+    showToast('Modo Smartphone activado', 'info');
+  }
+};
+
+function initDesktopViewMode() {
+  const savedView = localStorage.getItem('formas_desktop_view');
+  if (savedView === 'expanded') {
+    document.body.classList.add('desktop-expanded');
+    const btnText = document.getElementById('btn-toggle-text');
+    const badgeText = document.getElementById('desktop-badge-text');
+    if (btnText) btnText.innerText = 'Vista Smartphone';
+    if (badgeText) badgeText.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span> Vista Expandida Web';
+  }
+}
+
+// Interceptor de scroll para sincronizar con el contenedor interno del teléfono en desktop
+const _nativeScrollTo = window.scrollTo.bind(window);
+window.scrollTo = function(optOrX, y) {
+  const container = document.getElementById('app-scroll-container');
+  const isDesktopPhone = window.innerWidth >= 768 && !document.body.classList.contains('desktop-expanded') && container;
+  if (isDesktopPhone) {
+    if (typeof optOrX === 'object' && optOrX !== null) {
+      container.scrollTo(optOrX);
+    } else {
+      container.scrollTo(optOrX, y);
+    }
+  } else {
+    _nativeScrollTo(optOrX, y);
+  }
+};
+
 
 // --- INICIALIZACIÓN ---
 window.onload = function() {
+  initDesktopViewMode();
   initSimulatedCloudDatabase();
   
   const staffSession = sessionStorage.getItem('formas_staff_logged');
@@ -459,9 +506,11 @@ function updateClock() {
 
   const dateEl = document.getElementById('full-date-line');
   const clockEl = document.getElementById('clock');
+  const statusClock = document.getElementById('device-status-clock');
   
   if (dateEl) dateEl.innerText = dateStr;
   if (clockEl) clockEl.innerText = clockStr;
+  if (statusClock) statusClock.innerText = clockStr;
 
   if (activeView === 'live') {
     renderSchedule();
@@ -1222,7 +1271,10 @@ function renderSchedule() {
         const stickyControls = document.getElementById('schedule-sticky-controls');
         if (horizon && stickyControls) {
           const stickyBottomWhenSticking = 58 + stickyControls.offsetHeight;
-          const targetTop = horizon.getBoundingClientRect().top + window.scrollY - stickyBottomWhenSticking - 8;
+          const scrollOffset = (window.innerWidth >= 768 && !document.body.classList.contains('desktop-expanded') && document.getElementById('app-scroll-container'))
+            ? document.getElementById('app-scroll-container').scrollTop
+            : window.scrollY;
+          const targetTop = horizon.getBoundingClientRect().top + scrollOffset - stickyBottomWhenSticking - 8;
           window.scrollTo({ top: Math.max(0, targetTop), behavior: 'instant' });
         }
       }, 16);
